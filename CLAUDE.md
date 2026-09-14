@@ -28,28 +28,19 @@ vacía ("El programa"), listas compuestas tipográficamente en vez de rejillas.
 
 ## Paleta
 
-PENDIENTE DE CONFIRMAR: el brief propone virar de granate a ciruela para que
-acompañe al vídeo (violeta y verde). La paleta actual (granate + fucsia) viene
-del cartel de Instagram de Margarita y costó converger. No cambiarla sin un sí
-explícito.
+DECIDIDO (2026-09-14, viendo ambas sobre el vídeo): **se mantiene granate + fucsia**.
+La ciruela del brief se descartó; Lucía prefirió el contraste cálido del granate
+con la lavanda. No reabrir salvo que lo pidan.
 
 ```css
-/* Propuesta del brief (paleta A) */
---bg-sand:  #F8F3EA;  /* arena, fondo de secciones de texto (se mantiene) */
---bg-cream: #FCF9F3;  /* blanco roto, bloques destacados */
---plum:     #3B1F3A;  /* ciruela: base oscura y color de títulos */
---mauve:    #8C6C8F;  /* malva: texto secundario, separadores, ornamentos */
---lavender: #C9B6D6;  /* lavanda: fondos suaves, hover, detalles */
---fuchsia:  #E0338C;  /* acento puntual, nunca fondos grandes */
---stem:     #6F7F5A;  /* verde de tallo: detalles mínimos */
---ink:      #2A2226;  /* texto de cuerpo */
-
-/* Paleta actual en producción */
---hero-bg: #40090b;   /* granate */
---pink:    #ff4fc8;   /* fucsia, solo en el hero */
---bg:      #f8f3ea;   /* arena */
+--hero-bg:    #40090b;  /* granate: base oscura, velo del hero, títulos del cuerpo */
+--pink:       #ff4fc8;  /* fucsia: la palabra en cursiva del título y el botón principal */
+--hero-white: #f8f1e9;  /* texto sobre el vídeo */
+--bg:         #f8f3ea;  /* arena, fondo de secciones */
+--bg-alt:     #efe6d6;  /* arena oscura, secciones alternas */
 ```
 
+Regla: el fucsia ocupa poco (una palabra, un botón); nunca fondos grandes.
 ## Tipografía
 
 Fraunces (títulos) y DM Sans (cuerpo). Ojo: **sí están cargadas**, vía `@import`
@@ -65,6 +56,12 @@ centrados anchos.
 Original: `IMG_2323.MOV` (HEVC, 55 s, 94 MB). **Es vertical**: el stream es
 1920x1080 con `rotation=-90`, así que se muestra 1080x1920. Tenerlo en cuenta
 antes de asumir un hero horizontal.
+
+## Estado del rediseño
+
+- Fase 1 (vídeo + hero) hecha el 2026-09-14. Pendientes: Fase 2 (cuerpo), Fase 3 (OG, JSON-LD, legales, Lighthouse), Fase 4 (enlaces a webs personales).
+- El favicon actual es la rosa (Grok, recoloreada). El brief propone rama de lavanda o "T": sin decidir.
+- Capturas: el panel del navegador reduce los viewports mayores de ~800 px; para escritorio legible usar 1024 px y comprobar 1440 solo por métricas.
 
 ## Datos que faltan
 
