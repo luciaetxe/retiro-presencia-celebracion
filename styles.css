@@ -93,13 +93,13 @@ section:last-of-type{ border-bottom: none; }
 .nav-logo{
   font-family: var(--serif); font-weight: 600; font-size: 1.05rem;
   text-decoration:none; color: var(--hero-white);
-  text-shadow: 0 1px 10px rgba(0,0,0,.28);
+  text-shadow: 0 1px 14px rgba(0,0,0,.5);
 }
 .nav-cta{
   text-decoration: underline;
   text-underline-offset: 4px;
   color: var(--hero-white);
-  text-shadow: 0 1px 10px rgba(0,0,0,.28);
+  text-shadow: 0 1px 14px rgba(0,0,0,.5);
   font-size: 0.9rem;
   white-space: nowrap;
 }
@@ -118,11 +118,15 @@ section:last-of-type{ border-bottom: none; }
 }
 .hero-veil{
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: linear-gradient(to top,
-    color-mix(in srgb, var(--hero-bg) 90%, transparent) 0%,
-    color-mix(in srgb, var(--hero-bg) 55%, transparent) 38%,
-    color-mix(in srgb, var(--hero-bg) 12%, transparent) 72%,
-    color-mix(in srgb, var(--hero-bg) 4%, transparent) 100%);
+  background:
+    linear-gradient(to bottom,
+      color-mix(in srgb, var(--hero-bg) 42%, transparent) 0%,
+      transparent 24%),
+    linear-gradient(to top,
+      color-mix(in srgb, var(--hero-bg) 92%, transparent) 0%,
+      color-mix(in srgb, var(--hero-bg) 66%, transparent) 36%,
+      color-mix(in srgb, var(--hero-bg) 34%, transparent) 62%,
+      color-mix(in srgb, var(--hero-bg) 6%, transparent) 100%);
 }
 .hero-content{ position: relative; z-index: 2; width: 100%; padding-top: 120px; padding-bottom: 68px; }
 .hero-title{
@@ -131,6 +135,7 @@ section:last-of-type{ border-bottom: none; }
   line-height: 1.0;
   color: var(--hero-white);
   margin: 0;
+  text-shadow: 0 2px 22px rgba(0,0,0,.38);
 }
 .hero-title em{ font-style: italic; font-weight: 400; color: var(--pink); }
 .hero-sub{
@@ -141,6 +146,7 @@ section:last-of-type{ border-bottom: none; }
   color: var(--hero-white);
   margin: 0.2em 0 0.9em;
   line-height: 1.05;
+  text-shadow: 0 2px 18px rgba(0,0,0,.35);
 }
 .hero .lede{
   max-width: 34ch;
