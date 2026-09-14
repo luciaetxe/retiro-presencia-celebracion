@@ -7,6 +7,10 @@
 <meta name="description" content="Retiro de mujeres en la ermita de Sant Salvador de Bellver. Presencia, conexión, celebración y creación en grupo reducido. Con Margarita Margenat y Lucía Echenique.">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<meta name="theme-color" content="#40090b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,15 +23,17 @@
 </nav>
 
 <header class="hero" id="top">
-  <div class="wrap">
-    <h1 class="hero-title">Presencia. y<br>Celebración</h1>
-    <h2 class="hero-sub">retiro de<br>mujeres</h2>
+  <video class="hero-video" muted loop playsinline preload="metadata" poster="video/lavanda-poster.webp" aria-hidden="true"></video>
+  <div class="hero-veil" aria-hidden="true"></div>
+  <div class="wrap hero-content">
+    <h1 class="hero-title">Presencia. y <br><em>Celebración</em></h1>
+    <p class="hero-sub">retiro de <br>mujeres</p>
     <p class="lede">Un espacio para volver a lo esencial, a reconectar desde el corazón, en la naturaleza, siendo tribu.</p>
     <div class="hero-caption">
       <span>20, 21 y 22 de noviembre 2026</span>
       <span>Sant Salvador de Bellver</span>
     </div>
-    <div><a href="#contacto" class="cta-link">Reservar mi plaza →</a></div>
+    <div><a href="#contacto" class="hero-btn">Reservar mi plaza →</a></div>
   </div>
 </header>
 
@@ -199,5 +205,18 @@
   Margarita Margenat &amp; Lucía Echenique · Sant Salvador de Bellver
 </footer>
 
+<script>
+(function(){
+  var v = document.querySelector('.hero-video');
+  if (!v || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function start(){
+    var w = document.createElement('source'); w.src = 'video/lavanda.webm'; w.type = 'video/webm';
+    var m = document.createElement('source'); m.src = 'video/lavanda.mp4';  m.type = 'video/mp4';
+    v.appendChild(w); v.appendChild(m); v.autoplay = true; v.load();
+    var pr = v.play(); if (pr && pr.catch) pr.catch(function(){});
+  }
+  if (document.readyState === 'complete') start(); else addEventListener('load', start);
+})();
+</script>
 </body>
 </html>
