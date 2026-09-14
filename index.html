@@ -209,12 +209,16 @@
 (function(){
   var v = document.querySelector('.hero-video');
   if (!v || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function tryPlay(){ var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); }
   function start(){
+    v.setAttribute('autoplay', '');
     var w = document.createElement('source'); w.src = 'video/lavanda.webm'; w.type = 'video/webm';
     var m = document.createElement('source'); m.src = 'video/lavanda.mp4';  m.type = 'video/mp4';
-    v.appendChild(w); v.appendChild(m); v.autoplay = true; v.load();
-    var pr = v.play(); if (pr && pr.catch) pr.catch(function(){});
+    v.appendChild(w); v.appendChild(m);
+    v.addEventListener('canplay', tryPlay, { once: true });
+    v.load();
   }
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden && v.paused && v.readyState >= 3) tryPlay(); });
   if (document.readyState === 'complete') start(); else addEventListener('load', start);
 })();
 </script>
