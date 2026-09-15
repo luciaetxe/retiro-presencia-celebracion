@@ -271,23 +271,6 @@ section:last-of-type{ border-bottom: none; }
   object-fit: cover;
   display: block;
 }
-.photo-row{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 34px;
-}
-.photo-row img{
-  width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  object-position: top center;
-  border-radius: 3px;
-}
-.no-crop{
-  aspect-ratio: auto;
-  object-fit: initial;
-}
 
 /* Horario — bloques simples, sin tarjeta */
 .schedule{
@@ -371,4 +354,33 @@ footer .fname{ display:block; font-family:var(--serif); font-weight:600; color:v
   .access-item{ grid-template-columns: 1fr; gap:6px; }
   .activities-list{ grid-template-columns: 1fr; grid-auto-flow: row; grid-template-rows: none; }
   section{ padding: 68px 0; }
+}
+
+/* El lugar — fotos en cuadrícula, ampliables. Al lado del texto solo en pantalla ancha. */
+.photo-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+#lugar .feature-row{ align-items:start; }
+.thumb{ position:relative; display:block; border-radius:3px; overflow:hidden; }
+.thumb img{ width:100%; aspect-ratio:1; object-fit:cover; display:block; transition:transform .35s ease; }
+.thumb:hover img{ transform:scale(1.03); }
+.zoom{ position:absolute; right:8px; bottom:8px; width:26px; height:26px; border-radius:50%; background:rgba(64,9,11,.72); color:#f8f1e9; display:grid; place-items:center; }
+.lb{ position:fixed; inset:0; z-index:200; background:rgba(30,6,8,.93); display:grid; place-items:center; padding:24px; cursor:zoom-out; }
+.lb[hidden]{ display:none; }
+.lb img{ max-width:min(92vw,1100px); max-height:88vh; object-fit:contain; box-shadow:0 30px 80px -30px rgba(0,0,0,.8); }
+.lb-close{ position:absolute; top:14px; right:14px; width:44px; height:44px; border:0; border-radius:50%; background:rgba(248,241,233,.12); color:#f8f1e9; display:grid; place-items:center; cursor:pointer; }
+.lb-close:hover{ background:rgba(248,241,233,.24); }
+@media (max-width:899px){ #lugar .feature-row{ grid-template-columns:1fr; gap:28px; } }
+
+/* Apúntate — bloque granate, botón crema (el rosa solo vive en el hero) */
+.contact.dark{ background:var(--hero-bg); }
+.contact.dark .eyebrow{ color:rgba(248,241,233,.7); }
+.contact.dark .section-title, .contact.dark .lede, .contact.dark .small-note{ color:var(--hero-white); }
+.contact.dark .small-note{ opacity:.78; margin-top:14px; }
+.btn-cream{ display:inline-block; background:var(--hero-white); color:var(--hero-bg); text-decoration:none; padding:13px 22px; border-radius:4px; font-weight:500; font-size:1rem; }
+.btn-cream:hover{ background:#fff; }
+
+/* texto + foto al lado hasta pestañas bastante estrechas; solo se apila en móvil real */
+@media (min-width:600px) and (max-width:760px){
+  .feature-row{ grid-template-columns:1fr 1fr; gap:32px; align-items:center; }
+  .feature-row .feature-visual{ order:0; }
+  #lugar .feature-row{ grid-template-columns:1fr; }
 }

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Presencia y Celebración · Retiro de Mujeres · Sant Salvador de Bellver</title>
 <meta name="description" content="Retiro de mujeres en la ermita de Sant Salvador de Bellver. Presencia, conexión, celebración y creación en grupo reducido. Con Margarita Margenat y Lucía Echenique.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
 <meta name="theme-color" content="#40090b">
@@ -107,7 +108,7 @@
 
 <section class="alt" id="lugar">
   <div class="wrap">
-    <div class="feature-row feature-row--center">
+    <div class="feature-row">
       <div>
         <p class="eyebrow">El lugar</p>
         <h2 class="section-title">Sant Salvador de Bellver</h2>
@@ -115,12 +116,12 @@
         <p class="lede">Junto a la iglesia se encuentra una casa, que ha sido reformada y acondicionada a lo largo de los años para recibir a los visitantes, con sencillez, pero con comodidad.</p>
         <p class="lede">Este espacio se sostiene y abre sus puertas gracias a las donaciones de aquellos que lo disfrutan y lo valoran.</p>
       </div>
-      <img class="feature-visual no-crop" src="images/vista exterior ermita.jpeg" alt="Ermita de Sant Salvador de Bellver">
-    </div>
-    <div class="photo-row">
-      <img src="images/vista ermita.jpeg" alt="Vista de la ermita de Sant Salvador de Bellver">
-      <img src="images/puesta de sol vista.jpeg" alt="Puesta de sol desde Sant Salvador de Bellver">
-      <img src="images/ermita por dentro.jpeg" alt="Interior de la ermita, con el altar">
+      <div class="photo-grid">
+      <a class="thumb" href="images/vista exterior ermita.jpeg" aria-label="Ampliar foto"><img src="images/vista exterior ermita.jpeg" alt="Ermita de Sant Salvador de Bellver" loading="lazy"><span class="zoom" aria-hidden="true"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2.5h4v4M13.5 2.5 9 7M6.5 13.5h-4v-4M2.5 13.5 7 9"/></svg></span></a>
+      <a class="thumb" href="images/vista ermita.jpeg" aria-label="Ampliar foto"><img src="images/vista ermita.jpeg" alt="Vista de la ermita de Sant Salvador de Bellver" loading="lazy"><span class="zoom" aria-hidden="true"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2.5h4v4M13.5 2.5 9 7M6.5 13.5h-4v-4M2.5 13.5 7 9"/></svg></span></a>
+      <a class="thumb" href="images/puesta de sol vista.jpeg" aria-label="Ampliar foto"><img src="images/puesta de sol vista.jpeg" alt="Puesta de sol desde Sant Salvador de Bellver" loading="lazy"><span class="zoom" aria-hidden="true"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2.5h4v4M13.5 2.5 9 7M6.5 13.5h-4v-4M2.5 13.5 7 9"/></svg></span></a>
+      <a class="thumb" href="images/ermita por dentro.jpeg" aria-label="Ampliar foto"><img src="images/ermita por dentro.jpeg" alt="Interior de la ermita, con el altar" loading="lazy"><span class="zoom" aria-hidden="true"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2.5h4v4M13.5 2.5 9 7M6.5 13.5h-4v-4M2.5 13.5 7 9"/></svg></span></a>
+      </div>
     </div>
   </div>
 </section>
@@ -171,13 +172,13 @@
   </div>
 </section>
 
-<section class="alt contact" id="contacto">
+<section class="alt contact dark" id="contacto">
   <div class="wrap">
     <p class="eyebrow">Apúntate</p>
     <h2 class="section-title">Reserva tu plaza</h2>
     <p class="lede">Completa el formulario y te contamos todos los detalles.</p>
     <div style="margin-top:2em;">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSe1IAnaGGV3NlmShKqGBk-70MKR8-3k7L88Y0_SUVakqxXDNA/viewform" target="_blank" rel="noopener" class="cta-link">Ir al formulario →</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSe1IAnaGGV3NlmShKqGBk-70MKR8-3k7L88Y0_SUVakqxXDNA/viewform" target="_blank" rel="noopener" class="btn-cream">Ir al formulario →</a>
     </div>
     <p class="small-note">Rellenar el formulario no confirma tu plaza — os contactaremos para confirmar la reserva.</p>
   </div>
@@ -205,8 +206,16 @@
   Margarita Margenat &amp; Lucía Echenique · Sant Salvador de Bellver
 </footer>
 
+<div class="lb" hidden><button class="lb-close" type="button" aria-label="Cerrar"><svg viewBox="0 0 20 20" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l12 12M16 4 4 16"/></svg></button><img alt=""></div>
 <script>
 (function(){
+  var lb = document.querySelector('.lb'), lbImg = lb.querySelector('img');
+  function openLb(a){ lbImg.src = a.getAttribute('href'); lbImg.alt = a.querySelector('img').alt; lb.hidden = false; document.body.style.overflow = 'hidden'; }
+  function closeLb(){ lb.hidden = true; lbImg.src = ''; document.body.style.overflow = ''; }
+  document.querySelectorAll('.thumb').forEach(function(a){ a.addEventListener('click', function(e){ e.preventDefault(); openLb(a); }); });
+  lb.addEventListener('click', closeLb);
+  addEventListener('keydown', function(e){ if (e.key === 'Escape' && !lb.hidden) closeLb(); });
+
   var v = document.querySelector('.hero-video');
   if (!v || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   function tryPlay(){ var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); }
