@@ -358,7 +358,8 @@ footer .fname{ display:block; font-family:var(--serif); font-weight:600; color:v
 
 /* El lugar — fotos en cuadrícula, ampliables. Al lado del texto solo en pantalla ancha. */
 .photo-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-#lugar .feature-row{ align-items:start; }
+#lugar .feature-row{ align-items:start; margin-top:1.2em; }
+#lugar .feature-row > div > p:first-child{ margin-top:0; }
 .thumb{ position:relative; display:block; border-radius:3px; overflow:hidden; }
 .thumb img{ width:100%; aspect-ratio:1; object-fit:cover; display:block; transition:transform .35s ease; }
 .thumb:hover img{ transform:scale(1.03); }
