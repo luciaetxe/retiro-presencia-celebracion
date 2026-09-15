@@ -59,8 +59,10 @@ antes de asumir un hero horizontal.
 
 ## Estado del rediseño
 
-- Fase 1 (vídeo + hero) hecha el 2026-09-14. Pendientes: Fase 2 (cuerpo), Fase 3 (OG, JSON-LD, legales, Lighthouse), Fase 4 (enlaces a webs personales).
-- El favicon actual es la rosa (Grok, recoloreada). El brief propone rama de lavanda o "T": sin decidir.
+- Fase 1 (vídeo + hero) hecha el 2026-09-14.
+- Fase 2 del brief probada y DESCARTADA por Lucía el 2026-09-15 (le pareció caótica; prefiere la estructura actual). No reabrir. De ella solo se publicó: cuadrícula de fotos ampliable en El lugar, "Reserva tu plaza" en granate con botón crema, favicon círculo fucsia.
+- Pendientes: Fase 3 (OG, JSON-LD, legales, WebP/srcset, Lighthouse), Fase 4 (enlaces a webs personales, Instagram).
+- Favicon: círculo fucsia (decidido 2026-09-15).
 - Capturas: el panel del navegador reduce los viewports mayores de ~800 px; para escritorio legible usar 1024 px y comprobar 1440 solo por métricas.
 
 ## Datos que faltan
