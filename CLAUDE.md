@@ -26,24 +26,25 @@ centrado, título-párrafo-título-párrafo, imágenes como rectángulos alinead
 Antídotos: asimetría, escala variable, alguna foto a sangre, una sección casi
 vacía ("El programa"), listas compuestas tipográficamente en vez de rejillas.
 
-## Paleta
+## Paleta (definitiva, 2026-09-16)
 
-DECIDIDO (2026-09-14, viendo ambas sobre el vídeo): **se mantiene granate + fucsia**.
-La ciruela del brief se descartó; Lucía prefirió el contraste cálido del granate
-con la lavanda. No reabrir salvo que lo pidan.
+Elegida por Lucía sobre su moodboard. No reabrir. Sin granate ni fucsia.
 
 ```css
---hero-bg:    #40090b;  /* granate: base oscura, velo del hero, títulos del cuerpo */
---pink:       #ff4fc8;  /* fucsia: la palabra en cursiva del título y el botón principal */
---hero-white: #f8f1e9;  /* texto sobre el vídeo */
---bg:         #f8f3ea;  /* arena, fondo de secciones */
---bg-alt:     #efe6d6;  /* arena oscura, secciones alternas */
+--bg:           #F1EEF2;  /* bruma lavanda: fondo base */
+--bg-alt:       #E3DCE7;  /* lila arena: secciones alternas */
+--dark-2:       #3F4A39;  /* salvia profundo: velo del hero */
+--accent:       #6C5A7B;  /* lavanda oscura: etiquetas, cursivas, detalles */
+--dark-lav:     #4B4058;  /* lavanda profunda: "El programa" y "Reserva tu plaza" */
+--light:        #F3EFE6;  /* crema: texto sobre fondos oscuros */
+--accent-light: #D9CCE3;  /* lavanda clara: "Celebración" en el hero */
 ```
 
-Regla: el fucsia ocupa poco (una palabra, un botón); nunca fondos grandes.
+Tipografía: Fraunces (títulos, con peso) + Karla (texto). Botones rectangulares, nunca píldora.
+Rechazado: fondo crema (igual al de su web de masaje), "La intención" en oscuro, Playfair en títulos.
 ## Tipografía
 
-Fraunces (títulos) y DM Sans (cuerpo). Ojo: **sí están cargadas**, vía `@import`
+Fraunces (títulos) y Karla (cuerpo) desde 2026-09-16. Ojo: **sí están cargadas**, vía `@import`
 en la línea 4 de `styles.css` — el brief dice que no, y es incorrecto. Lo que sí
 conviene es moverlas a `<link>` con `preconnect` en el `<head>`, porque el
 `@import` serializa la descarga y penaliza el LCP.
