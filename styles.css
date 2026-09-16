@@ -1,31 +1,21 @@
-/* Presencia y Celebración — Retiro de Mujeres · Sant Salvador de Bellver */
-/* El rosa fucsia vive SOLO en el hero. El resto usa tonos tierra/terracota afines, no chillones. */
-
-/* Fuentes: cargadas desde <head> con preconnect (ver index.html) */
+/* Tribu Conecta — sistema definitivo (2026-09-16): bruma lavanda, salvia oscuro en el hero,
+   lavanda oscura para acentos y bloques de énfasis. Títulos Fraunces, texto Karla.
+   Tipografía: Playfair Display (títulos) + Karla (texto). Misma estructura que producción. */
 
 :root{
-  /* hero — rojo + rosa (único lugar donde aparece el rosa) */
-  --hero-bg: #40090b;
-  --hero-line: rgba(255,214,231,0.18);
-  --pink: #ff4fc8;
-  --hero-white: #f8f1e9;
-  /* cabecera de navegación (misma base oscura, texto en blanco para contraste) */
-  --nav-muted: #ffffff;
-
-  /* resto de la web — claro, cálido */
-  --bg: #f8f3ea;
-  --bg-alt: #efe6d6;
-  --ink: #3d362e;
-  --ink-dim: #756a5c;
-  --ink-faint: #a89a89;
-  --line: rgba(61,54,46,0.14);
-
-  /* acento del resto de la web — el mismo rojo del hero, sin mezclar más tonos */
-  --accent: var(--hero-bg);
-  --accent-soft: #a85c56;
-
-  --serif: 'Fraunces', 'Georgia', serif;
-  --sans: 'DM Sans', 'Segoe UI', sans-serif;
+  --bg: #F3EFE6;         /* crema cálido: fondo base */
+  --bg-alt: #EAE4D8;     /* arena: secciones alternas */
+  --dark: #4F5C47;       /* salvia oscuro: velo del hero y bloques oscuros */
+  --dark-2: #3F4A39;     /* salvia más profundo: degradado del velo */
+  --ink: #2E3328;        /* texto y títulos */
+  --ink-dim: #5C6354;    /* texto secundario */
+  --ink-faint: #8C927F;  /* notas */
+  --accent: #8F7C9C;     /* lavanda apagada: etiquetas, cursivas, enlaces, detalles */
+  --accent-light: #D9CCE3; /* lavanda clara: sobre fondo oscuro */
+  --light: #F3EFE6;      /* texto sobre fondo oscuro */
+  --line: rgba(46,51,40,.14);
+  --serif: 'Playfair Display', 'Georgia', serif;
+  --sans: 'Karla', 'Segoe UI', sans-serif;
 }
 
 *{ box-sizing: border-box; }
@@ -42,362 +32,334 @@ body{
 img{ max-width: 100%; display: block; }
 a{ color: inherit; }
 
-.wrap{
-  max-width: 1040px;
-  margin: 0 auto;
-  padding: 0 28px;
-}
+.wrap{ max-width: 1040px; margin: 0 auto; padding: 0 28px; }
 
 h1,h2,h3{
   font-family: var(--serif);
-  font-weight: 600;
-  font-style: normal;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.005em;
   margin: 0 0 0.5em;
-  color: var(--accent);
+  color: var(--ink);
 }
 .eyebrow{
   font-family: var(--sans);
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   font-size: 0.72rem;
   font-weight: 500;
-  color: var(--ink-dim);
+  color: var(--accent);
   margin: 0 0 1.1em;
 }
 p{ color: var(--ink-dim); font-weight: 400; }
 .section-title{
-  font-size: clamp(2.6rem, 5.5vw, 3.8rem);
-  font-weight: 700;
-  color: var(--accent);
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 500;
+  color: var(--ink);
 }
-.lede{
-  font-size: 1.1rem;
-  max-width: 620px;
-  color: var(--ink-dim);
-}
+.lede{ font-size: 1.1rem; max-width: 620px; color: var(--ink-dim); }
 
 section{ padding: 100px 0; border-bottom: 1px solid var(--line); }
 section.alt{ background: var(--bg-alt); }
 section:last-of-type{ border-bottom: none; }
 
-/* Nav — flota sobre el hero de vídeo, sin barra */
-.nav{
-  position: absolute; top: 0; left: 0; right: 0; z-index: 20;
-}
-.nav .wrap{
-  display:flex; align-items:center; justify-content:space-between;
-  padding-top: 20px; padding-bottom: 20px;
-}
+/* Nav — flota sobre el hero */
+.nav{ position: absolute; top: 0; left: 0; right: 0; z-index: 20; }
+.nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top: 20px; padding-bottom: 20px; }
 .nav-logo{
-  font-family: var(--serif); font-weight: 600; font-size: 1.05rem;
-  text-decoration:none; color: var(--hero-white);
-  text-shadow: 0 1px 6px rgba(40,5,8,.7), 0 2px 18px rgba(40,5,8,.6);
+  font-family: var(--serif); font-weight: 500; font-size: 1.05rem;
+  text-decoration:none; color: var(--light);
+  text-shadow: 0 1px 6px rgba(30,38,26,.7), 0 2px 18px rgba(30,38,26,.6);
 }
 .nav-cta{
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  color: var(--hero-white);
-  text-shadow: 0 1px 6px rgba(40,5,8,.7), 0 2px 18px rgba(40,5,8,.6);
-  font-size: 0.9rem;
+  font-family: var(--sans); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem;
+  text-decoration: none; border-bottom: 1px solid rgba(243,239,230,.55); padding-bottom: 3px;
+  color: var(--light); text-shadow: 0 1px 6px rgba(30,38,26,.7), 0 2px 18px rgba(30,38,26,.6);
   white-space: nowrap;
 }
 
-/* Hero — vídeo de lavanda a pantalla completa, velo granate en la franja del texto */
+/* Hero — vídeo de lavanda, velo salvia en la franja del texto */
 .hero{
   position: relative; isolation: isolate; overflow: hidden;
   min-height: 100svh; padding: 0;
   display: flex; align-items: flex-end;
-  background: var(--hero-bg);
+  background: var(--dark-2);
 }
-.hero-video{
-  position: absolute; inset: 0; z-index: 0;
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: 50% 72%;
-}
+.hero-video{ position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 72%; }
 .hero-veil{
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background:
-    linear-gradient(to bottom, color-mix(in srgb, var(--hero-bg) 55%, transparent) 0%, transparent 26%),
+    linear-gradient(to bottom, color-mix(in srgb, var(--dark-2) 55%, transparent) 0%, transparent 26%),
     linear-gradient(to top,
-      color-mix(in srgb, var(--hero-bg) 94%, transparent) 0%,
-      color-mix(in srgb, var(--hero-bg) 74%, transparent) 40%,
-      color-mix(in srgb, var(--hero-bg) 38%, transparent) 68%,
-      color-mix(in srgb, var(--hero-bg) 6%, transparent) 100%);
+      color-mix(in srgb, var(--dark-2) 94%, transparent) 0%,
+      color-mix(in srgb, var(--dark-2) 74%, transparent) 40%,
+      color-mix(in srgb, var(--dark-2) 38%, transparent) 68%,
+      color-mix(in srgb, var(--dark-2) 6%, transparent) 100%);
 }
 @media (min-width: 760px){
   .hero-veil{
     background:
-      linear-gradient(to bottom, color-mix(in srgb, var(--hero-bg) 55%, transparent) 0%, transparent 26%),
+      linear-gradient(to bottom, color-mix(in srgb, var(--dark-2) 55%, transparent) 0%, transparent 26%),
       linear-gradient(to right,
-        color-mix(in srgb, var(--hero-bg) 62%, transparent) 0%,
-        color-mix(in srgb, var(--hero-bg) 38%, transparent) 48%,
-        color-mix(in srgb, var(--hero-bg) 4%, transparent) 100%),
+        color-mix(in srgb, var(--dark-2) 62%, transparent) 0%,
+        color-mix(in srgb, var(--dark-2) 38%, transparent) 48%,
+        color-mix(in srgb, var(--dark-2) 4%, transparent) 100%),
       linear-gradient(to top,
-        color-mix(in srgb, var(--hero-bg) 92%, transparent) 0%,
-        color-mix(in srgb, var(--hero-bg) 60%, transparent) 38%,
-        color-mix(in srgb, var(--hero-bg) 22%, transparent) 68%,
+        color-mix(in srgb, var(--dark-2) 92%, transparent) 0%,
+        color-mix(in srgb, var(--dark-2) 60%, transparent) 38%,
+        color-mix(in srgb, var(--dark-2) 22%, transparent) 68%,
         transparent 100%);
   }
 }
 .hero-content{ position: relative; z-index: 2; width: 100%; padding-top: 120px; padding-bottom: 68px; }
 .hero-title{
-  font-size: clamp(3rem, 9vw, 6.4rem);
-  font-weight: 500;
-  line-height: 1.0;
-  color: var(--hero-white);
-  margin: 0;
-  text-shadow: 0 2px 8px rgba(40,5,8,.55), 0 6px 32px rgba(40,5,8,.5);
-}
-.hero-title em{ font-style: italic; font-weight: 400; color: var(--pink); }
-.hero-sub{
-  font-family: var(--serif);
-  font-style: italic;
+  font-size: clamp(3rem, 8.5vw, 6rem);
   font-weight: 400;
-  font-size: clamp(1.9rem, 5.5vw, 3.6rem);
-  color: var(--hero-white);
-  margin: 0.2em 0 0.9em;
-  line-height: 1.05;
-  text-shadow: 0 2px 8px rgba(40,5,8,.55), 0 6px 32px rgba(40,5,8,.5);
+  line-height: 1.0;
+  color: var(--light);
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(30,38,26,.55), 0 6px 32px rgba(30,38,26,.5);
+}
+.hero-title em{ font-style: italic; font-weight: 400; color: var(--accent-light); }
+.hero-sub{
+  font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  color: var(--light);
+  margin: 0.2em 0 0.9em; line-height: 1.05;
+  text-shadow: 0 2px 8px rgba(30,38,26,.55), 0 6px 32px rgba(30,38,26,.5);
 }
 .hero .lede{
-  max-width: 34ch;
-  margin: 0 0 2em;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--hero-white);
-  text-shadow: 0 1px 6px rgba(40,5,8,.65);
+  max-width: 36ch; margin: 0 0 2em;
+  font-size: 1.08rem; font-weight: 400;
+  color: var(--light);
+  text-shadow: 0 1px 6px rgba(30,38,26,.65);
 }
 .hero-caption{
   display:flex; justify-content:space-between; flex-wrap:wrap; gap: 10px 24px;
-  border-top: 1px solid rgba(248,241,233,.35);
-  padding-top: 22px;
-  margin-bottom: 2.2em;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--hero-white);
-  text-shadow: 0 1px 6px rgba(40,5,8,.65);
+  border-top: 1px solid rgba(243,239,230,.35);
+  padding-top: 22px; margin-bottom: 2.2em;
+  font-family: var(--serif); font-style: italic; font-size: 1rem;
+  color: var(--light);
+  text-shadow: 0 1px 6px rgba(30,38,26,.65);
 }
 .hero-btn{
   display: inline-block;
-  background: var(--pink); color: #fff;
-  text-decoration: none;
-  padding: 13px 22px; border-radius: 4px;
-  font-weight: 500; font-size: 1rem;
+  font-family: var(--sans); font-size: .82rem; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--light); text-decoration: none;
+  border: 1px solid rgba(243,239,230,.85);
+  padding: 13px 22px;
+  background: rgba(63,74,57,.35);
+  backdrop-filter: blur(2px);
+  transition: background .2s;
 }
+.hero-btn:hover{ background: var(--light); color: var(--dark-2); }
 @media (prefers-reduced-motion: reduce){
   .hero-video{ display: none; }
-  .hero{ background: var(--hero-bg) url(video/lavanda-poster.webp) center / cover no-repeat; }
+  .hero{ background: var(--dark-2) url(video/lavanda-poster.webp) center / cover no-repeat; }
 }
 
 .cta-link{
   display:inline-block;
-  text-decoration: underline;
-  text-underline-offset: 5px;
-  color: var(--accent);
+  text-decoration: underline; text-underline-offset: 5px; text-decoration-color: var(--accent);
+  color: var(--ink);
   font-size: 1.02rem;
 }
 
-/* Manifiesto */
+/* La intención */
 .manifiesto blockquote{
-  font-family: var(--serif);
-  font-weight: 600;
+  font-family: var(--serif); font-style: italic; font-weight: 400;
   font-size: clamp(1.5rem, 3vw, 2rem);
-  color: var(--accent);
-  margin: 0.6em 0;
-  line-height: 1.3;
-}
-/* Nuestra historia / El lugar — bloque foto + texto */
-.feature-visual.host-photo{
-  aspect-ratio: 3/4;
-  object-position: top center;
-}
-.host-names{
-  font-family: var(--serif); font-weight: 600;
-  font-size: 1.5rem; color: var(--accent); margin: 0 0 0.2em;
-}
-.host-names .amp{ color: var(--ink-dim); font-style: italic; }
-.role{ color: var(--ink-dim); font-size: 0.76rem; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.9em; display:block; }
-.story-placeholder{
-  border: 1px dashed var(--accent-soft);
-  border-radius: 4px;
-  padding: 18px 20px;
-  font-style: italic;
-  color: var(--ink-faint);
-  font-size: 0.92rem;
+  color: var(--ink);
+  margin: 0.6em 0; line-height: 1.3;
 }
 
-/* Actividades — lista, no cuadrícula */
+/* Nosotras */
+.feature-visual.host-photo{ aspect-ratio: 3/4; object-position: top center; }
+.host-names{ font-family: var(--serif); font-weight: 500; font-size: 1.5rem; color: var(--ink); margin: 0 0 0.2em; }
+.host-names .amp{ color: var(--accent); font-style: italic; font-weight: 400; }
+.role{ color: var(--accent); font-size: 0.74rem; text-transform:uppercase; letter-spacing:.16em; margin-bottom:.9em; display:block; }
+
+/* Actividades — lista */
 .activities-list{
-  list-style: none;
-  margin: 2.4em 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(6, auto);
+  list-style: none; margin: 2.4em 0 0; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr; grid-auto-flow: column; grid-template-rows: repeat(6, auto);
   column-gap: 56px;
 }
 .activities-list li{
-  font-family: var(--serif); font-weight: 500;
-  font-size: 1.2rem;
-  color: var(--accent);
-  padding: 13px 0;
-  border-bottom: 1px solid var(--line);
-  break-inside: avoid;
+  font-family: var(--serif); font-weight: 400;
+  font-size: 1.25rem; color: var(--ink);
+  padding: 13px 0; border-bottom: 1px solid var(--line);
 }
-.activities-list li span{
-  display: block;
-  font-family: var(--sans); font-style: normal;
-  font-size: 0.82rem;
-  color: var(--ink-faint);
-  margin-top: 3px;
-}
-.activities-note{
-  margin-top: 2.2em;
-  font-size: 0.9rem;
-  font-style: italic;
-  color: var(--ink-faint);
-}
+.activities-note{ margin-top: 2.2em; font-size: 0.9rem; font-style: italic; color: var(--ink-faint); }
 
-/* Comida / Alojamiento — two-col feature */
-.feature-row{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: start;
-}
+/* Bloques foto + texto */
+.feature-row{ display:grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
 .feature-row + .feature-row{ margin-top: 76px; }
 .feature-row--center{ align-items: center; }
-.feature-subtitle{
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1.2rem;
-  color: var(--ink-dim);
-  margin: 0 0 0.7em;
-}
-.feature-visual{
-  aspect-ratio: 4/3;
-  border-radius: 3px;
-  background: linear-gradient(160deg, #ded1ba, #c9b99d);
-  width: 100%;
-  object-fit: cover;
-  display: block;
-}
+.feature-subtitle{ font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.2rem; color: var(--accent); margin: 0 0 0.7em; }
+.feature-visual{ aspect-ratio: 4/3; border-radius: 2px; background: #DDD8CB; width: 100%; object-fit: cover; display: block; }
 
-/* Horario — bloques simples, sin tarjeta */
-.schedule{
-  display:grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  margin-top: 2.6em;
-  max-width: 620px;
-}
-.day-block .day-name{
-  font-family: var(--serif); font-weight: 600; font-size:1.25rem;
-  color: var(--accent); display:block; margin-bottom: 8px;
-}
+/* El programa */
+.schedule{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 2.6em; max-width: 620px; }
+.day-block .day-name{ font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 1.4rem; color: var(--ink); display:block; margin-bottom: 8px; }
 .day-block p{ font-size: 0.95rem; margin:0; }
 .day-block p + p{ margin-top: 6px; }
-.day-block b{ color: var(--ink); font-weight:600; }
+.day-block b{ color: var(--ink); font-weight: 600; }
 
-/* Precio — texto simple, sin competir con el título */
-.donativo-line{
-  font-family: var(--serif); font-weight: 700;
-  font-size: 1.7rem;
-  color: var(--accent);
-  margin: 0 0 0.25em;
-}
-.small-note{
-  font-size: 0.88rem;
-  color: var(--ink-faint);
-  margin: 0 0 1.8em;
-}
-.highlight-inline{
-  font-weight: 700;
-  color: var(--accent);
-}
+/* Cómo se sostiene */
+.donativo-line{ font-family: var(--serif); font-weight: 500; font-size: 1.8rem; color: var(--ink); margin: 0 0 0.25em; }
+.small-note{ font-size: 0.88rem; color: var(--ink-faint); margin: 0 0 1.8em; }
+.highlight-inline{ font-weight: 600; color: var(--ink); }
 
-/* El lugar / Cómo llegar */
+/* Cómo llegar */
 .access-list{ margin-top: 2.4em; display:flex; flex-direction:column; gap: 30px; }
 .access-item{ display:grid; grid-template-columns: 140px 1fr; gap: 24px; }
-.access-item .label{
-  font-family: var(--serif); font-weight:600; color:var(--accent); font-size:1.05rem;
-}
+.access-item .label{ font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--accent); font-size: 1.1rem; }
 .access-item p{ margin:0; }
 
 /* Próximas fechas */
 .dates-list{ margin-top: 2.6em; display:flex; flex-direction:column; }
-.date-row{
-  padding: 22px 0;
-  border-bottom: 1px solid var(--line);
-  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
-}
+.date-row{ padding: 22px 0; border-bottom: 1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
 .date-row:first-child{ border-top: 1px solid var(--line); }
-.date-row .when{ font-family:var(--serif); font-weight:600; font-size:1.3rem; color: var(--accent); }
+.date-row .when{ font-family:var(--serif); font-weight:500; font-size:1.4rem; color: var(--ink); }
 .date-row .meta{ font-size:0.86rem; color:var(--ink-faint); }
 .date-row .status{
-  font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em;
-  border:1px solid var(--accent-soft); color:var(--ink-dim);
-  padding:5px 14px; border-radius:999px;
+  font-size:0.72rem; text-transform:uppercase; letter-spacing:0.14em;
+  border:1px solid var(--accent); color:var(--accent);
+  padding:6px 14px;
 }
 
-/* Contacto / footer */
-.contact-note{ margin-top: 1.6em; font-size:0.86rem; color:var(--ink-faint); }
+/* El lugar — cuadrícula de fotos ampliables */
+.photo-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+#lugar .feature-row{ align-items:start; margin-top:1.2em; }
+#lugar .feature-row > div > p:first-child{ margin-top:0; }
+.thumb{ position:relative; display:block; border-radius:2px; overflow:hidden; }
+.thumb img{ width:100%; aspect-ratio:1; object-fit:cover; display:block; transition:transform .35s ease; }
+.thumb:hover img{ transform:scale(1.03); }
+.zoom{ position:absolute; right:8px; bottom:8px; width:26px; height:26px; border-radius:50%; background:rgba(63,74,57,.78); color:var(--light); display:grid; place-items:center; }
+.lb{ position:fixed; inset:0; z-index:200; background:rgba(30,38,26,.94); display:grid; place-items:center; padding:24px; cursor:zoom-out; }
+.lb[hidden]{ display:none; }
+.lb img{ max-width:min(92vw,1100px); max-height:88vh; object-fit:contain; box-shadow:0 30px 80px -30px rgba(0,0,0,.8); }
+.lb-close{ position:absolute; top:14px; right:14px; width:44px; height:44px; border:0; border-radius:50%; background:rgba(243,239,230,.12); color:var(--light); display:grid; place-items:center; cursor:pointer; }
+.lb-close:hover{ background:rgba(243,239,230,.24); }
+@media (max-width:899px){ #lugar .feature-row{ grid-template-columns:1fr; gap:28px; } }
 
-footer{
-  padding: 52px 0;
-  text-align:center;
-  font-size: 0.84rem;
-  color: var(--ink-faint);
-  background: var(--bg-alt);
+/* Apúntate — bloque salvia oscuro, botón crema */
+.contact.dark{ background:var(--dark); }
+.contact.dark .eyebrow{ color:var(--accent-light); }
+.contact.dark .section-title, .contact.dark .lede, .contact.dark .small-note{ color:var(--light); }
+.contact.dark .small-note{ opacity:.8; margin-top:14px; }
+.btn-cream{
+  display:inline-block; background:var(--light); color:var(--dark-2);
+  font-family: var(--sans); font-size:.82rem; font-weight:500; letter-spacing:.14em; text-transform:uppercase;
+  text-decoration:none; padding:13px 22px;
 }
-footer .fname{ display:block; font-family:var(--serif); font-weight:600; color:var(--ink-dim); margin-bottom:6px; font-size:1.05rem; }
+.btn-cream:hover{ background:#fff; }
+
+footer{ padding: 52px 0; text-align:center; font-size: 0.84rem; color: var(--ink-faint); background: var(--bg-alt); }
+footer .fname{ display:block; font-family:var(--serif); font-weight:500; color:var(--ink); margin-bottom:6px; font-size:1.05rem; }
 
 @media (max-width: 760px){
   .nav .wrap{ gap: 18px; }
   .hero-content{ padding-bottom: 52px; }
   .hero-video{ object-position: 50% 62%; }
   .nav-logo{ font-size: 0.92rem; }
-  .nav-cta{ font-size: 0.78rem; }
+  .nav-cta{ font-size: 0.7rem; }
   .feature-row{ grid-template-columns: 1fr; gap: 24px; }
-  .photo-row{ grid-template-columns: 1fr; }
   .feature-row .feature-visual{ order:-1; }
   .schedule{ grid-template-columns: 1fr; }
   .access-item{ grid-template-columns: 1fr; gap:6px; }
   .activities-list{ grid-template-columns: 1fr; grid-auto-flow: row; grid-template-rows: none; }
   section{ padding: 68px 0; }
+  .photo-grid{ margin-top:8px; }
 }
-
-/* El lugar — fotos en cuadrícula, ampliables. Al lado del texto solo en pantalla ancha. */
-.photo-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-#lugar .feature-row{ align-items:start; margin-top:1.2em; }
-#lugar .feature-row > div > p:first-child{ margin-top:0; }
-.thumb{ position:relative; display:block; border-radius:3px; overflow:hidden; }
-.thumb img{ width:100%; aspect-ratio:1; object-fit:cover; display:block; transition:transform .35s ease; }
-.thumb:hover img{ transform:scale(1.03); }
-.zoom{ position:absolute; right:8px; bottom:8px; width:26px; height:26px; border-radius:50%; background:rgba(64,9,11,.72); color:#f8f1e9; display:grid; place-items:center; }
-.lb{ position:fixed; inset:0; z-index:200; background:rgba(30,6,8,.93); display:grid; place-items:center; padding:24px; cursor:zoom-out; }
-.lb[hidden]{ display:none; }
-.lb img{ max-width:min(92vw,1100px); max-height:88vh; object-fit:contain; box-shadow:0 30px 80px -30px rgba(0,0,0,.8); }
-.lb-close{ position:absolute; top:14px; right:14px; width:44px; height:44px; border:0; border-radius:50%; background:rgba(248,241,233,.12); color:#f8f1e9; display:grid; place-items:center; cursor:pointer; }
-.lb-close:hover{ background:rgba(248,241,233,.24); }
-@media (max-width:899px){ #lugar .feature-row{ grid-template-columns:1fr; gap:28px; } }
-
-/* Apúntate — bloque granate, botón crema (el rosa solo vive en el hero) */
-.contact.dark{ background:var(--hero-bg); }
-.contact.dark .eyebrow{ color:rgba(248,241,233,.7); }
-.contact.dark .section-title, .contact.dark .lede, .contact.dark .small-note{ color:var(--hero-white); }
-.contact.dark .small-note{ opacity:.78; margin-top:14px; }
-.btn-cream{ display:inline-block; background:var(--hero-white); color:var(--hero-bg); text-decoration:none; padding:13px 22px; border-radius:4px; font-weight:500; font-size:1rem; }
-.btn-cream:hover{ background:#fff; }
-
-/* texto + foto al lado hasta pestañas bastante estrechas; solo se apila en móvil real */
 @media (min-width:600px) and (max-width:760px){
   .feature-row{ grid-template-columns:1fr 1fr; gap:32px; align-items:center; }
   .feature-row .feature-visual{ order:0; }
   #lugar .feature-row{ grid-template-columns:1fr; }
 }
+
+/* ---- Pase de feminidad ---- */
+:root{ --bg-alt:#EDE7E6; --ink:#33382E; --ink-dim:#5E655A; }
+body{ line-height:1.72; }
+/* separación entre secciones: sin línea dura; un trazo corto de lavanda centrado */
+section{ border-bottom:0; position:relative; }
+section + section::before{ content:""; position:absolute; top:0; left:50%; width:44px; height:1px; background:var(--accent); opacity:.7; transform:translateX(-50%); }
+/* fotos: arco en la foto de las anfitrionas, esquinas suaves en el resto */
+.feature-visual.host-photo{ border-radius:999px 999px 10px 10px; }
+.feature-visual{ border-radius:14px; }
+.thumb, .thumb img{ border-radius:12px; }
+/* títulos más ligeros y una cursiva en lavanda en el subtítulo de sección */
+.section-title{ font-weight:400; letter-spacing:0; }
+h3.section-title{ font-size: clamp(2rem, 4vw, 2.6rem); }
+.feature-subtitle{ color:var(--accent); font-size:1.3rem; }
+.manifiesto blockquote{ color:var(--accent); font-size: clamp(1.6rem, 3.2vw, 2.2rem); }
+.host-names{ font-weight:400; font-size:1.7rem; }
+.host-names .amp{ font-size:1.4rem; }
+.donativo-line{ font-weight:400; font-size:2rem; }
+.date-row .when{ font-weight:400; font-size:1.5rem; font-style:italic; }
+.day-block .day-name{ color:var(--accent); }
+/* etiquetas con más aire y letra un punto menor */
+.eyebrow{ letter-spacing:.26em; font-size:.68rem; }
+/* actividades: lista con líneas lavanda finísimas */
+.activities-list li{ border-bottom:1px solid color-mix(in srgb, var(--accent) 35%, transparent); font-weight:400; }
+/* botones con esquinas suaves */
+.hero-btn, .btn-cream{ border-radius:4px; }
+.date-row .status{ border-radius:999px; }
+footer{ background:var(--bg); }
+footer .fname{ font-weight:400; font-style:italic; font-size:1.2rem; color:var(--accent); }
+
+/* ---- Mezcla final: Fraunces con carácter + suavidad lavanda ---- */
+:root{ --serif: 'Fraunces', 'Georgia', serif; --dark-lav: #4B4058; }
+h1,h2,h3{ font-weight:600; letter-spacing:-0.01em; line-height:1.05; }
+.section-title{ font-weight:700; font-size: clamp(2.6rem, 5.5vw, 3.8rem); }
+h3.section-title{ font-size: clamp(2.1rem, 4.2vw, 2.8rem); }
+.hero-title{ font-weight:500; font-size: clamp(3rem, 9vw, 6.4rem); }
+.host-names{ font-weight:600; }
+.donativo-line{ font-weight:700; }
+.date-row .when{ font-weight:600; font-style:normal; }
+.activities-list li{ font-weight:500; }
+footer .fname{ font-weight:600; font-style:normal; color:var(--ink); }
+
+/* Reserva tu plaza en lavanda oscuro */
+.contact.dark{ background:var(--dark-lav); }
+.contact.dark .eyebrow{ color:#CFC2DA; }
+.btn-cream{ color:var(--dark-lav); }
+
+/* Hero: sombreado concentrado detrás del bloque de texto, además del velo */
+.hero-veil{
+  background:
+    linear-gradient(to bottom, color-mix(in srgb, var(--dark-2) 58%, transparent) 0%, transparent 26%),
+    radial-gradient(ellipse 120% 70% at 30% 92%, color-mix(in srgb, var(--dark-2) 88%, transparent) 0%, color-mix(in srgb, var(--dark-2) 55%, transparent) 45%, transparent 75%),
+    linear-gradient(to top, color-mix(in srgb, var(--dark-2) 90%, transparent) 0%, color-mix(in srgb, var(--dark-2) 50%, transparent) 42%, transparent 78%);
+}
+@media (min-width:760px){
+  .hero-veil{
+    background:
+      linear-gradient(to bottom, color-mix(in srgb, var(--dark-2) 58%, transparent) 0%, transparent 26%),
+      radial-gradient(ellipse 70% 85% at 18% 80%, color-mix(in srgb, var(--dark-2) 90%, transparent) 0%, color-mix(in srgb, var(--dark-2) 60%, transparent) 40%, transparent 72%),
+      linear-gradient(to top, color-mix(in srgb, var(--dark-2) 85%, transparent) 0%, color-mix(in srgb, var(--dark-2) 35%, transparent) 40%, transparent 75%);
+  }
+}
+.hero-title, .hero-sub{ text-shadow: 0 2px 6px rgba(20,28,18,.6), 0 8px 34px rgba(20,28,18,.55); }
+.hero .lede, .hero-caption{ text-shadow: 0 1px 5px rgba(20,28,18,.7), 0 3px 16px rgba(20,28,18,.5); }
+.hero .lede{ font-weight:500; }
+
+/* lavanda más oscura para textos y detalles (el hero conserva la clara) */
+:root{ --accent: #6C5A7B; }
+.activities-list li{ border-bottom-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+
+/* El programa como remanso lavanda oscuro */
+#horario{ background:var(--dark-lav); }
+#horario .eyebrow{ color:#CFC2DA; }
+#horario .section-title, #horario .lede, #horario .day-block p, #horario .day-block b{ color:var(--light); }
+#horario .day-block .day-name{ color:#CFC2DA; }
+#horario + section::before, #horario::before{ display:none; }
+
+
+/* Actividades en tono alterno, para que Intención y Actividades se distingan */
+#actividades{ background:var(--bg-alt); }
+
+/* secciones alternas con más diferencia */
+:root{ --bg:#F1EEF2; --bg-alt:#E3DCE7; }
