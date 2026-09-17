@@ -363,3 +363,23 @@ footer .fname{ font-weight:600; font-style:normal; color:var(--ink); }
 
 /* secciones alternas con más diferencia */
 :root{ --bg:#F1EEF2; --bg-alt:#E3DCE7; }
+/* logo: la flor en el pie */
+footer{ padding-top: 56px; }
+.footer-logo{ display:block; width:36px; height:36px; margin:0 auto 16px; }
+
+/* hero más legible (2026-09-17): vídeo algo más oscuro + velo más denso tras el texto; Celebración sigue en lavanda clara */
+.hero-video{ filter: brightness(.72) saturate(.85); }
+.hero-veil{
+  background:
+    linear-gradient(to bottom, color-mix(in srgb, var(--dark-2) 60%, transparent) 0%, transparent 28%),
+    radial-gradient(ellipse 130% 80% at 30% 90%, color-mix(in srgb, var(--dark-2) 94%, transparent) 0%, color-mix(in srgb, var(--dark-2) 72%, transparent) 45%, color-mix(in srgb, var(--dark-2) 25%, transparent) 75%, transparent 100%),
+    linear-gradient(to top, color-mix(in srgb, var(--dark-2) 96%, transparent) 0%, color-mix(in srgb, var(--dark-2) 62%, transparent) 45%, transparent 85%);
+}
+@media (min-width:760px){
+  .hero-veil{
+    background:
+      linear-gradient(to bottom, color-mix(in srgb, var(--dark-2) 60%, transparent) 0%, transparent 28%),
+      radial-gradient(ellipse 75% 95% at 18% 78%, color-mix(in srgb, var(--dark-2) 95%, transparent) 0%, color-mix(in srgb, var(--dark-2) 74%, transparent) 42%, color-mix(in srgb, var(--dark-2) 25%, transparent) 72%, transparent 100%),
+      linear-gradient(to top, color-mix(in srgb, var(--dark-2) 90%, transparent) 0%, color-mix(in srgb, var(--dark-2) 40%, transparent) 45%, transparent 80%);
+  }
+}
