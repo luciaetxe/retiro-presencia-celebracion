@@ -1,7 +1,25 @@
 # Tribu Conecta — reglas del proyecto
 
 Web de los retiros de mujeres de Margarita Margenat y Lucía Echenique.
-En producción: https://www.tribuconecta.site (Vercel, deploy automático al push).
+En producción: https://www.tribuconecta.site (Cloudflare Pages, proyecto `tribuconecta`, rama de producción `master`, subida directa con wrangler).
+
+## Cómo se construye y se sube (desde el 2026-10-26)
+
+- La fuente de verdad del diseño es `_lab/boceto-marca/camino.html` (carpeta `_lab*` ignorada en git). Lleva barras de prueba de tono y acento que NO van a producción.
+- `python _lab/boceto-marca/build.py` genera `dist/` (index.html con head completo, fuentes en `fonts/`, fotos en `img/`, vídeo, favicons, og.jpg, `_headers`). `dist/` está ignorado.
+- Vista previa: `npx wrangler pages deploy dist --project-name tribuconecta --branch preview --commit-dirty=true` → https://preview.tribuconecta.pages.dev
+- Producción: `npx wrangler pages deploy dist --project-name tribuconecta --branch master --commit-dirty=true` (la lanza Lucía: el clasificador de Claude Code la bloquea).
+- Tras construir, copiar `dist/index.html` a la raíz del repo y las fotos nuevas a `img/`, y hacer commit.
+
+## Sistema de diseño (v10, 2026-10-26; sustituye a la paleta lavanda de septiembre)
+
+- Fondo blanco puro `#FFFFFF` (alterno `#F6F5F2`), tinta `#141414`, texto secundario `#4F4F4F`, acento **fucsia `#D9418C`** (solo llama de la hoguera, "tribu.", 50€), rojo `#C8402E` solo en "Quedan N plazas" (a propósito: chirría), noche `#0A0F22` → `#223055` (portada y reserva, con estrellas en canvas).
+- Tipografía (autoalojada en `fonts/`, `font-display: block`): **Young Serif** (títulos, frases, horas), **Work Sans 300** (párrafos, listas), **Homemade Apple** solo en portada, nombres y "tribu.".
+- Dibujos a tinta (filtro feTurbulence/feDisplacementMap): hoguera (marca; palitos en tinta, llama en acento) y ermita en tinta sólida junto al título de El lugar. Estrellas de palitos pequeñas en Precio y en la cita.
+- Esquema de bloque: texto a la izquierda, columna derecha fija de 320 px con foto cuadrada (1:1), vídeo cuadrado o dibujo. Sin títulos mini, sin títulos sticky, sin efectos salvo las estrellas y el fundido de la portada.
+- Orden: portada (noche) · La intención · cita "tribu." (en móvil va tras el programa) · Actividades (desplegable + vídeo lavanda) · Programa (centrado en desktop, dos columnas) · Nosotras · El lugar (Cristo románico) · Alojamiento y comida (una sección) · Cómo se sostiene · Próximas fechas (destacada) · Reserva (noche) · Cómo llegar.
+- Gustos de Lucía: fotos nunca recortando caras, su foto solo en Nosotras, manuscrita en 2-3 gestos, acento en pocos sitios, coherencia antes que novedad. Criterio propio y proponer, no obedecer orden a orden.
+
 
 ## Innegociables
 
@@ -26,7 +44,7 @@ centrado, título-párrafo-título-párrafo, imágenes como rectángulos alinead
 Antídotos: asimetría, escala variable, alguna foto a sangre, una sección casi
 vacía ("El programa"), listas compuestas tipográficamente en vez de rejillas.
 
-## Paleta (definitiva, 2026-09-16)
+## Paleta anterior (2026-09-16, SUSTITUIDA el 2026-10-26; se conserva como historia)
 
 Elegida por Lucía sobre su moodboard. No reabrir. Sin granate ni fucsia.
 
