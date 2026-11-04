@@ -108,9 +108,6 @@ b{font-weight:500;color:inherit}
 .tribu blockquote{margin:0 auto;padding:0 var(--gutter);max-width:24em;font-family:var(--serif);font-size:clamp(1.3rem,2.6vw,2.1rem);line-height:1.35;color:var(--tinta)}
 .tribu blockquote span{display:block}
 .tribu .big{font-family:var(--mano);font-size:clamp(2.6rem,7vw,5.6rem);line-height:1.2;margin-top:.3em;color:var(--acento)}
-.tribu .estrellas{position:absolute;top:18%;opacity:.5}
-.tribu .estrellas.izq{left:8%}
-.tribu .estrellas.der{right:8%;transform:scale(-1,1)}
 
 /* actividades */
 .despliega{margin:0 0 1.5rem;max-width:40em}
@@ -203,9 +200,6 @@ footer .fname{font-family:var(--serif);font-size:1.05rem;color:var(--tinta);disp
   .reserva .dibujo{justify-self:start}
 }
 @media (max-width:860px){
-  body{display:flex;flex-direction:column}
-  .nav{order:0}
-  .hero{order:1}.intencion{order:2}#actividades{order:3}#horario{order:4}.tribu{order:5}#nosotras{order:6}#lugar{order:7}.casa{order:8}#precio{order:9}#fechas{order:10}.reserva{order:11}#acceso{order:12}footer{order:13}
 }
 @media (max-width:480px){
   .nav .logo span{display:none}
@@ -253,12 +247,6 @@ footer .fname{font-family:var(--serif);font-size:1.05rem;color:var(--tinta);disp
   </div>
 </section>
 
-<section class="tribu">
-  <svg class="estrellas izq" viewBox="0 0 160 96" aria-hidden="true"><use href="#cielo-chico"/></svg>
-  <svg class="estrellas der" viewBox="0 0 160 96" aria-hidden="true"><use href="#cielo-chico"/></svg>
-  <blockquote><span>Un fin de semana entre mujeres, siendo lo que nuestras antepasadas sabían ser.</span><span class="big">tribu.</span></blockquote>
-</section>
-
 <section class="bloque ancho" id="actividades">
   <div class="wrap">
     <div>
@@ -283,6 +271,10 @@ footer .fname{font-family:var(--serif);font-size:1.05rem;color:var(--tinta);disp
       <p class="activities-note">Las actividades concretas varían de un retiro a otro — esta web es genérica para todos ellos, y cada fecha puede tener su propio énfasis.</p>
     </div>
   </div>
+</section>
+
+<section class="tribu">
+  <blockquote><span>Un fin de semana entre mujeres, siendo lo que nuestras antepasadas sabían ser.</span><span class="big">tribu.</span></blockquote>
 </section>
 
 <section class="bloque ancho" id="horario">
@@ -418,7 +410,7 @@ footer .fname{font-family:var(--serif);font-size:1.05rem;color:var(--tinta);disp
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ document.body.classList.add('ready'); }); });
 
   // Cabecera: clara sobre el día, hueso sobre la noche (portada, atardecer, reserva)
-  var nav = document.querySelector('.nav'), oscuros = document.querySelectorAll('.hero, .tribu, .reserva');
+  var nav = document.querySelector('.nav'), oscuros = document.querySelectorAll('.hero, .reserva');
   function sobreOscuro(el){ var r = el.getBoundingClientRect(); return r.top < 60 && r.bottom > 60; }
   function estadoNav(){ var o = false; oscuros.forEach(function(el){ if (sobreOscuro(el)) o = true; }); nav.classList.toggle('claro', !o); }
   addEventListener('scroll', estadoNav, { passive: true }); addEventListener('resize', estadoNav); estadoNav();

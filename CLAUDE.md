@@ -15,9 +15,9 @@ En producción: https://www.tribuconecta.site (Cloudflare Pages, proyecto `tribu
 
 - Fondo blanco puro `#FFFFFF` (alterno `#F6F5F2`), tinta `#141414`, texto secundario `#4F4F4F`, acento **fucsia `#D9418C`** (solo llama de la hoguera, "tribu.", 50€), rojo `#C8402E` solo en "Quedan N plazas" (a propósito: chirría), noche `#0A0F22` → `#223055` (portada y reserva, con estrellas en canvas).
 - Tipografía (autoalojada en `fonts/`, `font-display: block`): **Young Serif** (títulos, frases, horas), **Work Sans 300** (párrafos, listas), **Homemade Apple** solo en portada, nombres y "tribu.".
-- Dibujos a tinta (filtro feTurbulence/feDisplacementMap): hoguera (marca; palitos en tinta, llama en acento) y ermita en tinta sólida junto al título de El lugar. Estrellas de palitos pequeñas en Precio y en la cita.
+- Dibujos a tinta (filtro feTurbulence/feDisplacementMap): hoguera (marca; palitos en tinta, llama en acento) y ermita en tinta sólida junto al título de El lugar. Estrellas de palitos pequeñas solo en Precio.
 - Esquema de bloque: texto a la izquierda, columna derecha fija de 320 px con foto cuadrada (1:1), vídeo cuadrado o dibujo. Sin títulos mini, sin títulos sticky, sin efectos salvo las estrellas y el fundido de la portada.
-- Orden: portada (noche) · La intención · cita "tribu." (en móvil va tras el programa) · Actividades (desplegable, a todo el ancho; el vídeo de lavanda se quitó el 2026-11-04) · Programa (centrado en desktop, dos columnas) · Nosotras · El lugar (Cristo románico) · Alojamiento y comida (una sección) · Cómo se sostiene · Próximas fechas (destacada) · Reserva (noche) · Cómo llegar.
+- Orden: portada (noche) · La intención · Actividades (desplegable, a todo el ancho; el vídeo de lavanda se quitó el 2026-11-04) · cita "tribu." (sin estrellitas desde el 2026-11-04; mismo orden en móvil) · Programa (centrado en desktop, dos columnas) · Nosotras · El lugar (Cristo románico) · Alojamiento y comida (una sección) · Cómo se sostiene · Próximas fechas (destacada) · Reserva (noche) · Cómo llegar.
 - Gustos de Lucía: fotos nunca recortando caras, su foto solo en Nosotras, manuscrita en 2-3 gestos, acento en pocos sitios, coherencia antes que novedad. Criterio propio y proponer, no obedecer orden a orden.
 
 
