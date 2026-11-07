@@ -1,0 +1,15 @@
+# Configuración de Cloudflare Pages para el proyecto tribuconecta.
+# Solo añade el almacén KV que usa la lista de tareas (/tareas → functions/api/tareas.js).
+# Los despliegues siguen siendo: npx wrangler pages deploy dist --project-name tribuconecta --branch <preview|master> --commit-dirty=true
+name = "tribuconecta"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-01-01"
+
+[[kv_namespaces]]
+binding = "TAREAS"
+id = "dfa219e96df14ffb98d513923342a4cf"
+
+[env.preview]
+[[env.preview.kv_namespaces]]
+binding = "TAREAS"
+id = "dfa219e96df14ffb98d513923342a4cf"

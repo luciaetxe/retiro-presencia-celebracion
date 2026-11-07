@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Antes del retiro · Presencia y Celebración</title>
+<meta name="description" content="Lista de tareas y de cosas que llevar de Margarita y Lucía para el retiro de noviembre.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg?v=hoguera" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=hoguera">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png?v=hoguera">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="preload" href="fonts/young-serif-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/homemade-apple-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/work-sans-300.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Young Serif';font-style:normal;font-weight:400;font-display:block;src:url(fonts/young-serif-400.woff2) format('woff2')}
+@font-face{font-family:'Homemade Apple';font-style:normal;font-weight:400;font-display:block;src:url(fonts/homemade-apple-400.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:300;font-display:block;src:url(fonts/work-sans-300.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:400;font-display:block;src:url(fonts/work-sans-400.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:500;font-display:block;src:url(fonts/work-sans-500.woff2) format('woff2')}
+
+:root{
+  --fondo:#FFFFFF; --tinta:#141414; --tinta-2:#4F4F4F; --plata:#8C8C8C;
+  --acento:#D9418C; --rojo:#C8402E; --line:rgba(20,20,20,.14); --suave:#F6F5F2;
+  --serif:'Young Serif',Georgia,serif; --mano:'Homemade Apple',cursive; --sans:'Work Sans',system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{color-scheme:light}
+body{margin:0;background:var(--fondo);color:var(--tinta);font-family:var(--sans);font-weight:300;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+p{margin:0 0 1em;color:var(--tinta-2)}
+button{font:inherit;color:inherit}
+.dibujo{color:var(--tinta)}
+
+.hoja{max-width:600px;margin-inline:auto;padding:clamp(2.5rem,7vw,4.5rem) clamp(20px,6vw,40px) 3rem}
+
+/* cabecera */
+.cab{display:grid;justify-items:center;text-align:center;gap:.4rem;margin-bottom:clamp(1.8rem,5vw,2.6rem)}
+.cab .marca{width:58px;height:65px}
+.cab .nombre{font-family:var(--serif);font-size:1rem;color:var(--tinta);margin-top:.6rem}
+.cab h1{font-family:var(--mano);font-weight:400;font-size:clamp(1.9rem,6.5vw,2.6rem);line-height:1.6;margin:.3em 0 .2em;color:var(--tinta)}
+.cab .meta{font-weight:400;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--plata);line-height:1.9;margin:0}
+.cab .meta span{display:block}
+.cab .faltan{font-family:var(--serif);font-size:1.15rem;line-height:1.4;color:var(--tinta);margin:1.3rem 0 0}
+.cab .faltan em{font-style:normal;color:var(--acento)}
+
+/* pestañas: dos listas */
+.listas{display:flex;gap:1.6rem;border-bottom:1px solid var(--line);margin-bottom:.4rem}
+.listas button{all:unset;cursor:pointer;font-family:var(--serif);font-size:1.3rem;line-height:1.2;padding:.55rem 0 .7rem;color:var(--plata);position:relative;-webkit-tap-highlight-color:transparent}
+.listas button[aria-selected="true"]{color:var(--tinta)}
+.listas button[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--tinta)}
+.listas button:focus-visible{outline:2px solid var(--acento);outline-offset:4px}
+.listas .n{font-family:var(--sans);font-weight:400;font-size:.78rem;color:var(--plata);margin-left:.35em;vertical-align:.25em}
+
+/* grupos por fecha */
+.grupo{padding:1.3rem 0 .6rem}
+.grupo + .grupo{border-top:1px solid var(--line)}
+.grupo h2{font-family:var(--serif);font-weight:400;font-size:1.05rem;line-height:1.2;margin:0 0 .5rem;color:var(--tinta);display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.grupo h2 small{font-family:var(--sans);font-weight:400;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--plata)}
+.grupo h2.pasada{color:var(--rojo)}
+.grupo h2.pasada small{color:var(--rojo)}
+.grupo h2.hoy small{color:var(--acento)}
+.grupo ul{list-style:none;margin:0;padding:0}
+.grupo li{margin:0}
+
+/* una tarea */
+.item{display:grid;grid-template-columns:22px 1fr;gap:.9rem;align-items:start;padding:.55rem 0}
+.item .caja-btn{all:unset;cursor:pointer;width:22px;height:22px;margin-top:.22em;position:relative;-webkit-tap-highlight-color:transparent}
+.caja{display:block;width:22px;height:22px;border:1.5px solid var(--tinta);border-radius:2px;position:relative;transition:border-color .25s}
+.caja svg{position:absolute;inset:-6px;width:34px;height:34px;overflow:visible;color:var(--tinta)}
+.caja svg use{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;transition:stroke-dashoffset .35s ease}
+.item.hecha .caja{border-color:var(--plata)}
+.item.hecha .caja svg use{stroke-dashoffset:0}
+.caja-btn:focus-visible .caja{outline:2px solid var(--acento);outline-offset:3px}
+.txt{line-height:1.45;min-width:0}
+.txt .t{all:unset;cursor:pointer;display:block;font-weight:400;color:var(--tinta);transition:color .3s;overflow-wrap:anywhere}
+.txt .t:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.item.hecha .txt .t{color:var(--plata);text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:var(--tinta)}
+.txt .nota{display:block;font-size:.88rem;color:var(--tinta-2);line-height:1.45;margin-top:.1em}
+.item.hecha .txt .nota{color:var(--plata)}
+.det{display:flex;flex-wrap:wrap;gap:.2rem 1rem;margin-top:.25rem;font-size:.8rem;color:var(--plata)}
+.det button{all:unset;cursor:pointer;color:var(--plata);border-bottom:1px solid transparent;line-height:1.3;-webkit-tap-highlight-color:transparent}
+.det button:hover,.det button:focus-visible{color:var(--tinta);border-bottom-color:currentColor}
+.det button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.det .quien{font-weight:400}
+.det .quien.lucia,.det .quien.marga{color:var(--tinta-2)}
+.det .fecha-btn{position:relative}
+.det .fecha-btn input{position:absolute;inset:0;opacity:0;width:100%;height:100%;border:0;padding:0;margin:0;cursor:pointer}
+.det .fecha-btn.pasada{color:var(--rojo)}
+.det .quitar,.det .sinfecha{display:none}
+.item.editando .det .quitar,.item.editando .det .sinfecha{display:inline}
+
+/* añadir */
+.anadir{border-top:1px solid var(--line);margin-top:.6rem;padding-top:1.2rem}
+.anadir form{display:grid;gap:.7rem}
+.anadir .fila{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
+.anadir input[type="text"]{all:unset;flex:1 1 100%;min-width:0;font-weight:300;font-size:1rem;line-height:1.4;padding:.45rem 0;border-bottom:1px solid var(--tinta);color:var(--tinta)}
+.anadir input[type="text"]::placeholder{color:var(--plata)}
+.anadir input[type="text"]:focus-visible{outline:none;border-bottom-color:var(--acento)}
+.anadir select,.anadir input[type="date"]{all:unset;font-weight:400;font-size:.82rem;color:var(--tinta-2);border-bottom:1px solid var(--line);padding:.25rem 0;cursor:pointer;-webkit-appearance:none;appearance:none}
+.anadir input[type="date"]{min-width:9.5em;position:relative}
+.anadir input[type="date"]::-webkit-calendar-picker-indicator{opacity:.5}
+.anadir select:focus-visible,.anadir input[type="date"]:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.anadir button{all:unset;cursor:pointer;margin-left:auto;font-weight:400;font-size:.82rem;letter-spacing:.06em;color:var(--tinta);border-bottom:1px solid currentColor;line-height:1.3;padding-bottom:.1em}
+.anadir button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.anadir button:disabled{color:var(--plata);cursor:default}
+
+.vacio{padding:2rem 0;color:var(--plata);font-size:.95rem}
+
+/* estado de sincronización */
+.estado{min-height:1.3em;font-size:.78rem;color:var(--plata);text-align:right;margin:.3rem 0 0;transition:color .3s}
+.estado.error{color:var(--rojo)}
+
+/* pie */
+footer{margin-top:3rem;padding-top:1.6rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;font-size:.82rem;color:var(--tinta-2)}
+footer .fname{font-family:var(--serif);font-size:.95rem;color:var(--tinta);display:block;margin-bottom:.2em}
+footer a{color:var(--plata);font-size:.78rem;text-decoration:none;border-bottom:1px solid currentColor;line-height:1.3;white-space:nowrap}
+footer a:hover,footer a:focus-visible{color:var(--tinta)}
+
+@media (max-width:420px){
+  .listas{gap:1.2rem}
+  .listas button{font-size:1.15rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="pulso" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+<g id="hoguera" filter="url(#pulso)" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M62,138 L140,120 M60,122 L138,140 M100,144 L100,128" stroke="currentColor" stroke-width="7"/><path class="llama" d="M100,112 C84,100 82,84 92,70 C92,82 98,86 100,92 C104,80 100,66 110,54 C112,74 124,80 124,98 C124,108 114,118 100,118 C92,118 86,112 86,104" style="stroke:var(--acento)" stroke-width="7"/><circle class="chispa" cx="120" cy="44" r="4" style="fill:var(--acento)"/><circle class="chispa" cx="84" cy="52" r="3.2" style="fill:var(--acento)"/><circle class="chispa" cx="130" cy="62" r="3" style="fill:var(--acento)"/></g>
+<path id="tick" fill="none" d="M6,18 C11,21 14,25 16,27 C19,18 24,10 30,5"/>
+</defs></svg>
+
+<main class="hoja">
+  <header class="cab">
+    <svg class="marca dibujo" viewBox="50 36 100 112" aria-hidden="true"><use href="#hoguera"/></svg>
+    <div class="nombre">Presencia y Celebración</div>
+    <h1>Antes del retiro</h1>
+    <p class="meta"><span>20, 21 y 22 de noviembre</span><span>Sant Salvador de Bellver</span></p>
+    <p class="faltan" id="faltan"></p>
+  </header>
+
+  <div class="listas" role="tablist" aria-label="Listas">
+    <button type="button" role="tab" id="tab-tareas" aria-selected="true" aria-controls="panel-tareas" data-lista="tareas">Tareas<span class="n" id="n-tareas"></span></button>
+    <button type="button" role="tab" id="tab-llevar" aria-selected="false" aria-controls="panel-llevar" data-lista="llevar">Para llevar<span class="n" id="n-llevar"></span></button>
+  </div>
+
+  <section id="panel-tareas" role="tabpanel" aria-labelledby="tab-tareas">
+    <div class="grupos" data-lista="tareas"><p class="vacio">Cargando la lista…</p></div>
+    <div class="anadir">
+      <form data-lista="tareas" autocomplete="off">
+        <div class="fila"><input type="text" id="nueva-tarea" name="texto" placeholder="Nueva tarea" maxlength="300" aria-label="Nueva tarea"></div>
+        <div class="fila">
+          <select name="quien" id="quien-tarea" aria-label="Quién"><option value="dos">Las dos</option><option value="lucia">Lucía</option><option value="marga">Marga</option></select>
+          <input type="date" name="fecha" id="fecha-tarea" aria-label="Fecha" min="2026-11-01" max="2026-11-22">
+          <button type="submit" disabled>Añadir</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section id="panel-llevar" role="tabpanel" aria-labelledby="tab-llevar" hidden>
+    <div class="grupos" data-lista="llevar"><p class="vacio">Cargando la lista…</p></div>
+    <div class="anadir">
+      <form data-lista="llevar" autocomplete="off">
+        <div class="fila"><input type="text" id="nueva-llevar" name="texto" placeholder="Algo más que llevar" maxlength="300" aria-label="Algo más que llevar"></div>
+        <div class="fila">
+          <select name="quien" id="quien-llevar" aria-label="Quién lo lleva"><option value="dos">Las dos</option><option value="lucia">Lucía</option><option value="marga">Marga</option></select>
+          <input type="date" name="fecha" id="fecha-llevar" aria-label="Fecha límite, si la hay" min="2026-11-01" max="2026-11-22">
+          <button type="submit" disabled>Añadir</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <p class="estado" id="estado" aria-live="polite"></p>
+
+  <footer>
+    <div><span class="fname">Presencia y Celebración</span>Margarita Margenat &amp; Lucía Echenique · Sant Salvador de Bellver</div>
+    <a href="maleta">Lista de las participantes</a>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var API = 'api/tareas?k=bellver-2026';
+  var RETIRO = new Date(2026, 10, 20);
+  var DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var QUIEN = { lucia: 'Lucía', marga: 'Marga', dos: 'Las dos', '': 'Las dos' };
+  var CICLO = { dos: 'lucia', lucia: 'marga', marga: 'dos', '': 'lucia' };
+
+  var estado = { items: [] };   // lo que se pinta (base + cambios pendientes)
+  var listaActiva = 'tareas';
+  var editando = null;
+  var elEstado = document.getElementById('estado');
+  var tabs = document.querySelectorAll('.listas [role="tab"]');
+  var paneles = { tareas: document.getElementById('panel-tareas'), llevar: document.getElementById('panel-llevar') };
+  var grupos = { tareas: paneles.tareas.querySelector('.grupos'), llevar: paneles.llevar.querySelector('.grupos') };
+
+  try { var g = localStorage.getItem('tareas-lista'); if (g === 'llevar') listaActiva = 'llevar'; } catch (e) {}
+
+  // --- fechas ---
+  function hoyISO(){ var d = new Date(); return iso(d); }
+  function iso(d){ return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function deISO(s){ var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function nombreFecha(s, largo){
+    var d = deISO(s), dia = DIAS[d.getDay()], n = d.getDate(), m = MESES[d.getMonth()];
+    return largo ? dia.charAt(0).toUpperCase() + dia.slice(1) + ' ' + n + ' de ' + m : dia.slice(0, 3) + ' ' + n;
+  }
+  function pintaFaltan(){
+    var hoy = new Date(); hoy.setHours(0,0,0,0);
+    var dias = Math.round((RETIRO - hoy) / 86400000), el = document.getElementById('faltan');
+    if (dias > 1) el.innerHTML = 'Faltan <em>' + dias + ' días</em>';
+    else if (dias === 1) el.innerHTML = 'Es <em>mañana</em>';
+    else if (dias === 0) el.innerHTML = 'Es <em>hoy</em>';
+    else if (dias >= -2) el.innerHTML = 'Estamos <em>en el retiro</em>';
+    else el.textContent = 'Ya pasó. Gracias, tribu.';
+  }
+
+  // --- render ---
+  function etiquetaGrupo(fecha, hoy){
+    if (!fecha) return { titulo: 'Sin fecha', sub: '', clase: '' };
+    var dias = Math.round((deISO(fecha) - deISO(hoy)) / 86400000);
+    var sub = dias === 0 ? 'hoy' : dias === 1 ? 'mañana' : dias < 0 ? 'atrasado' : dias <= 6 ? 'en ' + dias + ' días' : '';
+    if (fecha === '2026-11-20') sub = sub ? sub + ' · llegada' : 'llegada';
+    return { titulo: nombreFecha(fecha, true), sub: sub, clase: dias < 0 ? 'pasada' : dias === 0 ? 'hoy' : '' };
+  }
+  function render(){
+    var hoy = hoyISO();
+    ['tareas', 'llevar'].forEach(function(lista){
+      var items = estado.items.filter(function(t){ return t.lista === lista; });
+      items.sort(function(a, b){
+        var fa = a.fecha || '9999', fb = b.fecha || '9999';
+        return fa < fb ? -1 : fa > fb ? 1 : 0;
+      });
+      var pend = items.filter(function(t){ return !t.hecho; }).length;
+      document.getElementById('n-' + lista).textContent = items.length ? pend : '';
+      var cont = grupos[lista];
+      cont.innerHTML = '';
+      if (!items.length) {
+        var p = document.createElement('p'); p.className = 'vacio';
+        p.textContent = lista === 'tareas' ? 'No hay tareas. Añade la primera abajo.' : 'Nada apuntado todavía.';
+        cont.appendChild(p); return;
+      }
+      var porFecha = [];
+      items.forEach(function(t){
+        var k = t.fecha || '';
+        var g = porFecha.length && porFecha[porFecha.length - 1].fecha === k ? porFecha[porFecha.length - 1] : null;
+        if (!g) { g = { fecha: k, items: [] }; porFecha.push(g); }
+        g.items.push(t);
+      });
+      // la lista "Para llevar" normalmente no tiene fechas: sin título si todo es sin fecha
+      var soloSinFecha = porFecha.length === 1 && porFecha[0].fecha === '';
+      porFecha.forEach(function(g){
+        var sec = document.createElement('section'); sec.className = 'grupo';
+        if (!soloSinFecha) {
+          var e = etiquetaGrupo(g.fecha, hoy), h = document.createElement('h2');
+          var pendientes = g.items.some(function(t){ return !t.hecho; });
+          h.className = pendientes ? e.clase : '';
+          h.textContent = e.titulo;
+          if (e.sub) { var s = document.createElement('small'); s.textContent = e.sub; h.appendChild(s); }
+          sec.appendChild(h);
+        }
+        var ul = document.createElement('ul');
+        g.items.forEach(function(t){ ul.appendChild(filaItem(t, hoy)); });
+        sec.appendChild(ul);
+        cont.appendChild(sec);
+      });
+    });
+  }
+  function filaItem(t, hoy){
+    var li = document.createElement('li');
+    var div = document.createElement('div');
+    div.className = 'item' + (t.hecho ? ' hecha' : '') + (editando === t.id ? ' editando' : '');
+    div.dataset.id = t.id;
+
+    var cb = document.createElement('button'); cb.type = 'button'; cb.className = 'caja-btn';
+    cb.setAttribute('role', 'checkbox'); cb.setAttribute('aria-checked', String(!!t.hecho));
+    cb.setAttribute('aria-label', (t.hecho ? 'Desmarcar: ' : 'Marcar hecha: ') + t.texto);
+    cb.innerHTML = '<span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span>';
+    cb.addEventListener('click', function(){ cambia(t.id, function(x){ x.hecho = !x.hecho; }); });
+
+    var txt = document.createElement('div'); txt.className = 'txt';
+    var tb = document.createElement('button'); tb.type = 'button'; tb.className = 't'; tb.textContent = t.texto;
+    tb.title = 'Tocar para mostrar o esconder "quitar"';
+    tb.addEventListener('click', function(){ editando = editando === t.id ? null : t.id; render(); });
+    txt.appendChild(tb);
+    if (t.nota) { var n = document.createElement('span'); n.className = 'nota'; n.textContent = t.nota; txt.appendChild(n); }
+
+    var det = document.createElement('div'); det.className = 'det';
+    var q = document.createElement('button'); q.type = 'button'; q.className = 'quien ' + (t.quien || 'dos');
+    q.textContent = QUIEN[t.quien || 'dos']; q.title = 'Tocar para cambiar quién';
+    q.addEventListener('click', function(){ cambia(t.id, function(x){ x.quien = CICLO[x.quien || 'dos']; }); });
+    det.appendChild(q);
+
+    var fb = document.createElement('span'); fb.className = 'fecha-btn' + (t.fecha && t.fecha < hoy && !t.hecho ? ' pasada' : '');
+    var fl = document.createElement('button'); fl.type = 'button'; fl.textContent = t.fecha ? nombreFecha(t.fecha, false) : 'Poner fecha';
+    fl.setAttribute('aria-label', (t.fecha ? 'Cambiar la fecha, ahora ' + nombreFecha(t.fecha, true) : 'Poner fecha') + ': ' + t.texto);
+    var fi = document.createElement('input'); fi.type = 'date'; fi.value = t.fecha || ''; fi.min = '2026-11-01'; fi.max = '2026-11-22'; fi.tabIndex = -1;
+    fi.setAttribute('aria-hidden', 'true');
+    fi.addEventListener('change', function(){ var v = fi.value; cambia(t.id, function(x){ x.fecha = v; }); });
+    fl.addEventListener('click', function(){ if (fi.showPicker) { try { fi.showPicker(); return; } catch (e) {} } fi.focus(); fi.click(); });
+    fb.appendChild(fl); fb.appendChild(fi);
+    det.appendChild(fb);
+    if (t.fecha) {
+      var sf = document.createElement('button'); sf.type = 'button'; sf.className = 'sinfecha'; sf.textContent = 'Sin fecha';
+      sf.setAttribute('aria-label', 'Quitar la fecha: ' + t.texto);
+      sf.addEventListener('click', function(){ cambia(t.id, function(x){ x.fecha = ''; }); });
+      det.appendChild(sf);
+    }
+    var del = document.createElement('button'); del.type = 'button'; del.className = 'quitar'; del.textContent = 'Quitar de la lista';
+    del.addEventListener('click', function(){ editando = null; cambia(t.id, null); });
+    det.appendChild(del);
+
+    txt.appendChild(det);
+    div.appendChild(cb); div.appendChild(txt);
+    li.appendChild(div);
+    return li;
+  }
+
+  // --- pestañas ---
+  function muestra(lista){
+    listaActiva = lista;
+    tabs.forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.lista === lista)); });
+    paneles.tareas.hidden = lista !== 'tareas';
+    paneles.llevar.hidden = lista !== 'llevar';
+    try { localStorage.setItem('tareas-lista', lista); } catch (e) {}
+  }
+  tabs.forEach(function(b){ b.addEventListener('click', function(){ muestra(b.dataset.lista); }); });
+
+  // --- añadir ---
+  document.querySelectorAll('.anadir form').forEach(function(f){
+    var texto = f.elements.texto, btn = f.querySelector('button');
+    texto.addEventListener('input', function(){ btn.disabled = !texto.value.trim(); });
+    f.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var v = texto.value.trim(); if (!v) return;
+      var nuevo = { id: 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), lista: f.dataset.lista, texto: v, fecha: f.elements.fecha.value || '', quien: f.elements.quien.value, hecho: false };
+      texto.value = ''; f.elements.fecha.value = ''; btn.disabled = true;
+      guarda(function(items){ items.push(nuevo); });
+    });
+  });
+
+  // --- cambios y guardado con versión ---
+  // base = último estado confirmado por el servidor; ops = cambios aún no confirmados.
+  // Lo que se pinta es siempre base + ops, así no se pierde nada aunque lleguen cambios mientras se guarda.
+  var base = { v: 0, items: [] }, ops = [], guardando = false;
+  function aplica(){
+    var items = JSON.parse(JSON.stringify(base.items));
+    ops.forEach(function(op){ try { op(items); } catch (e) {} });
+    return items;
+  }
+  function refresca(){ estado.items = aplica(); render(); }
+  function cambia(id, fn){
+    guarda(function(items){
+      for (var i = 0; i < items.length; i++) if (items[i].id === id) { if (fn) fn(items[i]); else items.splice(i, 1); return; }
+    });
+  }
+  function guarda(op){ ops.push(op); refresca(); procesa(); }
+  function procesa(){
+    if (guardando || !ops.length) return;
+    guardando = true;
+    var enviando = ops.length, items = aplica(), v = base.v;
+    pon('Guardando…');
+    fetch(API, { method: 'PUT', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ base: v, items: items }) })
+      .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, status: r.status, j: j }; }); })
+      .then(function(res){
+        if (res.ok) { base = { v: res.j.v, items: res.j.items }; ops = ops.slice(enviando); pon('Guardado'); }
+        else if (res.status === 409 && res.j.estado) { base = { v: res.j.estado.v, items: res.j.estado.items }; } // otra guardó antes: reintentamos sobre su versión
+        else { throw new Error(res.j && res.j.error || res.status); }
+        refresca();
+      })
+      .catch(function(){ pon('No se ha podido guardar. Revisa la conexión y vuelve a tocar.', true); })
+      .then(function(){ guardando = false; if (ops.length) setTimeout(procesa, 400); });
+  }
+  var tEstado;
+  function pon(msg, error){
+    clearTimeout(tEstado);
+    elEstado.textContent = msg; elEstado.className = 'estado' + (error ? ' error' : '');
+    if (!error) tEstado = setTimeout(function(){ elEstado.textContent = ''; }, 2200);
+  }
+
+  // --- cargar y refrescar ---
+  function carga(silencio){
+    if (guardando || ops.length) return;
+    fetch(API, { cache: 'no-store' })
+      .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(j){ if (j.v !== base.v || !silencio) { base = { v: j.v, items: j.items || [] }; refresca(); } })
+      .catch(function(){ if (!silencio) { grupos.tareas.innerHTML = grupos.llevar.innerHTML = '<p class="vacio">No se ha podido cargar la lista. Revisa la conexión y recarga.</p>'; } });
+  }
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) carga(true); });
+  window.addEventListener('focus', function(){ carga(true); });
+  setInterval(function(){ if (!document.hidden) carga(true); }, 25000);
+
+  pintaFaltan();
+  muestra(listaActiva);
+  carga(false);
+})();
+</script>
+</body>
+</html>
