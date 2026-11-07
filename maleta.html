@@ -93,26 +93,26 @@ footer button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
 @page{size:A4;margin:0}
 @media print{
   html,body{background:#fff}
-  body{font-size:11.3pt;line-height:1.42}
+  body{font-size:12.2pt;line-height:1.45}
   .hoja{max-width:none;width:210mm;height:297mm;overflow:hidden;margin:0;padding:16mm 17mm 12mm;display:flex;flex-direction:column}
-  .cab{margin-bottom:9mm;gap:.2rem}
-  .cab .marca{width:54px;height:61px}
+  .cab{margin-bottom:12mm;gap:.2rem}
+  .cab .marca{width:62px;height:70px}
   .cab .nombre{font-size:11pt;margin-top:.5rem}
-  .cab h1{font-size:25pt;margin:.25em 0 .15em}
+  .cab h1{font-size:27pt;margin:.25em 0 .15em}
   .cab .meta{font-size:7.4pt}
   .cab .lede{font-size:11.8pt;margin-top:4mm}
   .lista{column-count:2;column-gap:11mm;column-fill:balance}
-  .grupo{break-inside:avoid;padding:4.5mm 0 3mm}
+  .grupo{break-inside:avoid;padding:6mm 0 4mm}
   .grupo:first-child{border-top:0;padding-top:0}
   .lista .grupo:nth-child(4){border-top:0;padding-top:0}
-  .grupo h2{font-size:14.5pt;margin-bottom:2.5mm}
-  .item{padding:2mm 0;gap:3.4mm;grid-template-columns:4.6mm 1fr}
-  .caja{width:4.6mm;height:4.6mm;margin-top:.9mm;border-width:1px}
+  .grupo h2{font-size:15.5pt;margin-bottom:3mm}
+  .item{padding:2.4mm 0;gap:3.6mm;grid-template-columns:5mm 1fr}
+  .caja{width:5mm;height:5mm;margin-top:1mm;border-width:1px}
   .caja svg{display:none}
   .txt small{font-size:8.8pt}
   .nota{margin-top:auto;padding-top:4mm;grid-template-columns:1fr auto}
   .estrellas{width:80px;height:48px}
-  footer{margin-top:5mm;padding-top:3mm;font-size:8pt}
+  footer{margin-top:auto;padding-top:3mm;font-size:8pt}
   footer .fname{font-size:9.2pt}
   footer button{display:none}
   .item input:checked ~ .txt b{color:var(--tinta);text-decoration:none}
@@ -137,7 +137,6 @@ footer button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
     <div class="nombre">Presencia y Celebración</div>
     <h1>Qué llevar</h1>
     <p class="meta"><span>20, 21 y 22 de noviembre</span><span>Sant Salvador de Bellver</span></p>
-    <p class="lede">La lista de la maleta. Ve marcando lo que ya tengas.</p>
   </header>
 
   <div class="lista">
@@ -189,12 +188,6 @@ footer button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
 
   </div>
 
-  <div class="nota">
-    <div>
-      <p>Cada habitación tiene su baño. Cualquier duda, en el grupo.</p>
-    </div>
-    <svg class="estrellas" viewBox="0 0 160 96" aria-hidden="true"><use href="#cielo-chico"/></svg>
-  </div>
 
   <footer>
     <div><span class="fname">Presencia y Celebración</span>Margarita Margenat &amp; Lucía Echenique · Sant Salvador de Bellver</div>
