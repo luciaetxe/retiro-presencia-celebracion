@@ -10,6 +10,7 @@ En producción: https://www.tribuconecta.site (Cloudflare Pages, proyecto `tribu
 - Vista previa: `npx wrangler pages deploy dist --project-name tribuconecta --branch preview --commit-dirty=true` → https://preview.tribuconecta.pages.dev
 - Producción: `npx wrangler pages deploy dist --project-name tribuconecta --branch master --commit-dirty=true` (la lanza Lucía: el clasificador de Claude Code la bloquea).
 - Tras construir, copiar `dist/index.html` a la raíz del repo y las fotos nuevas a `img/`, y hacer commit.
+- **Documentos para las participantes (desde el 2026-11-07):** `maleta.html` en la raíz es la fuente de verdad de la lista "Qué llevar" (URL `/maleta`, casillas guardadas en localStorage, `@media print` = una hoja A4 a dos columnas). `build.py` la copia a `dist/`. El PDF y la imagen para WhatsApp se generan con Chrome headless `--print-to-pdf` y se rasteriza la página con pymupdf a 200 dpi → `documentos/que-llevar.{pdf,png}`. Capturas fiables con CDP (`Emulation.setDeviceMetricsOverride`), no con `--window-size`.
 
 ## Sistema de diseño (v10, 2026-10-26; sustituye a la paleta lavanda de septiembre)
 
