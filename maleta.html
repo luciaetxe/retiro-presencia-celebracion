@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Qué llevar · Presencia y Celebración</title>
+<meta name="description" content="Lista de lo que llevar al retiro Presencia y Celebración, 20, 21 y 22 de noviembre en Sant Salvador de Bellver. Marca lo que ya tengas en la maleta.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://www.tribuconecta.site/maleta">
+<link rel="icon" href="favicon.svg?v=hoguera" type="image/svg+xml">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=hoguera">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png?v=hoguera">
+<meta name="theme-color" content="#FFFFFF">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Qué llevar · Presencia y Celebración">
+<meta property="og:description" content="La lista de la maleta para el retiro. Marca lo que ya tengas.">
+<meta property="og:image" content="https://www.tribuconecta.site/og.jpg">
+<meta property="og:url" content="https://www.tribuconecta.site/maleta">
+<meta property="og:locale" content="es_ES">
+<link rel="preload" href="fonts/young-serif-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/homemade-apple-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/work-sans-300.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Young Serif';font-style:normal;font-weight:400;font-display:block;src:url(fonts/young-serif-400.woff2) format('woff2')}
+@font-face{font-family:'Homemade Apple';font-style:normal;font-weight:400;font-display:block;src:url(fonts/homemade-apple-400.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:300;font-display:block;src:url(fonts/work-sans-300.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:400;font-display:block;src:url(fonts/work-sans-400.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:500;font-display:block;src:url(fonts/work-sans-500.woff2) format('woff2')}
+
+:root{
+  --fondo:#FFFFFF; --tinta:#141414; --tinta-2:#4F4F4F; --plata:#8C8C8C;
+  --acento:#D9418C; --line:rgba(20,20,20,.14);
+  --serif:'Young Serif',Georgia,serif; --mano:'Homemade Apple',cursive; --sans:'Work Sans',system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{color-scheme:light}
+body{margin:0;background:var(--fondo);color:var(--tinta);font-family:var(--sans);font-weight:300;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+p{margin:0 0 1em;color:var(--tinta-2)}
+.dibujo{color:var(--tinta)}
+
+.hoja{max-width:600px;margin-inline:auto;padding:clamp(2.5rem,7vw,4.5rem) clamp(20px,6vw,40px) 3rem}
+
+/* cabecera: hoguera, nombre, título */
+.cab{display:grid;justify-items:center;text-align:center;gap:.4rem;margin-bottom:clamp(2.2rem,6vw,3.2rem)}
+.cab .marca{width:58px;height:65px}
+.cab .nombre{font-family:var(--serif);font-size:1rem;color:var(--tinta);margin-top:.6rem}
+.cab h1{font-family:var(--mano);font-weight:400;font-size:clamp(2rem,7vw,2.7rem);line-height:1.6;margin:.3em 0 .2em;color:var(--tinta)}
+.cab .meta{font-weight:400;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--plata);line-height:1.9;margin:0}
+.cab .meta span{display:block}
+.cab .lede{font-family:var(--serif);font-size:1.05rem;line-height:1.5;color:var(--tinta);max-width:22em;margin:1.4rem 0 0}
+
+/* bloques de la lista */
+.grupo{border-top:1px solid var(--line);padding:1.5rem 0 1.1rem}
+.grupo h2{font-family:var(--serif);font-weight:400;font-size:1.35rem;line-height:1.2;margin:0 0 .9rem;color:var(--tinta)}
+.grupo ul{list-style:none;margin:0;padding:0}
+.grupo li{margin:0}
+.item{display:grid;grid-template-columns:22px 1fr;gap:.9rem;align-items:start;padding:.5rem 0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.item input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
+.caja{width:22px;height:22px;margin-top:.22em;border:1.5px solid var(--tinta);border-radius:2px;position:relative;flex:none;transition:border-color .25s}
+.caja svg{position:absolute;inset:-6px;width:34px;height:34px;overflow:visible;color:var(--tinta)}
+.caja svg use{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;transition:stroke-dashoffset .35s ease}
+.item input:checked ~ .caja{border-color:var(--plata)}
+.item input:checked ~ .caja svg use{stroke-dashoffset:0}
+.item input:focus-visible ~ .caja{outline:2px solid var(--acento);outline-offset:3px}
+.txt{line-height:1.45;transition:color .3s}
+.txt b{font-weight:400;color:var(--tinta);transition:color .3s}
+.txt small{display:block;font-size:.88rem;color:var(--tinta-2);line-height:1.45;margin-top:.1em}
+.item input:checked ~ .txt b{color:var(--plata);text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:var(--tinta)}
+.item input:checked ~ .txt small{color:var(--plata)}
+
+.nota{border-top:1px solid var(--line);padding:1.5rem 0 0;display:grid;grid-template-columns:1fr auto;gap:1rem 2rem;align-items:start}
+.nota p{margin:0 0 .6em;color:var(--tinta-2)}
+.nota p:last-child{margin-bottom:0}
+.nota b{font-weight:400;color:var(--tinta)}
+.estrellas{color:var(--tinta);opacity:.55;width:96px;height:58px;display:block;margin-top:-.4rem}
+
+/* pie */
+footer{margin-top:3rem;padding-top:1.6rem;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;font-size:.82rem;color:var(--tinta-2)}
+footer .fname{font-family:var(--serif);font-size:.95rem;color:var(--tinta);display:block;margin-bottom:.2em}
+footer button{all:unset;cursor:pointer;color:var(--plata);font-size:.78rem;border-bottom:1px solid currentColor;line-height:1.3;white-space:nowrap}
+footer button[hidden]{display:none}
+footer button:hover,footer button:focus-visible{color:var(--tinta)}
+footer button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+
+@media (max-width:420px){
+  .nota{grid-template-columns:1fr}
+  .estrellas{margin-top:0}
+}
+
+/* impresión: una cara A4, dos columnas, casillas vacías */
+@page{size:A4;margin:0}
+@media print{
+  html,body{background:#fff}
+  body{font-size:11.3pt;line-height:1.42}
+  .hoja{max-width:none;width:210mm;height:297mm;overflow:hidden;margin:0;padding:16mm 17mm 12mm;display:flex;flex-direction:column}
+  .cab{margin-bottom:9mm;gap:.2rem}
+  .cab .marca{width:54px;height:61px}
+  .cab .nombre{font-size:11pt;margin-top:.5rem}
+  .cab h1{font-size:25pt;margin:.25em 0 .15em}
+  .cab .meta{font-size:7.4pt}
+  .cab .lede{font-size:11.8pt;margin-top:4mm}
+  .lista{column-count:2;column-gap:11mm;column-fill:balance}
+  .grupo{break-inside:avoid;padding:4.5mm 0 3mm}
+  .grupo:first-child{border-top:0;padding-top:0}
+  .lista .grupo:nth-child(4){border-top:0;padding-top:0}
+  .grupo h2{font-size:14.5pt;margin-bottom:2.5mm}
+  .item{padding:2mm 0;gap:3.4mm;grid-template-columns:4.6mm 1fr}
+  .caja{width:4.6mm;height:4.6mm;margin-top:.9mm;border-width:1px}
+  .caja svg{display:none}
+  .txt small{font-size:8.8pt}
+  .nota{margin-top:auto;padding-top:4mm;grid-template-columns:1fr auto}
+  .estrellas{width:80px;height:48px}
+  footer{margin-top:5mm;padding-top:3mm;font-size:8pt}
+  footer .fname{font-size:9.2pt}
+  footer button{display:none}
+  .item input:checked ~ .txt b{color:var(--tinta);text-decoration:none}
+  .item input:checked ~ .caja{border-color:var(--tinta)}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="pulso" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+<g id="hoguera" filter="url(#pulso)" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M62,138 L140,120 M60,122 L138,140 M100,144 L100,128" stroke="currentColor" stroke-width="7"/><path class="llama" d="M100,112 C84,100 82,84 92,70 C92,82 98,86 100,92 C104,80 100,66 110,54 C112,74 124,80 124,98 C124,108 114,118 100,118 C92,118 86,112 86,104" style="stroke:var(--acento)" stroke-width="7"/><circle class="chispa" cx="120" cy="44" r="4" style="fill:var(--acento)"/><circle class="chispa" cx="84" cy="52" r="3.2" style="fill:var(--acento)"/><circle class="chispa" cx="130" cy="62" r="3" style="fill:var(--acento)"/></g>
+<g id="hoguera-fina" filter="url(#pulso)" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M62,138 L140,120 M60,122 L138,140 M100,144 L100,128" stroke="currentColor" stroke-width="3.2"/><path class="llama" d="M100,112 C84,100 82,84 92,70 C92,82 98,86 100,92 C104,80 100,66 110,54 C112,74 124,80 124,98 C124,108 114,118 100,118 C92,118 86,112 86,104" style="stroke:var(--acento)" stroke-width="3.2"/><circle class="chispa" cx="120" cy="44" r="2.4" style="fill:var(--acento)"/><circle class="chispa" cx="84" cy="52" r="2" style="fill:var(--acento)"/><circle class="chispa" cx="130" cy="62" r="1.8" style="fill:var(--acento)"/></g>
+<g id="palitos" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M0,-9 L0,9 M-8,-4.5 L8,4.5 M-8,4.5 L8,-4.5"/></g>
+<g id="palitos4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M0,-9 L0,9 M-9,0 L9,0 M-6,-6 L6,6 M-6,6 L6,-6"/></g>
+<g id="cielo-chico" filter="url(#pulso)"><use href="#palitos" transform="translate(20,30) scale(1.1)"/><use href="#palitos4" transform="translate(84,14) scale(.8)"/><use href="#palitos" transform="translate(140,48) scale(.7)"/><use href="#palitos4" transform="translate(58,78) scale(.6)"/></g>
+<path id="tick" fill="none" d="M6,18 C11,21 14,25 16,27 C19,18 24,10 30,5"/>
+</defs></svg>
+
+<main class="hoja">
+  <header class="cab">
+    <svg class="marca dibujo" viewBox="50 36 100 112" aria-hidden="true"><use href="#hoguera"/></svg>
+    <div class="nombre">Presencia y Celebración</div>
+    <h1>Qué llevar</h1>
+    <p class="meta"><span>20, 21 y 22 de noviembre</span><span>Sant Salvador de Bellver</span></p>
+    <p class="lede">La lista de la maleta. Ve marcando lo que ya tengas.</p>
+  </header>
+
+  <div class="lista">
+    <section class="grupo">
+      <h2>Para dormir</h2>
+      <ul>
+        <li><label class="item"><input type="checkbox" data-k="cama"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Ropa de cama de 90</b><small>Bajera, funda de almohada y sábana encimera.</small></span></label></li>
+        <li><label class="item"><input type="checkbox" data-k="pijama"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Pijama</b></span></label></li>
+      </ul>
+    </section>
+
+    <section class="grupo">
+      <h2>Para el baño</h2>
+      <ul>
+        <li><label class="item"><input type="checkbox" data-k="toalla"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Toalla de baño</b></span></label></li>
+        <li><label class="item"><input type="checkbox" data-k="neceser"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Neceser</b><small>Jabón, cepillo y pasta de dientes, peine… lo que uses.</small></span></label></li>
+        <li><label class="item"><input type="checkbox" data-k="secador"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Secador, si lo necesitas</b></span></label></li>
+      </ul>
+    </section>
+
+    <section class="grupo">
+      <h2>Para la práctica</h2>
+      <ul>
+        <li><label class="item"><input type="checkbox" data-k="esterilla"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Esterilla de yoga</b></span></label></li>
+        <li><label class="item"><input type="checkbox" data-k="ropa-yoga"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Ropa cómoda para el yoga de las mañanas</b><small>Sábado y domingo.</small></span></label></li>
+        <li><label class="item"><input type="checkbox" data-k="chal"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Chal o manta pequeña</b><small>Para los ratos sentadas.</small></span></label></li>
+      </ul>
+    </section>
+
+    <section class="grupo">
+      <h2>Para el camino</h2>
+      <ul>
+        <li><label class="item"><input type="checkbox" data-k="calzado-montana"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Calzado cómodo para caminar por la montaña</b></span></label></li>
+        <li><label class="item"><input type="checkbox" data-k="ropa-caminar"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Ropa para caminar</b></span></label></li>
+        <li><label class="item"><input type="checkbox" data-k="botella"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Botella de agua</b></span></label></li>
+        <li><label class="item"><input type="checkbox" data-k="linterna"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Linterna o frontal</b><small>Para moverte de noche fuera de la casa.</small></span></label></li>
+      </ul>
+    </section>
+
+    <section class="grupo">
+      <h2>Para la casa</h2>
+      <ul>
+        <li><label class="item"><input type="checkbox" data-k="calzado-interior"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Calzado cómodo de interior</b></span></label></li>
+        <li><label class="item"><input type="checkbox" data-k="ropa-estar"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Ropa cómoda para estar</b></span></label></li>
+        <li><label class="item"><input type="checkbox" data-k="abrigo"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Abrigo</b><small>Jerséis, chaquetas, calcetines gordos.</small></span></label></li>
+        <li><label class="item"><input type="checkbox" data-k="cargador"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Cargador</b></span></label></li>
+      </ul>
+    </section>
+
+    <section class="grupo">
+      <h2>Si quieres</h2>
+      <ul>
+        <li><label class="item"><input type="checkbox" data-k="fuego"><span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span><span class="txt"><b>Algo pequeño para soltar en el fuego</b><small>Un objeto, una palabra escrita.</small></span></label></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="nota">
+    <div>
+      <p><b>Lo ponemos nosotras:</b> libreta y boli.</p>
+      <p>Cada habitación tiene su baño. Cualquier duda, en el grupo.</p>
+    </div>
+    <svg class="estrellas" viewBox="0 0 160 96" aria-hidden="true"><use href="#cielo-chico"/></svg>
+  </div>
+
+  <footer>
+    <div><span class="fname">Presencia y Celebración</span>Margarita Margenat &amp; Lucía Echenique · Sant Salvador de Bellver</div>
+    <button type="button" id="reset" hidden>Desmarcar todo</button>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var KEY = 'maleta-nov-2026', cajas = document.querySelectorAll('.item input'), reset = document.getElementById('reset');
+  var guardado = {};
+  try { guardado = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+  function pinta(){ var n = 0; cajas.forEach(function(c){ if (c.checked) n++; }); reset.hidden = n === 0; }
+  cajas.forEach(function(c){
+    c.checked = !!guardado[c.dataset.k];
+    c.addEventListener('change', function(){
+      guardado[c.dataset.k] = c.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(guardado)); } catch (e) {}
+      pinta();
+    });
+  });
+  reset.addEventListener('click', function(){
+    guardado = {};
+    cajas.forEach(function(c){ c.checked = false; });
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    pinta();
+  });
+  pinta();
+})();
+</script>
+</body>
+</html>
