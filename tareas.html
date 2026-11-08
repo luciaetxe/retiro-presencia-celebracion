@@ -109,6 +109,54 @@ button{font:inherit;color:inherit}
 
 .vacio{padding:2rem 0;color:var(--plata);font-size:.95rem}
 
+/* calendario */
+@media (min-width:760px){ .hoja.ancha{max-width:1120px} }
+.pista{font-size:.84rem;color:var(--plata);line-height:1.55;margin:.9rem 0 1.1rem;min-height:1.5em}
+.pista strong{font-weight:400;color:var(--tinta)}
+.pista button{all:unset;cursor:pointer;color:var(--tinta-2);border-bottom:1px solid var(--line);line-height:1.3;-webkit-tap-highlight-color:transparent}
+.pista button:hover,.pista button:focus-visible{color:var(--tinta);border-bottom-color:currentColor}
+.pista button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.pista button[aria-pressed="true"]{color:var(--acento);border-bottom-color:currentColor}
+.pista .sep{margin:0 .45em;color:var(--line)}
+.pista .quienes{display:inline-flex;gap:.8em;flex-wrap:wrap}
+.bandejas{display:grid;gap:.6rem;margin-bottom:1rem}
+.zona{border:1px dashed var(--line);border-radius:6px;padding:.6rem .75rem .65rem;transition:background .2s,border-color .2s}
+.zona .dcab{margin-bottom:.1rem}
+.zona.atras{border-color:rgba(200,64,46,.45)}
+.zona.atras .nom{color:var(--rojo)}
+.cal{display:grid}
+.dia{border-top:1px solid var(--line);padding:.7rem .2rem .55rem;min-height:3.6rem;transition:background .2s;border-radius:4px}
+.dcab{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
+.dcab .num{font-family:var(--serif);font-size:1.05rem;line-height:1.2;color:var(--tinta)}
+.dcab .nom{font-weight:400;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--plata)}
+.dcab .eti{font-size:.72rem;color:var(--plata);margin-left:auto}
+.dia.hoy .num,.dia.hoy .eti{color:var(--acento)}
+.dia.pasado .num{color:var(--plata)}
+.dia.retiro{background:var(--suave);padding-inline:.6rem}
+.fichas{display:grid;gap:.35rem;margin-top:.45rem}
+.ficha{all:unset;box-sizing:border-box;display:flex;align-items:baseline;gap:.5rem;width:100%;cursor:grab;font-size:.84rem;line-height:1.35;padding:.38rem .55rem;border:1px solid var(--line);border-radius:4px;background:var(--fondo);color:var(--tinta);text-align:left;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;transition:border-color .2s,box-shadow .2s,opacity .2s;-webkit-tap-highlight-color:transparent}
+.ficha .tx{flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
+.ficha .ini{flex:none;font-size:.68rem;font-weight:400;letter-spacing:.06em;color:var(--plata)}
+.ficha:hover{border-color:var(--tinta-2)}
+.ficha:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.ficha.hecha{color:var(--plata);text-decoration:line-through;text-decoration-color:var(--tinta)}
+.ficha.tarde{color:var(--rojo);border-color:rgba(200,64,46,.45)}
+.ficha.sel{border-color:var(--acento);box-shadow:0 0 0 2px rgba(217,65,140,.22)}
+.ficha.arrastrando{opacity:.3}
+.ficha.fantasma{position:fixed;left:0;top:0;z-index:50;pointer-events:none;box-shadow:0 10px 28px rgba(20,20,20,.16);border-color:var(--tinta-2);background:#fff;will-change:transform}
+.eligiendo [data-dia]{cursor:pointer}
+.eligiendo .dia:hover,.eligiendo .zona[data-dia]:hover,[data-dia].dest{background:#FDF2F8;outline:1.5px dashed var(--acento);outline-offset:-1px}
+.eligiendo .dia.retiro:hover,.dia.retiro.dest{background:#FBE8F1}
+.vaciocal{font-size:.78rem;color:var(--plata);margin:.3rem 0 0}
+@media (min-width:760px){
+  .cal{grid-template-columns:repeat(7,1fr);column-gap:.55rem}
+  .dia{min-height:150px;padding:.6rem .15rem .7rem}
+  .dia.retiro{padding-inline:.5rem}
+  .dcab .eti{margin-left:0;flex-basis:100%;margin-top:-.15rem}
+  .bandejas{grid-template-columns:1fr 1fr}
+  .bandejas .zona:only-child{grid-column:1/-1}
+}
+
 /* estado de sincronización */
 .estado{min-height:1.3em;font-size:.78rem;color:var(--plata);text-align:right;margin:.3rem 0 0;transition:color .3s}
 .estado.error{color:var(--rojo)}
@@ -147,6 +195,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   <div class="listas" role="tablist" aria-label="Listas">
     <button type="button" role="tab" id="tab-tareas" aria-selected="true" aria-controls="panel-tareas" data-lista="tareas">Tareas<span class="n" id="n-tareas"></span></button>
     <button type="button" role="tab" id="tab-llevar" aria-selected="false" aria-controls="panel-llevar" data-lista="llevar">Para llevar<span class="n" id="n-llevar"></span></button>
+    <button type="button" role="tab" id="tab-cal" aria-selected="false" aria-controls="panel-cal" data-lista="cal">Calendario</button>
   </div>
 
   <section id="panel-tareas" role="tabpanel" aria-labelledby="tab-tareas">
@@ -177,6 +226,22 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     </div>
   </section>
 
+  <section id="panel-cal" role="tabpanel" aria-labelledby="tab-cal" hidden>
+    <p class="pista" id="pista"></p>
+    <div class="bandejas" id="bandejas"></div>
+    <div class="cal" id="cal"></div>
+    <div class="anadir">
+      <form data-lista="tareas" autocomplete="off">
+        <div class="fila"><input type="text" id="nueva-tarea-cal" name="texto" placeholder="Nueva tarea" maxlength="300" aria-label="Nueva tarea"></div>
+        <div class="fila">
+          <select name="quien" id="quien-tarea-cal" aria-label="Quién"><option value="dos">Las dos</option><option value="lucia">Lucía</option><option value="marga">Marga</option></select>
+          <input type="date" name="fecha" id="fecha-tarea-cal" aria-label="Fecha" min="2026-11-01" max="2026-11-22">
+          <button type="submit" disabled>Añadir</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
   <p class="estado" id="estado" aria-live="polite"></p>
 
   <footer>
@@ -199,10 +264,11 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   var editando = null;
   var elEstado = document.getElementById('estado');
   var tabs = document.querySelectorAll('.listas [role="tab"]');
-  var paneles = { tareas: document.getElementById('panel-tareas'), llevar: document.getElementById('panel-llevar') };
+  var paneles = { tareas: document.getElementById('panel-tareas'), llevar: document.getElementById('panel-llevar'), cal: document.getElementById('panel-cal') };
+  var hoja = document.querySelector('.hoja');
   var grupos = { tareas: paneles.tareas.querySelector('.grupos'), llevar: paneles.llevar.querySelector('.grupos') };
 
-  try { var g = localStorage.getItem('tareas-lista'); if (g === 'llevar') listaActiva = 'llevar'; } catch (e) {}
+  try { var g = localStorage.getItem('tareas-lista'); if (g === 'llevar' || g === 'cal') listaActiva = g; } catch (e) {}
 
   // --- fechas ---
   function hoyISO(){ var d = new Date(); return iso(d); }
@@ -272,6 +338,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
         cont.appendChild(sec);
       });
     });
+    if (listaActiva === 'cal') renderCal();
   }
   function filaItem(t, hoy){
     var li = document.createElement('li');
@@ -323,12 +390,192 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     return li;
   }
 
+  // --- calendario: tocar una tarea y luego un día, o arrastrarla ---
+  var sel = null, mq = window.matchMedia('(min-width:760px)');
+  var calEl = document.getElementById('cal'), bandejas = document.getElementById('bandejas'), pista = document.getElementById('pista');
+  var INI = { lucia: 'L', marga: 'M', dos: 'L+M', '': 'L+M' };
+  var FIN = '2026-11-22', PRIMERO = '2026-11-02';
+  function masDias(s, n){ var d = deISO(s); d.setDate(d.getDate() + n); return iso(d); }
+  function diasVisibles(hoy){
+    var ini;
+    if (mq.matches) {
+      var d = deISO(hoy > FIN ? '2026-11-16' : hoy), dow = (d.getDay() + 6) % 7;
+      d.setDate(d.getDate() - dow); ini = iso(d);
+      if (ini > '2026-11-16') ini = '2026-11-16';
+    } else ini = hoy > '2026-11-20' ? '2026-11-20' : hoy;
+    if (ini < PRIMERO) ini = PRIMERO;
+    var out = []; for (var s = ini; s <= FIN; s = masDias(s, 1)) out.push(s);
+    return out;
+  }
+  function buscar(id){ for (var i = 0; i < estado.items.length; i++) if (estado.items[i].id === id) return estado.items[i]; return null; }
+  function ficha(t, hoy){
+    var b = document.createElement('button'); b.type = 'button';
+    b.className = 'ficha' + (t.hecho ? ' hecha' : '') + (t.fecha && t.fecha < hoy && !t.hecho ? ' tarde' : '') + (sel === t.id ? ' sel' : '');
+    b.dataset.id = t.id;
+    b.setAttribute('aria-pressed', String(sel === t.id));
+    b.setAttribute('aria-label', t.texto + ' (' + QUIEN[t.quien || 'dos'] + '). ' + (sel === t.id ? 'Seleccionada: toca un día para moverla.' : 'Tocar para elegirla y moverla de día.'));
+    var tx = document.createElement('span'); tx.className = 'tx'; tx.textContent = t.texto;
+    var ini = document.createElement('span'); ini.className = 'ini'; ini.textContent = INI[t.quien || 'dos']; ini.setAttribute('aria-hidden', 'true');
+    b.appendChild(tx); b.appendChild(ini);
+    b.addEventListener('click', function(ev){ ev.stopPropagation(); if (ignoraClick) return; sel = sel === t.id ? null : t.id; renderCal(); });
+    b.addEventListener('pointerdown', function(ev){ empieza(ev, b, t); });
+    return b;
+  }
+  function cabecera(num, nom, eti){
+    var h = document.createElement('div'); h.className = 'dcab';
+    if (num) { var a = document.createElement('span'); a.className = 'num'; a.textContent = num; h.appendChild(a); }
+    var b = document.createElement('span'); b.className = 'nom'; b.textContent = nom; h.appendChild(b);
+    if (eti) { var c = document.createElement('span'); c.className = 'eti'; c.textContent = eti; h.appendChild(c); }
+    return h;
+  }
+  function zona(el, fecha, items, hoy){
+    if (fecha !== null) {
+      el.setAttribute('data-dia', fecha);
+      el.addEventListener('click', function(){ if (ignoraClick || !sel) return; mover(sel, fecha); });
+      if (sel) {
+        el.tabIndex = 0; el.setAttribute('role', 'button');
+        el.setAttribute('aria-label', 'Mover aquí: ' + (fecha ? nombreFecha(fecha, true) : 'sin fecha'));
+        el.addEventListener('keydown', function(ev){ if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); mover(sel, fecha); } });
+      }
+    }
+    var f = document.createElement('div'); f.className = 'fichas';
+    items.forEach(function(t){ f.appendChild(ficha(t, hoy)); });
+    el.appendChild(f);
+    return el;
+  }
+  function renderCal(){
+    var hoy = hoyISO(), dias = diasVisibles(hoy), visibles = {};
+    dias.forEach(function(s){ visibles[s] = true; });
+    var tareas = estado.items.filter(function(t){ return t.lista === 'tareas'; });
+    if (sel && !buscar(sel)) sel = null;
+    var sinFecha = tareas.filter(function(t){ return !t.fecha; });
+    var atrasadas = tareas.filter(function(t){ return t.fecha && !visibles[t.fecha] && !t.hecho; });
+
+    bandejas.innerHTML = '';
+    if (atrasadas.length) {
+      var za = document.createElement('div'); za.className = 'zona atras';
+      za.appendChild(cabecera('', 'Atrasadas', ''));
+      bandejas.appendChild(zona(za, null, atrasadas, hoy));
+    }
+    var zs = document.createElement('div'); zs.className = 'zona';
+    zs.appendChild(cabecera('', 'Sin fecha', ''));
+    zona(zs, '', sinFecha, hoy);
+    if (!sinFecha.length) { var v = document.createElement('p'); v.className = 'vaciocal'; v.textContent = 'Nada sin fecha.'; zs.appendChild(v); }
+    bandejas.appendChild(zs);
+
+    calEl.innerHTML = '';
+    var manana = masDias(hoy, 1);
+    dias.forEach(function(s){
+      var d = deISO(s), art = document.createElement('article');
+      var pasado = s < hoy, esHoy = s === hoy, retiro = s >= '2026-11-20';
+      art.className = 'dia' + (pasado ? ' pasado' : '') + (esHoy ? ' hoy' : '') + (retiro ? ' retiro' : '');
+      var eti = esHoy ? 'hoy' : s === '2026-11-20' ? 'llegada' : retiro ? 'retiro' : s === manana ? 'mañana' : '';
+      art.appendChild(cabecera(String(d.getDate()), DIAS[d.getDay()], eti));
+      var items = tareas.filter(function(t){ return t.fecha === s; });
+      calEl.appendChild(zona(art, s, items, hoy));
+    });
+    paneles.cal.classList.toggle('eligiendo', !!sel);
+    pintaPista(sel ? buscar(sel) : null);
+  }
+  function pintaPista(t){
+    pista.innerHTML = '';
+    if (!t) {
+      pista.textContent = 'Toca una tarea y después el día al que la quieres mover. También puedes arrastrarla (en el móvil, mantén pulsado).';
+      return;
+    }
+    var st = document.createElement('strong'); st.textContent = '«' + t.texto + '»'; pista.appendChild(st);
+    pista.appendChild(document.createTextNode(': toca el día al que la quieres mover.'));
+    pista.appendChild(document.createElement('br'));
+    var qs = document.createElement('span'); qs.className = 'quienes';
+    qs.appendChild(document.createTextNode('La hace'));
+    ['lucia', 'marga', 'dos'].forEach(function(q){
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = QUIEN[q];
+      b.setAttribute('aria-pressed', String((t.quien || 'dos') === q));
+      b.addEventListener('click', function(){ cambia(t.id, function(x){ x.quien = q; }); });
+      qs.appendChild(b);
+    });
+    pista.appendChild(qs);
+    var sep = document.createElement('span'); sep.className = 'sep'; sep.textContent = '·'; pista.appendChild(sep);
+    var c = document.createElement('button'); c.type = 'button'; c.textContent = 'Cancelar';
+    c.addEventListener('click', function(){ sel = null; renderCal(); });
+    pista.appendChild(c);
+  }
+  function mover(id, fecha){
+    var t = buscar(id); sel = null;
+    if (t && t.fecha !== fecha) cambia(id, function(x){ x.fecha = fecha; }); else renderCal();
+  }
+  if (mq.addEventListener) mq.addEventListener('change', function(){ if (listaActiva === 'cal') renderCal(); });
+  else if (mq.addListener) mq.addListener(function(){ if (listaActiva === 'cal') renderCal(); });
+
+  // arrastrar: con ratón al moverse; con el dedo tras mantener pulsado (así el scroll sigue funcionando)
+  var dr = null, ignoraClick = false, raf = 0;
+  function empieza(ev, el, t){
+    if (ev.pointerType === 'mouse' && ev.button !== 0) return;
+    if (dr) return;
+    dr = { id: t.id, el: el, pid: ev.pointerId, x0: ev.clientX, y0: ev.clientY, x: ev.clientX, y: ev.clientY, touch: ev.pointerType !== 'mouse', activo: false, dest: null, timer: 0 };
+    if (dr.touch) dr.timer = setTimeout(function(){ if (dr && !dr.activo) activa(); }, 380);
+  }
+  function activa(){
+    var r = dr.el.getBoundingClientRect();
+    dr.activo = true; dr.dx = dr.x0 - r.left; dr.dy = dr.y0 - r.top;
+    var g = dr.el.cloneNode(true); g.classList.add('fantasma'); g.classList.remove('sel'); g.style.width = r.width + 'px';
+    document.body.appendChild(g); dr.ghost = g;
+    dr.el.classList.add('arrastrando');
+    if (navigator.vibrate) { try { navigator.vibrate(12); } catch (e) {} }
+    sigue(); bucle();
+  }
+  function sigue(){
+    dr.ghost.style.transform = 'translate(' + (dr.x - dr.dx) + 'px,' + (dr.y - dr.dy) + 'px) rotate(-1.5deg)';
+    var bajo = document.elementFromPoint(dr.x, dr.y), z = bajo && bajo.closest('[data-dia]');
+    if (z && !paneles.cal.contains(z)) z = null;
+    if (z !== dr.dest) { if (dr.dest) dr.dest.classList.remove('dest'); dr.dest = z; if (z) z.classList.add('dest'); }
+  }
+  function bucle(){
+    if (!dr || !dr.activo) return;
+    var m = 72, v = 0;
+    if (dr.y < m) v = -(m - dr.y) / 5; else if (dr.y > window.innerHeight - m) v = (dr.y - (window.innerHeight - m)) / 5;
+    if (v) { window.scrollBy(0, v); sigue(); }
+    raf = requestAnimationFrame(bucle);
+  }
+  function termina(ev, cancela){
+    if (!dr || ev.pointerId !== dr.pid) return;
+    clearTimeout(dr.timer);
+    if (dr.activo) {
+      ignoraClick = true; setTimeout(function(){ ignoraClick = false; }, 400);
+      cancelAnimationFrame(raf);
+      var dest = dr.dest, id = dr.id;
+      dr.ghost.remove(); dr.el.classList.remove('arrastrando'); if (dest) dest.classList.remove('dest');
+      dr = null;
+      if (!cancela && dest) mover(id, dest.getAttribute('data-dia'));
+      return;
+    }
+    dr = null;
+  }
+  document.addEventListener('pointermove', function(ev){
+    if (!dr || ev.pointerId !== dr.pid) return;
+    dr.x = ev.clientX; dr.y = ev.clientY;
+    if (!dr.activo) {
+      var d = Math.hypot(dr.x - dr.x0, dr.y - dr.y0);
+      if (dr.touch) { if (d > 8) { clearTimeout(dr.timer); dr = null; } }
+      else if (d > 5) activa();
+      return;
+    }
+    sigue();
+  });
+  document.addEventListener('pointerup', function(ev){ termina(ev, false); });
+  document.addEventListener('pointercancel', function(ev){ termina(ev, true); });
+  paneles.cal.addEventListener('touchmove', function(ev){ if (dr && dr.activo) ev.preventDefault(); }, { passive: false });
+  paneles.cal.addEventListener('contextmenu', function(ev){ if (ev.target.closest('.ficha')) ev.preventDefault(); });
+
   // --- pestañas ---
   function muestra(lista){
     listaActiva = lista;
     tabs.forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.lista === lista)); });
     paneles.tareas.hidden = lista !== 'tareas';
     paneles.llevar.hidden = lista !== 'llevar';
+    paneles.cal.hidden = lista !== 'cal';
+    hoja.classList.toggle('ancha', lista === 'cal');
+    if (lista === 'cal') renderCal();
     try { localStorage.setItem('tareas-lista', lista); } catch (e) {}
   }
   tabs.forEach(function(b){ b.addEventListener('click', function(){ muestra(b.dataset.lista); }); });
