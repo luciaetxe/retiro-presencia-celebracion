@@ -17,14 +17,21 @@ async function leer(env) {
   try { return JSON.parse(raw); } catch (e) { return { v: 0, items: [] }; }
 }
 
+// Listas: "tareas" (fecha y quién), "llevar" (solo texto) y "comida" (cantidad, unidad, precio por unidad, quién pagó).
+function numOk(v, max) { return typeof v === "number" && isFinite(v) && v >= 0 && v <= max; }
 function itemValido(t) {
-  return t && typeof t.id === "string" && t.id.length <= 40
+  if (!(t && typeof t.id === "string" && t.id.length <= 40
     && typeof t.texto === "string" && t.texto.length <= 300
-    && (t.lista === "tareas" || t.lista === "llevar")
-    && (t.fecha === "" || /^\d{4}-\d{2}-\d{2}$/.test(t.fecha))
-    && (t.quien === "" || t.quien === "lucia" || t.quien === "marga" || t.quien === "dos")
+    && (t.lista === "tareas" || t.lista === "llevar" || t.lista === "comida")
+    && (t.fecha === undefined || t.fecha === "" || /^\d{4}-\d{2}-\d{2}$/.test(t.fecha))
+    && (t.quien === undefined || t.quien === "" || t.quien === "lucia" || t.quien === "marga" || t.quien === "dos")
     && (t.nota === undefined || (typeof t.nota === "string" && t.nota.length <= 300))
-    && typeof t.hecho === "boolean";
+    && typeof t.hecho === "boolean")) return false;
+  if (t.lista !== "comida") return true;
+  return numOk(t.cantidad, 99999)
+    && typeof t.unidad === "string" && t.unidad.length <= 8
+    && (t.precio === null || numOk(t.precio, 99999))
+    && (t.pagado === "" || t.pagado === "lucia" || t.pagado === "marga");
 }
 
 export async function onRequestGet({ request, env }) {

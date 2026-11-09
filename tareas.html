@@ -89,23 +89,48 @@ button{font:inherit;color:inherit}
 .det .fecha-btn{position:relative}
 .det .fecha-btn input{position:absolute;inset:0;opacity:0;width:100%;height:100%;border:0;padding:0;margin:0;cursor:pointer}
 .det .fecha-btn.pasada{color:var(--rojo)}
-.det .quitar,.det .sinfecha{display:none}
-.item.editando .det .quitar,.item.editando .det .sinfecha{display:inline}
+.det .quitar,.det .sinfecha,.det .editar{display:none}
+.item.editando .det .quitar,.item.editando .det .sinfecha,.item.editando .det .editar{display:inline}
+.txt input.edit{all:unset;display:block;width:100%;font-weight:400;color:var(--tinta);line-height:1.45;border-bottom:1px solid var(--acento);overflow-wrap:anywhere}
+.txt .ayuda{display:block;font-size:.78rem;color:var(--plata);margin-top:.3em}
 
 /* añadir */
 .anadir{border-top:1px solid var(--line);margin-top:.6rem;padding-top:1.2rem}
-.anadir form{display:grid;gap:.7rem}
-.anadir .fila{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
-.anadir input[type="text"]{all:unset;flex:1 1 100%;min-width:0;font-weight:300;font-size:1rem;line-height:1.4;padding:.45rem 0;border-bottom:1px solid var(--tinta);color:var(--tinta)}
-.anadir input[type="text"]::placeholder{color:var(--plata)}
-.anadir input[type="text"]:focus-visible{outline:none;border-bottom-color:var(--acento)}
-.anadir select,.anadir input[type="date"]{all:unset;font-weight:400;font-size:.82rem;color:var(--tinta-2);border-bottom:1px solid var(--line);padding:.25rem 0;cursor:pointer;-webkit-appearance:none;appearance:none}
-.anadir input[type="date"]{min-width:9.5em;position:relative}
-.anadir input[type="date"]::-webkit-calendar-picker-indicator{opacity:.5}
-.anadir select:focus-visible,.anadir input[type="date"]:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
-.anadir button{all:unset;cursor:pointer;margin-left:auto;font-weight:400;font-size:.82rem;letter-spacing:.06em;color:var(--tinta);border-bottom:1px solid currentColor;line-height:1.3;padding-bottom:.1em}
-.anadir button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
-.anadir button:disabled{color:var(--plata);cursor:default}
+.campos{display:grid;gap:.7rem}
+.campos .fila{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
+.campos input[type="text"]{all:unset;flex:1 1 100%;min-width:0;font-weight:300;font-size:1rem;line-height:1.4;padding:.45rem 0;border-bottom:1px solid var(--tinta);color:var(--tinta)}
+.campos input[type="text"]::placeholder{color:var(--plata)}
+.campos input[type="text"]:focus-visible{outline:none;border-bottom-color:var(--acento)}
+.campos input.num{flex:0 0 auto;width:4.2em;font-size:.95rem;text-align:right}
+.campos input.num.precio{width:5.2em}
+.campos .uni{font-size:.82rem;color:var(--plata)}
+.campos select,.campos input[type="date"]{all:unset;font-weight:400;font-size:.82rem;color:var(--tinta-2);border-bottom:1px solid var(--line);padding:.25rem 0;cursor:pointer;-webkit-appearance:none;appearance:none}
+.campos input[type="date"]{min-width:9.5em;position:relative}
+.campos input[type="date"]::-webkit-calendar-picker-indicator{opacity:.5}
+.campos select:focus-visible,.campos input[type="date"]:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.campos button{all:unset;cursor:pointer;margin-left:auto;font-weight:400;font-size:.82rem;letter-spacing:.06em;color:var(--tinta);border-bottom:1px solid currentColor;line-height:1.3;padding-bottom:.1em}
+.campos button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.campos button:disabled{color:var(--plata);cursor:default}
+.campos button.secundario{margin-left:0;color:var(--plata);border-bottom-color:transparent}
+.campos button.secundario:hover,.campos button.secundario:focus-visible{color:var(--tinta);border-bottom-color:currentColor}
+.campos button.peligro{margin-left:0;color:var(--plata);border-bottom-color:transparent}
+.campos button.peligro:hover,.campos button.peligro:focus-visible{color:var(--rojo);border-bottom-color:currentColor}
+.form-edit{padding:.2rem 0 .8rem}
+
+/* comida: cantidades, precios y presupuesto */
+.sub{font-family:var(--serif);font-weight:400;font-size:1.25rem;line-height:1.2;margin:1.8rem 0 .3rem;color:var(--tinta)}
+.sub:first-child{margin-top:1.1rem}
+.sub small{font-family:var(--sans);font-weight:400;font-size:.78rem;color:var(--plata);margin-left:.5em;vertical-align:.15em}
+.resumen{display:grid;gap:.15rem;font-size:.9rem;color:var(--tinta-2);line-height:1.55;padding:.7rem 0 .9rem;border-bottom:1px solid var(--line)}
+.resumen .linea{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.resumen .linea span:last-child{font-family:var(--serif);color:var(--tinta);white-space:nowrap}
+.resumen .mal span:last-child{color:var(--rojo)}
+.resumen .poco{font-size:.82rem;color:var(--plata)}
+.item.comida{grid-template-columns:22px 1fr auto}
+.item .total{font-family:var(--serif);font-size:.95rem;color:var(--tinta);padding-top:.15em;white-space:nowrap}
+.item.hecha .total{color:var(--plata)}
+.det .pago{font-weight:400}
+.det .pago.lucia,.det .pago.marga{color:var(--tinta-2)}
 
 .vacio{padding:2rem 0;color:var(--plata);font-size:.95rem}
 
@@ -201,7 +226,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   <section id="panel-tareas" role="tabpanel" aria-labelledby="tab-tareas">
     <div class="grupos" data-lista="tareas"><p class="vacio">Cargando la lista…</p></div>
     <div class="anadir">
-      <form data-lista="tareas" autocomplete="off">
+      <form class="campos" data-lista="tareas" autocomplete="off">
         <div class="fila"><input type="text" id="nueva-tarea" name="texto" placeholder="Nueva tarea" maxlength="300" aria-label="Nueva tarea"></div>
         <div class="fila">
           <select name="quien" id="quien-tarea" aria-label="Quién"><option value="dos">Las dos</option><option value="lucia">Lucía</option><option value="marga">Marga</option></select>
@@ -213,15 +238,26 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   </section>
 
   <section id="panel-llevar" role="tabpanel" aria-labelledby="tab-llevar" hidden>
-    <div class="grupos" data-lista="llevar"><p class="vacio">Cargando la lista…</p></div>
+    <h2 class="sub">Comida</h2>
+    <div class="resumen" id="resumen-comida"></div>
+    <div class="grupos" data-lista="comida"><p class="vacio">Cargando la lista…</p></div>
     <div class="anadir">
-      <form data-lista="llevar" autocomplete="off">
-        <div class="fila"><input type="text" id="nueva-llevar" name="texto" placeholder="Algo más que llevar" maxlength="300" aria-label="Algo más que llevar"></div>
+      <form class="campos" data-lista="comida" autocomplete="off">
+        <div class="fila"><input type="text" id="nueva-comida" name="texto" placeholder="Qué comida" maxlength="300" aria-label="Qué comida"></div>
         <div class="fila">
-          <select name="quien" id="quien-llevar" aria-label="Quién lo lleva"><option value="dos">Las dos</option><option value="lucia">Lucía</option><option value="marga">Marga</option></select>
-          <input type="date" name="fecha" id="fecha-llevar" aria-label="Fecha límite, si la hay" min="2026-11-01" max="2026-11-22">
+          <input type="text" class="num" name="cantidad" inputmode="decimal" value="1" aria-label="Cantidad">
+          <select name="unidad" aria-label="Unidad"><option value="ud">ud</option><option value="kg">kg</option><option value="g">g</option><option value="l">l</option><option value="paq">paq.</option></select>
+          <span class="uni">a</span>
+          <input type="text" class="num precio" name="precio" inputmode="decimal" placeholder="€/ud" aria-label="Precio por unidad">
           <button type="submit" disabled>Añadir</button>
         </div>
+      </form>
+    </div>
+    <h2 class="sub">Otras cosas para llevar</h2>
+    <div class="grupos" data-lista="llevar"><p class="vacio">Cargando la lista…</p></div>
+    <div class="anadir">
+      <form class="campos" data-lista="llevar" autocomplete="off">
+        <div class="fila"><input type="text" id="nueva-llevar" name="texto" placeholder="Algo más que llevar" maxlength="300" aria-label="Algo más que llevar"><button type="submit" disabled>Añadir</button></div>
       </form>
     </div>
   </section>
@@ -231,7 +267,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     <div class="bandejas" id="bandejas"></div>
     <div class="cal" id="cal"></div>
     <div class="anadir">
-      <form data-lista="tareas" autocomplete="off">
+      <form class="campos" data-lista="tareas" autocomplete="off">
         <div class="fila"><input type="text" id="nueva-tarea-cal" name="texto" placeholder="Nueva tarea" maxlength="300" aria-label="Nueva tarea"></div>
         <div class="fila">
           <select name="quien" id="quien-tarea-cal" aria-label="Quién"><option value="dos">Las dos</option><option value="lucia">Lucía</option><option value="marga">Marga</option></select>
@@ -258,15 +294,20 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
   var QUIEN = { lucia: 'Lucía', marga: 'Marga', dos: 'Las dos', '': 'Las dos' };
   var CICLO = { dos: 'lucia', lucia: 'marga', marga: 'dos', '': 'lucia' };
+  var PRESUPUESTO = 400;                                     // € para la comida
+  var PAGO = { '': 'Sin pagar', lucia: 'Pagó Lucía', marga: 'Pagó Marga' };
+  var CICLO_PAGO = { '': 'lucia', lucia: 'marga', marga: '' };
+  var UNIDAD = { ud: 'ud', kg: 'kg', g: 'g', l: 'l', paq: 'paq.' };
 
   var estado = { items: [] };   // lo que se pinta (base + cambios pendientes)
   var listaActiva = 'tareas';
-  var editando = null;
+  var editando = null;       // tarea con los botones «Sin fecha» / «Cambiar el texto» / «Quitar» a la vista
+  var editandoTexto = null;  // tarea cuyo texto se está escribiendo
   var elEstado = document.getElementById('estado');
   var tabs = document.querySelectorAll('.listas [role="tab"]');
   var paneles = { tareas: document.getElementById('panel-tareas'), llevar: document.getElementById('panel-llevar'), cal: document.getElementById('panel-cal') };
   var hoja = document.querySelector('.hoja');
-  var grupos = { tareas: paneles.tareas.querySelector('.grupos'), llevar: paneles.llevar.querySelector('.grupos') };
+  var grupos = { tareas: paneles.tareas.querySelector('.grupos'), llevar: paneles.llevar.querySelector('.grupos[data-lista="llevar"]'), comida: paneles.llevar.querySelector('.grupos[data-lista="comida"]') };
 
   try { var g = localStorage.getItem('tareas-lista'); if (g === 'llevar' || g === 'cal') listaActiva = g; } catch (e) {}
 
@@ -288,6 +329,12 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     else el.textContent = 'Ya pasó. Gracias, tribu.';
   }
 
+  // --- números y dinero ---
+  function num(s){ if (typeof s === 'number') return isFinite(s) ? s : null; var v = parseFloat(String(s || '').replace(',', '.')); return isFinite(v) ? v : null; }
+  function eur(n){ return n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €'; }
+  function cant(n, u){ return n.toLocaleString('es-ES', { maximumFractionDigits: 3 }) + ' ' + (UNIDAD[u] || u || 'ud'); }
+  function totalDe(t){ var c = num(t.cantidad), p = num(t.precio); return p === null ? null : (c === null ? 1 : c) * p; }
+
   // --- render ---
   function etiquetaGrupo(fecha, hoy){
     if (!fecha) return { titulo: 'Sin fecha', sub: '', clase: '' };
@@ -298,14 +345,20 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   }
   function render(){
     var hoy = hoyISO();
+    renderComida();
     ['tareas', 'llevar'].forEach(function(lista){
       var items = estado.items.filter(function(t){ return t.lista === lista; });
+      if (lista === 'llevar') items.forEach(function(t){ t.fecha = ''; }); // en "Para llevar" no hay fechas ni persona
       items.sort(function(a, b){
         var fa = a.fecha || '9999', fb = b.fecha || '9999';
         return fa < fb ? -1 : fa > fb ? 1 : 0;
       });
       var pend = items.filter(function(t){ return !t.hecho; }).length;
-      document.getElementById('n-' + lista).textContent = items.length ? pend : '';
+      if (lista === 'tareas') document.getElementById('n-tareas').textContent = items.length ? pend : '';
+      else {
+        var pc = estado.items.filter(function(t){ return t.lista === 'comida' && !t.hecho; }).length;
+        document.getElementById('n-llevar').textContent = (pend + pc) ? (pend + pc) : '';
+      }
       var cont = grupos[lista];
       cont.innerHTML = '';
       if (!items.length) {
@@ -353,13 +406,38 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     cb.addEventListener('click', function(){ cambia(t.id, function(x){ x.hecho = !x.hecho; }); });
 
     var txt = document.createElement('div'); txt.className = 'txt';
+    if (editandoTexto === t.id) {
+      // escribiendo el texto nuevo: Intro o salir de la casilla guarda, Esc deja el de antes
+      var inp = document.createElement('input'); inp.type = 'text'; inp.className = 'edit'; inp.value = t.texto; inp.maxLength = 300;
+      inp.setAttribute('aria-label', 'Texto de la tarea');
+      var cerrado = false;
+      function acaba(guardar){
+        if (cerrado) return; cerrado = true;
+        var v = inp.value.trim();
+        editandoTexto = null; editando = null;
+        if (guardar && v && v !== t.texto) cambia(t.id, function(x){ x.texto = v; }); else render();
+      }
+      inp.addEventListener('keydown', function(ev){
+        if (ev.key === 'Enter') { ev.preventDefault(); acaba(true); }
+        else if (ev.key === 'Escape') { ev.preventDefault(); acaba(false); }
+      });
+      inp.addEventListener('blur', function(){ acaba(true); });
+      txt.appendChild(inp);
+      var ay = document.createElement('span'); ay.className = 'ayuda'; ay.textContent = 'Intro para guardar · Esc para dejarlo como estaba';
+      txt.appendChild(ay);
+      setTimeout(function(){ inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }, 0);
+      div.appendChild(cb); div.appendChild(txt); li.appendChild(div);
+      return li;
+    }
     var tb = document.createElement('button'); tb.type = 'button'; tb.className = 't'; tb.textContent = t.texto;
-    tb.title = 'Tocar para mostrar o esconder "quitar"';
+    tb.title = 'Tocar para mostrar o esconder las opciones';
     tb.addEventListener('click', function(){ editando = editando === t.id ? null : t.id; render(); });
     txt.appendChild(tb);
     if (t.nota) { var n = document.createElement('span'); n.className = 'nota'; n.textContent = t.nota; txt.appendChild(n); }
 
     var det = document.createElement('div'); det.className = 'det';
+    var conFecha = t.lista === 'tareas';
+    if (conFecha) {
     var q = document.createElement('button'); q.type = 'button'; q.className = 'quien ' + (t.quien || 'dos');
     q.textContent = QUIEN[t.quien || 'dos']; q.title = 'Tocar para cambiar quién';
     q.addEventListener('click', function(){ cambia(t.id, function(x){ x.quien = CICLO[x.quien || 'dos']; }); });
@@ -380,6 +458,11 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       sf.addEventListener('click', function(){ cambia(t.id, function(x){ x.fecha = ''; }); });
       det.appendChild(sf);
     }
+    }
+    var ed = document.createElement('button'); ed.type = 'button'; ed.className = 'editar'; ed.textContent = 'Cambiar el texto';
+    ed.setAttribute('aria-label', 'Cambiar el texto: ' + t.texto);
+    ed.addEventListener('click', function(){ editandoTexto = t.id; render(); });
+    det.appendChild(ed);
     var del = document.createElement('button'); del.type = 'button'; del.className = 'quitar'; del.textContent = 'Quitar de la lista';
     del.addEventListener('click', function(){ editando = null; cambia(t.id, null); });
     det.appendChild(del);
@@ -387,6 +470,95 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     txt.appendChild(det);
     div.appendChild(cb); div.appendChild(txt);
     li.appendChild(div);
+    return li;
+  }
+
+  // --- comida: cantidades, precio por unidad, total y quién pagó ---
+  function renderComida(){
+    var items = estado.items.filter(function(t){ return t.lista === 'comida'; });
+    var cont = grupos.comida, res = document.getElementById('resumen-comida');
+    // resumen
+    var previsto = 0, sinPrecio = 0, pagado = { lucia: 0, marga: 0 }, comprado = 0;
+    items.forEach(function(t){
+      var tot = totalDe(t);
+      if (tot === null) { sinPrecio++; return; }
+      previsto += tot;
+      if (t.hecho) comprado += tot;
+      if (t.pagado === 'lucia' || t.pagado === 'marga') pagado[t.pagado] += tot;
+    });
+    res.innerHTML = '';
+    function linea(a, b, clase){ var d = document.createElement('div'); d.className = 'linea' + (clase ? ' ' + clase : ''); var s1 = document.createElement('span'); s1.textContent = a; var s2 = document.createElement('span'); s2.textContent = b; d.appendChild(s1); d.appendChild(s2); res.appendChild(d); }
+    linea('Presupuesto', eur(PRESUPUESTO));
+    linea('Previsto' + (sinPrecio ? ' (' + sinPrecio + ' sin precio)' : ''), eur(previsto));
+    var resto = PRESUPUESTO - previsto;
+    linea(resto >= 0 ? 'Queda' : 'Se pasa', eur(Math.abs(resto)), resto < 0 ? 'mal' : '');
+    if (pagado.lucia || pagado.marga) {
+      if (pagado.lucia) linea('Ha pagado Lucía (a devolver)', eur(pagado.lucia));
+      if (pagado.marga) linea('Ha pagado Marga (a devolver)', eur(pagado.marga));
+    }
+    if (comprado) linea('Comprado hasta ahora', eur(comprado));
+    // lista
+    cont.innerHTML = '';
+    if (!items.length) { var p = document.createElement('p'); p.className = 'vacio'; p.textContent = 'Nada apuntado todavía. Pon qué comida, cuánta y a qué precio.'; cont.appendChild(p); return; }
+    var ul = document.createElement('ul'); ul.className = 'grupo';
+    items.forEach(function(t){ ul.appendChild(editandoTexto === t.id ? filaComidaEdit(t) : filaComida(t)); });
+    var sec = document.createElement('section'); sec.className = 'grupo'; sec.appendChild(ul); cont.appendChild(sec);
+  }
+  function filaComida(t){
+    var li = document.createElement('li');
+    var div = document.createElement('div'); div.className = 'item comida' + (t.hecho ? ' hecha' : ''); div.dataset.id = t.id;
+    var cb = document.createElement('button'); cb.type = 'button'; cb.className = 'caja-btn';
+    cb.setAttribute('role', 'checkbox'); cb.setAttribute('aria-checked', String(!!t.hecho));
+    cb.setAttribute('aria-label', (t.hecho ? 'Desmarcar comprado: ' : 'Marcar comprado: ') + t.texto);
+    cb.innerHTML = '<span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span>';
+    cb.addEventListener('click', function(){ cambia(t.id, function(x){ x.hecho = !x.hecho; }); });
+    var txt = document.createElement('div'); txt.className = 'txt';
+    var tb = document.createElement('button'); tb.type = 'button'; tb.className = 't'; tb.textContent = t.texto; tb.title = 'Tocar para cambiar nombre, cantidad o precio';
+    tb.addEventListener('click', function(){ editandoTexto = t.id; render(); });
+    txt.appendChild(tb);
+    var det = document.createElement('div'); det.className = 'det';
+    var c = num(t.cantidad), p = num(t.precio);
+    var dc = document.createElement('button'); dc.type = 'button';
+    dc.textContent = cant(c === null ? 1 : c, t.unidad) + (p !== null ? ' a ' + eur(p) : ' · sin precio');
+    dc.title = 'Tocar para cambiar cantidad o precio';
+    dc.addEventListener('click', function(){ editandoTexto = t.id; render(); });
+    det.appendChild(dc);
+    var pg = document.createElement('button'); pg.type = 'button'; pg.className = 'pago ' + (t.pagado || ''); pg.textContent = PAGO[t.pagado || ''];
+    pg.title = 'Tocar para cambiar quién lo pagó';
+    pg.addEventListener('click', function(){ cambia(t.id, function(x){ x.pagado = CICLO_PAGO[x.pagado || '']; if (x.pagado) x.hecho = true; }); });
+    det.appendChild(pg);
+    txt.appendChild(det);
+    var tot = document.createElement('div'); tot.className = 'total'; var tv = totalDe(t); tot.textContent = tv === null ? '—' : eur(tv);
+    div.appendChild(cb); div.appendChild(txt); div.appendChild(tot);
+    li.appendChild(div);
+    return li;
+  }
+  function filaComidaEdit(t){
+    var li = document.createElement('li');
+    var f = document.createElement('form'); f.className = 'campos form-edit'; f.autocomplete = 'off';
+    f.innerHTML = '<div class="fila"><input type="text" name="texto" maxlength="300" aria-label="Qué comida"></div>'
+      + '<div class="fila"><input type="text" class="num" name="cantidad" inputmode="decimal" aria-label="Cantidad">'
+      + '<select name="unidad" aria-label="Unidad"><option value="ud">ud</option><option value="kg">kg</option><option value="g">g</option><option value="l">l</option><option value="paq">paq.</option></select>'
+      + '<span class="uni">a</span><input type="text" class="num precio" name="precio" inputmode="decimal" placeholder="€/ud" aria-label="Precio por unidad"></div>'
+      + '<div class="fila"><button type="button" class="peligro">Quitar de la lista</button><button type="button" class="secundario">Cancelar</button><button type="submit">Guardar</button></div>';
+    f.elements.texto.value = t.texto;
+    f.elements.cantidad.value = num(t.cantidad) === null ? '1' : String(num(t.cantidad)).replace('.', ',');
+    f.elements.unidad.value = UNIDAD[t.unidad] ? t.unidad : 'ud';
+    f.elements.precio.value = num(t.precio) === null ? '' : String(num(t.precio)).replace('.', ',');
+    f.elements.precio.placeholder = '€/' + UNIDAD[f.elements.unidad.value];
+    f.elements.unidad.addEventListener('change', function(){ f.elements.precio.placeholder = '€/' + UNIDAD[f.elements.unidad.value]; });
+    f.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var v = f.elements.texto.value.trim(); if (!v) { f.elements.texto.focus(); return; }
+      var c = num(f.elements.cantidad.value), u = f.elements.unidad.value, p = num(f.elements.precio.value);
+      editandoTexto = null;
+      cambia(t.id, function(x){ x.texto = v; x.cantidad = c === null || c < 0 ? 1 : c; x.unidad = u; x.precio = p === null || p < 0 ? null : p; });
+    });
+    f.querySelector('.secundario').addEventListener('click', function(){ editandoTexto = null; render(); });
+    f.querySelector('.peligro').addEventListener('click', function(){ editandoTexto = null; cambia(t.id, null); });
+    f.addEventListener('keydown', function(ev){ if (ev.key === 'Escape') { ev.preventDefault(); editandoTexto = null; render(); } });
+    li.appendChild(f);
+    setTimeout(function(){ f.elements.texto.focus(); }, 0);
     return li;
   }
 
@@ -587,11 +759,19 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     f.addEventListener('submit', function(ev){
       ev.preventDefault();
       var v = texto.value.trim(); if (!v) return;
-      var nuevo = { id: 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), lista: f.dataset.lista, texto: v, fecha: f.elements.fecha.value || '', quien: f.elements.quien.value, hecho: false };
-      texto.value = ''; f.elements.fecha.value = ''; btn.disabled = true;
+      var nuevo = { id: 'u' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), lista: f.dataset.lista, texto: v, fecha: '', quien: '', hecho: false };
+      if (f.dataset.lista === 'tareas') { nuevo.fecha = f.elements.fecha.value || ''; nuevo.quien = f.elements.quien.value; f.elements.fecha.value = ''; }
+      if (f.dataset.lista === 'comida') {
+        var c = num(f.elements.cantidad.value), p = num(f.elements.precio.value);
+        nuevo.cantidad = c === null || c < 0 ? 1 : c; nuevo.unidad = f.elements.unidad.value; nuevo.precio = p === null || p < 0 ? null : p; nuevo.pagado = '';
+        f.elements.cantidad.value = '1'; f.elements.precio.value = ''; f.elements.unidad.value = 'ud'; f.elements.precio.placeholder = '€/ud';
+      }
+      texto.value = ''; btn.disabled = true;
       guarda(function(items){ items.push(nuevo); });
     });
   });
+
+  (function(){ var f = document.querySelector('form[data-lista="comida"]'); f.elements.unidad.addEventListener('change', function(){ f.elements.precio.placeholder = '€/' + UNIDAD[f.elements.unidad.value]; }); })();
 
   // --- cambios y guardado con versión ---
   // base = último estado confirmado por el servidor; ops = cambios aún no confirmados.
@@ -635,7 +815,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
 
   // --- cargar y refrescar ---
   function carga(silencio){
-    if (guardando || ops.length) return;
+    if (guardando || ops.length || editandoTexto) return;
     fetch(API, { cache: 'no-store' })
       .then(function(r){ if (r.status === 401) { location.replace('tareas'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function(j){ if (j.v !== base.v || !silencio) { base = { v: j.v, items: j.items || [] }; refresca(); } })
