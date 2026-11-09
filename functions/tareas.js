@@ -1,4 +1,5 @@
 // Puerta de /tareas: con la cookie de acceso sirve la página (dist/tareas.html); sin ella, pide la contraseña.
+// La puerta no dice qué hay detrás (petición de Lucía, 2026-11-09): solo la hoguera, la casilla y Entrar.
 import { tieneAcceso, entrar } from "../lib/acceso.js";
 
 function pagina(error) {
@@ -7,35 +8,27 @@ function pagina(error) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Antes del retiro · Presencia y Celebración</title>
+<title>Presencia y Celebración</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="favicon.svg?v=hoguera" type="image/svg+xml">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png?v=hoguera">
 <meta name="theme-color" content="#FFFFFF">
 <style>
-@font-face{font-family:'Young Serif';font-style:normal;font-weight:400;font-display:block;src:url(fonts/young-serif-400.woff2) format('woff2')}
-@font-face{font-family:'Homemade Apple';font-style:normal;font-weight:400;font-display:block;src:url(fonts/homemade-apple-400.woff2) format('woff2')}
 @font-face{font-family:'Work Sans';font-style:normal;font-weight:300;font-display:block;src:url(fonts/work-sans-300.woff2) format('woff2')}
 @font-face{font-family:'Work Sans';font-style:normal;font-weight:400;font-display:block;src:url(fonts/work-sans-400.woff2) format('woff2')}
 :root{--fondo:#FFFFFF;--tinta:#141414;--tinta-2:#4F4F4F;--plata:#8C8C8C;--acento:#D9418C;--rojo:#C8402E;--line:rgba(20,20,20,.14);color-scheme:light}
 *{box-sizing:border-box}
 body{margin:0;background:var(--fondo);color:var(--tinta);font-family:'Work Sans',system-ui,sans-serif;font-weight:300;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
-.hoja{max-width:600px;margin-inline:auto;padding:clamp(2.5rem,7vw,4.5rem) clamp(20px,6vw,40px) 3rem}
+.hoja{max-width:600px;margin-inline:auto;padding:clamp(4rem,14vh,8rem) clamp(20px,6vw,40px) 3rem}
 .cab{display:grid;justify-items:center;text-align:center;gap:.4rem;margin-bottom:clamp(1.8rem,5vw,2.6rem)}
 .cab .marca{width:58px;height:65px;color:var(--tinta)}
-.cab .nombre{font-family:'Young Serif',Georgia,serif;font-size:1rem;margin-top:.6rem}
-.cab h1{font-family:'Homemade Apple',cursive;font-weight:400;font-size:clamp(1.9rem,6.5vw,2.6rem);line-height:1.6;margin:.3em 0 .2em}
-.cab .meta{font-weight:400;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--plata);line-height:1.9;margin:0}
-.cab .meta span{display:block}
-form{display:grid;gap:1rem;max-width:380px;margin:2rem auto 0}
-label{font-weight:300;font-size:1rem;color:var(--tinta-2);line-height:1.5}
-input{all:unset;display:block;width:100%;font-weight:300;font-size:1.15rem;line-height:1.4;padding:.45rem 0;border-bottom:1px solid var(--tinta);color:var(--tinta)}
+form{display:grid;gap:1rem;max-width:300px;margin:1.5rem auto 0;justify-items:center}
+input{all:unset;display:block;width:100%;text-align:center;font-weight:300;font-size:1.15rem;line-height:1.4;padding:.45rem 0;border-bottom:1px solid var(--tinta);color:var(--tinta)}
+input::placeholder{color:var(--plata)}
 input:focus-visible{border-bottom-color:var(--acento)}
-button{all:unset;cursor:pointer;justify-self:start;font-weight:400;font-size:.9rem;letter-spacing:.06em;color:var(--tinta);border-bottom:1px solid currentColor;line-height:1.3;padding-bottom:.1em;margin-top:.4rem}
+button{all:unset;cursor:pointer;font-weight:400;font-size:.9rem;letter-spacing:.06em;color:var(--tinta);border-bottom:1px solid currentColor;line-height:1.3;padding-bottom:.1em;margin-top:.4rem}
 button:focus-visible{outline:2px solid var(--acento);outline-offset:4px}
 .error{color:var(--rojo);font-size:.9rem;margin:0}
-footer{margin-top:3rem;padding-top:1.6rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--tinta-2)}
-footer .fname{font-family:'Young Serif',Georgia,serif;font-size:.95rem;color:var(--tinta);display:block;margin-bottom:.2em}
 </style>
 </head>
 <body>
@@ -46,17 +39,12 @@ footer .fname{font-family:'Young Serif',Georgia,serif;font-size:.95rem;color:var
 <main class="hoja">
   <header class="cab">
     <svg class="marca" viewBox="50 36 100 112" aria-hidden="true"><use href="#hoguera"/></svg>
-    <div class="nombre">Presencia y Celebración</div>
-    <h1>Antes del retiro</h1>
-    <p class="meta"><span>20, 21 y 22 de noviembre</span><span>Sant Salvador de Bellver</span></p>
   </header>
   <form method="post" action="tareas" autocomplete="off">
-    <label for="clave">Esta lista es de Lucía y Marga. Escribe la contraseña:</label>
-    <input type="password" id="clave" name="clave" autofocus autocapitalize="off" autocomplete="current-password" required>
+    <input type="password" id="clave" name="clave" placeholder="Contraseña" aria-label="Contraseña" autofocus autocapitalize="off" autocomplete="current-password" required>
     ${error ? '<p class="error">No es esa.</p>' : ''}
     <button type="submit">Entrar</button>
   </form>
-  <footer><span class="fname">Presencia y Celebración</span>Margarita Margenat &amp; Lucía Echenique · Sant Salvador de Bellver</footer>
 </main>
 </body>
 </html>
