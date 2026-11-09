@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Hoja de información y compromiso · Presencia y Celebración</title>
+<style>
+@font-face{font-family:'Young Serif';font-style:normal;font-weight:400;src:url(../../fonts/young-serif-400.woff2) format('woff2')}
+@font-face{font-family:'Homemade Apple';font-style:normal;font-weight:400;src:url(../../fonts/homemade-apple-400.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:300;src:url(../../fonts/work-sans-300.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:400;src:url(../../fonts/work-sans-400.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:500;src:url(../../fonts/work-sans-500.woff2) format('woff2')}
+:root{
+  --fondo:#FFFFFF; --tinta:#141414; --tinta-2:#4F4F4F; --plata:#8C8C8C;
+  --acento:#D9418C; --line:rgba(20,20,20,.16);
+  --serif:'Young Serif',Georgia,serif; --mano:'Homemade Apple',cursive; --sans:'Work Sans',system-ui,sans-serif;
+}
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--fondo);color:var(--tinta)}
+body{font-family:var(--sans);font-weight:300;font-size:9.1pt;line-height:1.4;-webkit-font-smoothing:antialiased;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+p{margin:0;color:var(--tinta-2)}
+.hoja{width:210mm;height:297mm;overflow:hidden;padding:11mm 16mm 9mm;display:flex;flex-direction:column}
+
+/* cabecera */
+.cab{display:grid;grid-template-columns:1fr auto;gap:4mm 8mm;align-items:start;margin-bottom:3mm}
+.cab .nombre{font-family:var(--serif);font-size:9.5pt;color:var(--tinta)}
+.cab h1{font-family:var(--mano);font-weight:400;font-size:19pt;line-height:1.55;margin:.05em 0 .05em;color:var(--tinta)}
+.cab .sub{font-family:var(--serif);font-size:11.5pt;color:var(--tinta);margin:0}
+.cab .meta{font-weight:400;font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--plata);line-height:1.9;margin:1.5mm 0 0}
+.cab .meta span+span::before{content:"·";margin:0 .7em;color:var(--plata)}
+.marca{width:48px;height:54px;color:var(--tinta);margin-top:1mm}
+
+.lede{font-family:var(--serif);font-size:9.6pt;line-height:1.42;color:var(--tinta);max-width:44em;margin:0 0 3mm}
+
+/* bloques */
+.bloque{border-top:1px solid var(--line);padding:2.6mm 0 2.4mm}
+h2{font-family:var(--serif);font-weight:400;font-size:11pt;line-height:1.2;margin:0 0 1.6mm;color:var(--tinta)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:0 9mm}
+
+ul{list-style:none;margin:0;padding:0}
+.asumo li{display:grid;grid-template-columns:4.2mm 1fr;gap:0 2.6mm;padding:1mm 0;color:var(--tinta-2)}
+.asumo li::before{content:"";width:3.2mm;height:3.2mm;margin-top:1.4mm;border:1px solid var(--tinta);border-radius:1px}
+.asumo b{font-weight:400;color:var(--tinta)}
+
+/* datos */
+.campos{display:grid;grid-template-columns:1fr 1fr;gap:2.2mm 7mm;margin-top:.5mm}
+.campo{display:flex;flex-direction:column;gap:0}
+.campo span{font-weight:400;font-size:7pt;letter-spacing:.1em;text-transform:uppercase;color:var(--plata)}
+.campo i{display:block;height:6.2mm;border-bottom:1px solid var(--tinta)}
+.campo.ancho{grid-column:1/-1}
+
+/* fotos */
+.imagen{display:grid;grid-template-columns:1fr 1fr;gap:2mm 7mm}
+.opcion{display:grid;grid-template-columns:4.2mm 1fr;gap:0 2.6mm;color:var(--tinta-2);padding:.6mm 0}
+.opcion::before{content:"";width:3.6mm;height:3.6mm;margin-top:.8mm;border:1px solid var(--tinta);border-radius:1px}
+.opcion b{font-weight:400;color:var(--tinta)}
+
+/* firma */
+.firma{border-top:1px solid var(--line);padding-top:2.6mm;display:grid;grid-template-columns:1fr 1.1fr 1.4fr;gap:0 8mm;align-items:end}
+.firma .campo i{height:11mm}
+.firma .acuerdo{font-family:var(--serif);font-size:10pt;color:var(--tinta);line-height:1.35;align-self:end;padding-bottom:.5mm}
+
+.datos{font-size:7.4pt;line-height:1.38;color:var(--tinta-2);margin-top:auto;padding-top:2.4mm;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:0 8mm;align-items:end}
+.datos b{font-weight:400;color:var(--tinta)}
+.estrellas{color:var(--tinta);opacity:.55;width:64px;height:40px;display:block}
+footer{padding-top:2.2mm;font-size:7.4pt;color:var(--tinta-2);display:flex;justify-content:space-between;align-items:flex-end}
+footer .fname{font-family:var(--serif);font-size:8.6pt;color:var(--tinta);display:block;margin-bottom:.15em}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="pulso" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+<g id="hoguera" filter="url(#pulso)" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M62,138 L140,120 M60,122 L138,140 M100,144 L100,128" stroke="currentColor" stroke-width="7"/><path d="M100,112 C84,100 82,84 92,70 C92,82 98,86 100,92 C104,80 100,66 110,54 C112,74 124,80 124,98 C124,108 114,118 100,118 C92,118 86,112 86,104" style="stroke:var(--acento)" stroke-width="7"/><circle cx="120" cy="44" r="4" style="fill:var(--acento)"/><circle cx="84" cy="52" r="3.2" style="fill:var(--acento)"/><circle cx="130" cy="62" r="3" style="fill:var(--acento)"/></g>
+<g id="palitos" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M0,-9 L0,9 M-8,-4.5 L8,4.5 M-8,4.5 L8,-4.5"/></g>
+<g id="palitos4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M0,-9 L0,9 M-9,0 L9,0 M-6,-6 L6,6 M-6,6 L6,-6"/></g>
+<g id="cielo-chico" filter="url(#pulso)"><use href="#palitos" transform="translate(20,30) scale(1.1)"/><use href="#palitos4" transform="translate(84,14) scale(.8)"/><use href="#palitos" transform="translate(140,48) scale(.7)"/><use href="#palitos4" transform="translate(58,78) scale(.6)"/></g>
+</defs></svg>
+
+<main class="hoja">
+  <header class="cab">
+    <div>
+      <div class="nombre">Presencia y Celebración</div>
+      <h1>Antes de empezar</h1>
+      <p class="sub">Hoja de información y compromiso</p>
+      <p class="meta"><span>20, 21 y 22 de noviembre de 2026</span><span>Sant Salvador de Bellver</span></p>
+    </div>
+    <svg class="marca" viewBox="50 36 100 112" aria-hidden="true"><use href="#hoguera"/></svg>
+  </header>
+
+  <p class="lede">Este retiro es un espacio de autocuidado. Nosotras acompañamos y sostenemos el grupo; cada una es la primera responsable de escuchar su cuerpo, sus límites y lo que necesita. Aquí tienes lo que conviene saber antes de empezar y lo que te pedimos que asumas.</p>
+
+  <section class="bloque">
+    <h2>Cómo es el retiro</h2>
+    <div class="cols">
+      <p>Del viernes 20 al domingo 22 de noviembre en la ermita de Sant Salvador de Bellver, en Sant Boi de Lluçanès. Practicaremos yoga suave, meditación y dinámicas de presencia y celebración en grupo. Ninguna actividad es obligatoria.</p>
+      <p>Daremos un paseo por el entorno de la ermita: camino de montaña, con algo de desnivel, en pleno otoño. El retiro es a donación y lo acompañamos Margarita Margenat y Lucía Echenique como terapeutas. No es un tratamiento médico ni psicológico, ni lo sustituye.</p>
+    </div>
+  </section>
+
+  <section class="bloque">
+    <h2>Lo que asumo al participar</h2>
+    <ul class="asumo">
+      <li><span><b>Participo de forma voluntaria.</b> Puedo parar, descansar o no hacer cualquier actividad, en cualquier momento, sin dar explicaciones.</span></li>
+      <li><span><b>El paseo lo hago a mi ritmo y por mi propio pie.</b> Margarita y Lucía caminan con nosotras, pero no son guías de montaña. Llevaré calzado adecuado y agua, avisaré si necesito parar y puedo quedarme en la casa si lo prefiero.</span></li>
+      <li><span><b>Me encuentro en condiciones físicas y emocionales para participar.</b> He anotado abajo cualquier cuestión de salud que convenga conocer y, si algo cambia durante el fin de semana, lo diré.</span></li>
+      <li><span><b>Entiendo que las organizadoras no responden de los daños o accidentes</b> que se deriven de mis propias decisiones, de mi estado de salud o de no seguir las indicaciones de seguridad que se den.</span></li>
+      <li><span><b>Cuido la casa, el espacio y la intimidad del grupo.</b> Lo que se comparte en el retiro se queda en el retiro.</span></li>
+      <li><span><b>En caso de urgencia,</b> autorizo a que se avise a los servicios de emergencia y a mi contacto de emergencia, y a que se les facilite la información de salud que he anotado.</span></li>
+    </ul>
+  </section>
+
+  <section class="bloque">
+    <h2>Mis datos</h2>
+    <div class="campos">
+      <label class="campo"><span>Nombre y apellidos</span><i></i></label>
+      <label class="campo"><span>DNI</span><i></i></label>
+      <label class="campo"><span>Teléfono</span><i></i></label>
+      <label class="campo"><span>Contacto de emergencia (nombre y teléfono)</span><i></i></label>
+      <label class="campo ancho"><span>Alergias, medicación, lesiones u otra información de salud que convenga conocer</span><i></i><i></i></label>
+    </div>
+  </section>
+
+  <section class="bloque">
+    <h2>Fotos</h2>
+    <div class="imagen">
+      <div class="opcion"><span><b>Sí</b>, podéis usar fotos en las que aparezca en la web y las redes del retiro.</span></div>
+      <div class="opcion"><span><b>Prefiero no aparecer</b> en las fotos que se publiquen.</span></div>
+    </div>
+  </section>
+
+  <section class="firma">
+    <p class="acuerdo">He leído esta hoja y estoy de acuerdo.</p>
+    <label class="campo"><span>Fecha</span><i></i></label>
+    <label class="campo"><span>Firma</span><i></i></label>
+  </section>
+
+  <div class="datos">
+    <p><b>Tus datos.</b> La información de esta hoja la usaremos solo durante el retiro y para lo que indica. La guardaremos en un lugar cerrado durante tres años, por si hiciera falta, y después la destruiremos. Las responsables somos Margarita Margenat y Lucía Echenique; puedes pedirnos verla, corregirla o borrarla cuando quieras.</p>
+    <svg class="estrellas" viewBox="0 0 160 96" aria-hidden="true"><use href="#cielo-chico"/></svg>
+  </div>
+
+  <footer>
+    <div><span class="fname">Presencia y Celebración</span>Margarita Margenat &amp; Lucía Echenique · Sant Salvador de Bellver</div>
+    <div>www.tribuconecta.site</div>
+  </footer>
+</main>
+</body>
+</html>
