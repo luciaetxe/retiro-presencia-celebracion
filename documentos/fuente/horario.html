@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Horario · Presencia y Celebración</title>
+<style>
+@font-face{font-family:'Young Serif';font-style:normal;font-weight:400;src:url(../../fonts/young-serif-400.woff2) format('woff2')}
+@font-face{font-family:'Homemade Apple';font-style:normal;font-weight:400;src:url(../../fonts/homemade-apple-400.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:300;src:url(../../fonts/work-sans-300.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-style:normal;font-weight:400;src:url(../../fonts/work-sans-400.woff2) format('woff2')}
+:root{
+  --fondo:#FFFFFF; --tinta:#141414; --tinta-2:#4F4F4F; --plata:#8C8C8C;
+  --acento:#D9418C; --line:rgba(20,20,20,.16); --caja:rgba(20,20,20,.32);
+  --serif:'Young Serif',Georgia,serif; --mano:'Homemade Apple',cursive; --sans:'Work Sans',system-ui,sans-serif;
+}
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--fondo);color:var(--tinta)}
+body{font-family:var(--sans);font-weight:300;font-size:9.2pt;line-height:1.4;-webkit-font-smoothing:antialiased;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+p{margin:0;color:var(--tinta-2)}
+.hoja{width:210mm;height:297mm;overflow:hidden;padding:12mm 14mm 9mm;display:flex;flex-direction:column;break-after:page}
+.hoja:last-child{break-after:auto}
+
+/* cabecera */
+.cab{display:grid;grid-template-columns:1fr auto;gap:0 8mm;align-items:start;margin-bottom:6mm}
+.cab .nombre{font-family:var(--serif);font-size:9.5pt;color:var(--tinta)}
+.cab h1{font-family:var(--mano);font-weight:400;font-size:26pt;line-height:1.55;margin:.05em 0 0;color:var(--tinta)}
+.cab .meta{font-weight:400;font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--plata);line-height:1.9;margin:1mm 0 0}
+.cab .meta span+span::before{content:"·";margin:0 .7em;color:var(--plata)}
+.marca{width:52px;height:58px;color:var(--tinta);margin-top:1mm}
+
+/* rejilla del día */
+.plano{flex:1;display:grid;grid-template-columns:24mm 1fr 46mm;grid-template-rows:auto repeat(8,1fr);gap:2.4mm;min-height:0}
+.col{font-weight:400;font-size:6.8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--plata);padding:0 0 1.2mm 1mm;border-bottom:1px solid var(--tinta);align-self:end}
+.cuadro{border:1px solid var(--caja);border-radius:1.5px}
+.cuadro.hora{position:relative}
+.cuadro.hora::after{content:"h";position:absolute;right:2mm;bottom:1.6mm;font-size:7pt;color:var(--plata);font-weight:400}
+
+/* pie práctico */
+.practico{margin-top:5mm;padding-top:3.2mm;border-top:1px solid var(--line);display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:2.6mm 6mm}
+.campo{display:flex;flex-direction:column}
+.campo span{font-weight:400;font-size:6.6pt;letter-spacing:.12em;text-transform:uppercase;color:var(--plata)}
+.campo i{display:block;height:6mm;border-bottom:1px solid var(--tinta)}
+.campo.fijo{justify-content:flex-end}
+.campo.fijo b{font-family:var(--serif);font-weight:400;font-size:12pt;color:var(--tinta);line-height:1;padding-bottom:1.2mm}
+
+footer{padding-top:2.4mm;margin-top:2.6mm;border-top:1px solid var(--line);font-size:7.4pt;color:var(--tinta-2);display:flex;justify-content:space-between;align-items:flex-end}
+footer .fname{font-family:var(--serif);font-size:8.6pt;color:var(--tinta);display:block;margin-bottom:.15em}
+.estrellas{color:var(--tinta);opacity:.55;width:64px;height:40px;display:block}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="pulso" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+<g id="hoguera" filter="url(#pulso)" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M62,138 L140,120 M60,122 L138,140 M100,144 L100,128" stroke="currentColor" stroke-width="7"/><path d="M100,112 C84,100 82,84 92,70 C92,82 98,86 100,92 C104,80 100,66 110,54 C112,74 124,80 124,98 C124,108 114,118 100,118 C92,118 86,112 86,104" style="stroke:var(--acento)" stroke-width="7"/><circle cx="120" cy="44" r="4" style="fill:var(--acento)"/><circle cx="84" cy="52" r="3.2" style="fill:var(--acento)"/><circle cx="130" cy="62" r="3" style="fill:var(--acento)"/></g>
+<g id="palitos" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M0,-9 L0,9 M-8,-4.5 L8,4.5 M-8,4.5 L8,-4.5"/></g>
+<g id="palitos4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M0,-9 L0,9 M-9,0 L9,0 M-6,-6 L6,6 M-6,6 L6,-6"/></g>
+<g id="cielo-chico" filter="url(#pulso)"><use href="#palitos" transform="translate(20,30) scale(1.1)"/><use href="#palitos4" transform="translate(84,14) scale(.8)"/><use href="#palitos" transform="translate(140,48) scale(.7)"/><use href="#palitos4" transform="translate(58,78) scale(.6)"/></g>
+</defs></svg>
+
+<!-- Las tres hojas se generan con el script de abajo a partir de esta plantilla -->
+<template id="dia">
+<main class="hoja">
+  <header class="cab">
+    <div>
+      <div class="nombre">Presencia y Celebración</div>
+      <h1 class="titulo"></h1>
+      <p class="meta"><span class="fecha"></span><span>Sant Salvador de Bellver</span></p>
+    </div>
+    <svg class="marca" viewBox="50 36 100 112" aria-hidden="true"><use href="#hoguera"/></svg>
+  </header>
+
+  <section class="plano">
+    <div class="col">Hora</div>
+    <div class="col">Qué</div>
+    <div class="col">Dónde</div>
+  </section>
+
+  <section class="practico">
+    <label class="campo"><span>Wifi y contraseña</span><i></i></label>
+    <label class="campo"><span>Lucía</span><i></i></label>
+    <label class="campo"><span>Margarita</span><i></i></label>
+    <div class="campo fijo"><span>Emergencias</span><b>112</b></div>
+  </section>
+
+  <footer>
+    <div><span class="fname">Presencia y Celebración</span>Margarita Margenat &amp; Lucía Echenique · Sant Salvador de Bellver</div>
+    <svg class="estrellas" viewBox="0 0 160 96" aria-hidden="true"><use href="#cielo-chico"/></svg>
+  </footer>
+</main>
+</template>
+
+<script>
+(function(){
+  var dias = [["Viernes","20 de noviembre de 2026"],["Sábado","21 de noviembre de 2026"],["Domingo","22 de noviembre de 2026"]];
+  var t = document.getElementById('dia');
+  dias.forEach(function(d){
+    var n = t.content.cloneNode(true);
+    n.querySelector('.titulo').textContent = d[0];
+    n.querySelector('.fecha').textContent = d[1];
+    var plano = n.querySelector('.plano');
+    for (var i = 0; i < 8; i++) {
+      ['hora','que','donde'].forEach(function(c){
+        var q = document.createElement('div'); q.className = 'cuadro ' + c; plano.appendChild(q);
+      });
+    }
+    document.body.appendChild(n);
+  });
+})();
+</script>
+</body>
+</html>

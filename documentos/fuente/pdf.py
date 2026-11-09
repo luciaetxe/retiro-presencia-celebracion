@@ -19,5 +19,9 @@ subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--no-pdf-header-foot
                 "--virtual-time-budget=4000", f"--print-to-pdf={pdf}", src.as_uri()], check=True)
 doc = pymupdf.open(pdf)
 print("páginas:", len(doc))
-doc[0].get_pixmap(dpi=200).save(png)
+if len(doc) == 1:
+    doc[0].get_pixmap(dpi=200).save(png)
+else:
+    for i, pag in enumerate(doc, 1):
+        pag.get_pixmap(dpi=200).save(ROOT / "documentos" / f"{nombre}-{i}.png")
 print("ok", pdf, png)
