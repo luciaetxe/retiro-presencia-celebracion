@@ -17,7 +17,7 @@ async function leer(env) {
   try { return JSON.parse(raw); } catch (e) { return { v: 0, items: [] }; }
 }
 
-// Listas: "tareas" (fecha y quién), "llevar" (solo texto) y "comida" (cantidad, unidad, precio por unidad, quién pagó).
+// Listas: "tareas" (fecha y quién), "llevar" (solo texto) y "comida" (cantidad, unidad, precio por unidad, con qué dinero se pagó: retiro/lucia/marga, dónde se compra).
 function numOk(v, max) { return typeof v === "number" && isFinite(v) && v >= 0 && v <= max; }
 function itemValido(t) {
   if (!(t && typeof t.id === "string" && t.id.length <= 40
@@ -31,8 +31,11 @@ function itemValido(t) {
   return numOk(t.cantidad, 99999)
     && typeof t.unidad === "string" && t.unidad.length <= 8
     && (t.precio === null || numOk(t.precio, 99999))
-    && (t.pagado === "" || t.pagado === "lucia" || t.pagado === "marga");
+    && (t.pagado === "" || t.pagado === "retiro" || t.pagado === "lucia" || t.pagado === "marga")
+    && (t.sitio === undefined || t.sitio === "" || SITIOS.includes(t.sitio));
 }
+// Dónde se compra cada comida (los antiguos sin sitio se enseñan en "Otros").
+const SITIOS = ["mercadillo", "carniceria", "super", "casa", "otros"];
 
 export async function onRequestGet({ request, env }) {
   if (!await tieneAcceso(request, env)) return json({ error: "acceso" }, 401);

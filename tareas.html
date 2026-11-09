@@ -134,6 +134,15 @@ button{font:inherit;color:inherit}
 
 .vacio{padding:2rem 0;color:var(--plata);font-size:.95rem}
 
+/* filtros: ver solo lo de una, o lo pagado con cada dinero */
+.filtro{display:flex;flex-wrap:wrap;gap:.3rem 1.1rem;align-items:baseline;padding:.9rem 0 .2rem;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--plata)}
+.filtro span{letter-spacing:.06em}
+.filtro button{all:unset;cursor:pointer;color:var(--plata);letter-spacing:.1em;text-transform:uppercase;line-height:1.4;border-bottom:1px solid transparent;padding-bottom:.05em;-webkit-tap-highlight-color:transparent}
+.filtro button:hover{color:var(--tinta)}
+.filtro button[aria-pressed="true"]{color:var(--tinta);border-bottom-color:var(--tinta)}
+.filtro button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.resumen + .filtro{padding-top:.7rem}
+
 /* calendario */
 @media (min-width:760px){ .hoja.ancha{max-width:1120px} }
 .pista{font-size:.84rem;color:var(--plata);line-height:1.55;margin:.9rem 0 1.1rem;min-height:1.5em}
@@ -244,6 +253,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   </div>
 
   <section id="panel-tareas" role="tabpanel" aria-labelledby="tab-tareas">
+    <div class="filtro" id="filtro-quien" role="group" aria-label="Ver las tareas de"></div>
     <div class="grupos" data-lista="tareas"><p class="vacio">Cargando la lista…</p></div>
     <div class="anadir">
       <form class="campos" data-lista="tareas" autocomplete="off">
@@ -260,6 +270,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   <section id="panel-llevar" role="tabpanel" aria-labelledby="tab-llevar" hidden>
     <h2 class="sub">Comida</h2>
     <div class="resumen" id="resumen-comida"></div>
+    <div class="filtro" id="filtro-pago" role="group" aria-label="Ver lo pagado con"></div>
     <div class="grupos" data-lista="comida"><p class="vacio">Cargando la lista…</p></div>
     <div class="anadir">
       <form class="campos" data-lista="comida" autocomplete="off">
@@ -269,6 +280,10 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
           <select name="unidad" aria-label="Unidad"><option value="ud">ud</option><option value="kg">kg</option><option value="g">g</option><option value="l">l</option><option value="paq">paq.</option></select>
           <span class="uni">a</span>
           <input type="text" class="num precio" name="precio" inputmode="decimal" placeholder="€/ud" aria-label="Precio por unidad">
+        </div>
+        <div class="fila">
+          <span class="uni">en</span>
+          <select name="sitio" aria-label="Dónde se compra"><option value="super">Supermercado</option><option value="mercadillo">Mercadillo</option><option value="carniceria">Carnicería</option><option value="casa">Lo hace Lucía en casa</option><option value="otros">Otros</option></select>
           <button type="submit" disabled>Añadir</button>
         </div>
       </form>
@@ -329,9 +344,36 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   var QUIEN = { lucia: 'Lucía', marga: 'Marga', dos: 'Las dos', '': 'Las dos' };
   var CICLO = { dos: 'lucia', lucia: 'marga', marga: 'dos', '': 'lucia' };
   var PRESUPUESTO = 400;                                     // € para la comida
-  var PAGO = { '': 'Sin pagar', lucia: 'Pagó Lucía', marga: 'Pagó Marga' };
-  var CICLO_PAGO = { '': 'lucia', lucia: 'marga', marga: '' };
+  var PAGO = { '': 'Sin pagar', retiro: 'Dinero retiro', marga: 'Dinero Margarita', lucia: 'Dinero Lucía' };
+  var CICLO_PAGO = { '': 'retiro', retiro: 'marga', marga: 'lucia', lucia: '' };
+  var VACIO_PAGO = { retiro: 'Nada pagado con dinero del retiro.', marga: 'Nada pagado con dinero de Margarita.', lucia: 'Nada pagado con dinero de Lucía.', sin: 'Todo está pagado.' };
+  // filtros (se recuerdan en este dispositivo, no se comparten)
+  var FILTRO_QUIEN = [['', 'Todas'], ['lucia', 'Lucía'], ['marga', 'Marga']];   // «Las dos» cuenta para cada una
+  var FILTRO_PAGO = [['', 'Todo'], ['retiro', 'Dinero retiro'], ['marga', 'Dinero Margarita'], ['lucia', 'Dinero Lucía'], ['sin', 'Sin pagar']];
+  var filtroQuien = '', filtroPago = '';
+  try { filtroQuien = localStorage.getItem('tareas-filtro-quien') || ''; filtroPago = localStorage.getItem('tareas-filtro-pago') || ''; } catch (e) {}
+  if (!FILTRO_QUIEN.some(function(f){ return f[0] === filtroQuien; })) filtroQuien = '';
+  if (!FILTRO_PAGO.some(function(f){ return f[0] === filtroPago; })) filtroPago = '';
+  function esDe(t, q){ return !q || t.quien === q || t.quien === 'dos' || !t.quien; }
+  function pagadoCon(t, f){ return !f || (f === 'sin' ? !t.pagado : t.pagado === f); }
+  function pintaFiltro(id, opciones, actual, alElegir){
+    var cont = document.getElementById(id); cont.innerHTML = '';
+    var et = document.createElement('span'); et.textContent = 'Ver'; cont.appendChild(et);
+    opciones.forEach(function(op){
+      var b = document.createElement('button'); b.type = 'button'; b.textContent = op[1];
+      b.setAttribute('aria-pressed', String(op[0] === actual));
+      b.addEventListener('click', function(){ alElegir(op[0]); });
+      cont.appendChild(b);
+    });
+  }
+  function pintaFiltros(){
+    pintaFiltro('filtro-quien', FILTRO_QUIEN, filtroQuien, function(v){ filtroQuien = v; try { localStorage.setItem('tareas-filtro-quien', v); } catch (e) {} render(); });
+    pintaFiltro('filtro-pago', FILTRO_PAGO, filtroPago, function(v){ filtroPago = v; try { localStorage.setItem('tareas-filtro-pago', v); } catch (e) {} render(); });
+  }
   var UNIDAD = { ud: 'ud', kg: 'kg', g: 'g', l: 'l', paq: 'paq.' };
+  var SITIOS = ['mercadillo', 'carniceria', 'super', 'casa', 'otros'];   // orden en que se pintan los grupos de la compra
+  var SITIO = { mercadillo: 'Mercadillo', carniceria: 'Carnicería', super: 'Supermercado', casa: 'Lo hace Lucía en casa', otros: 'Otros' };
+  function sitioDe(t){ return SITIO[t.sitio] ? t.sitio : 'otros'; }
 
   var estado = { items: [] };   // lo que se pinta (base + cambios pendientes)
   var listaActiva = 'tareas';
@@ -379,6 +421,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   }
   function render(){
     var hoy = hoyISO();
+    pintaFiltros();
     renderComida();
     ['tareas', 'llevar'].forEach(function(lista){
       var items = estado.items.filter(function(t){ return t.lista === lista; });
@@ -388,7 +431,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
         return fa < fb ? -1 : fa > fb ? 1 : 0;
       });
       var pend = items.filter(function(t){ return !t.hecho; }).length;
-      if (lista === 'tareas') document.getElementById('n-tareas').textContent = items.length ? pend : '';
+      if (lista === 'tareas') { document.getElementById('n-tareas').textContent = items.length ? pend : ''; items = items.filter(function(t){ return esDe(t, filtroQuien); }); }
       else {
         var pc = estado.items.filter(function(t){ return t.lista === 'comida' && !t.hecho; }).length;
         document.getElementById('n-llevar').textContent = (pend + pc) ? (pend + pc) : '';
@@ -397,7 +440,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       cont.innerHTML = '';
       if (!items.length) {
         var p = document.createElement('p'); p.className = 'vacio';
-        p.textContent = lista === 'tareas' ? 'No hay tareas. Añade la primera abajo.' : 'Nada apuntado todavía.';
+        p.textContent = lista === 'tareas' ? (filtroQuien ? 'Nada para ' + QUIEN[filtroQuien] + '.' : 'No hay tareas. Añade la primera abajo.') : 'Nada apuntado todavía.';
         cont.appendChild(p); return;
       }
       var porFecha = [];
@@ -512,13 +555,13 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     var items = estado.items.filter(function(t){ return t.lista === 'comida'; });
     var cont = grupos.comida, res = document.getElementById('resumen-comida');
     // resumen
-    var previsto = 0, sinPrecio = 0, pagado = { lucia: 0, marga: 0 }, comprado = 0;
+    var previsto = 0, sinPrecio = 0, pagado = { retiro: 0, lucia: 0, marga: 0 }, comprado = 0;
     items.forEach(function(t){
       var tot = totalDe(t);
       if (tot === null) { sinPrecio++; return; }
       previsto += tot;
       if (t.hecho) comprado += tot;
-      if (t.pagado === 'lucia' || t.pagado === 'marga') pagado[t.pagado] += tot;
+      if (pagado[t.pagado] !== undefined) pagado[t.pagado] += tot;
     });
     res.innerHTML = '';
     function linea(a, b, clase){ var d = document.createElement('div'); d.className = 'linea' + (clase ? ' ' + clase : ''); var s1 = document.createElement('span'); s1.textContent = a; var s2 = document.createElement('span'); s2.textContent = b; d.appendChild(s1); d.appendChild(s2); res.appendChild(d); }
@@ -526,17 +569,32 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     linea('Previsto' + (sinPrecio ? ' (' + sinPrecio + ' sin precio)' : ''), eur(previsto));
     var resto = PRESUPUESTO - previsto;
     linea(resto >= 0 ? 'Queda' : 'Se pasa', eur(Math.abs(resto)), resto < 0 ? 'mal' : '');
-    if (pagado.lucia || pagado.marga) {
-      if (pagado.lucia) linea('Ha pagado Lucía (a devolver)', eur(pagado.lucia));
-      if (pagado.marga) linea('Ha pagado Marga (a devolver)', eur(pagado.marga));
-    }
+    if (pagado.retiro) linea('Dinero del retiro', eur(pagado.retiro));
+    if (pagado.marga) linea('Dinero de Margarita (a devolver)', eur(pagado.marga));
+    if (pagado.lucia) linea('Dinero de Lucía (a devolver)', eur(pagado.lucia));
     if (comprado) linea('Comprado hasta ahora', eur(comprado));
     // lista
     cont.innerHTML = '';
-    if (!items.length) { var p = document.createElement('p'); p.className = 'vacio'; p.textContent = 'Nada apuntado todavía. Pon qué comida, cuánta y a qué precio.'; cont.appendChild(p); return; }
-    var ul = document.createElement('ul'); ul.className = 'grupo';
-    items.forEach(function(t){ ul.appendChild(editandoTexto === t.id ? filaComidaEdit(t) : filaComida(t)); });
-    var sec = document.createElement('section'); sec.className = 'grupo'; sec.appendChild(ul); cont.appendChild(sec);
+    if (!items.length) { var p = document.createElement('p'); p.className = 'vacio'; p.textContent = 'Nada apuntado todavía. Pon qué comida, cuánta, a qué precio y dónde se compra.'; cont.appendChild(p); return; }
+    items = items.filter(function(t){ return pagadoCon(t, filtroPago); });
+    if (!items.length) { var p2 = document.createElement('p'); p2.className = 'vacio'; p2.textContent = VACIO_PAGO[filtroPago]; cont.appendChild(p2); return; }
+    // un grupo por sitio donde se compra, en el orden de SITIOS; solo los que tienen algo
+    SITIOS.forEach(function(k){
+      var del = items.filter(function(t){ return sitioDe(t) === k; });
+      if (!del.length) return;
+      var sec = document.createElement('section'); sec.className = 'grupo'; sec.dataset.sitio = k;
+      var h = document.createElement('h2'); h.textContent = SITIO[k];
+      var sub = 0, pend = 0;
+      del.forEach(function(t){ var tv = totalDe(t); if (tv !== null) sub += tv; if (!t.hecho) pend++; });
+      var sm = document.createElement('small');
+      sm.textContent = (filtroPago ? del.length + (del.length === 1 ? ' cosa' : ' cosas') : (pend ? pend + ' por comprar' : 'todo comprado')) + (sub ? ' · ' + eur(sub) : '');
+      h.appendChild(sm);
+      sec.appendChild(h);
+      var ul = document.createElement('ul');
+      del.forEach(function(t){ ul.appendChild(editandoTexto === t.id ? filaComidaEdit(t) : filaComida(t)); });
+      sec.appendChild(ul);
+      cont.appendChild(sec);
+    });
   }
   function filaComida(t){
     var li = document.createElement('li');
@@ -547,7 +605,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     cb.innerHTML = '<span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span>';
     cb.addEventListener('click', function(){ cambia(t.id, function(x){ x.hecho = !x.hecho; }); });
     var txt = document.createElement('div'); txt.className = 'txt';
-    var tb = document.createElement('button'); tb.type = 'button'; tb.className = 't'; tb.textContent = t.texto; tb.title = 'Tocar para cambiar nombre, cantidad o precio';
+    var tb = document.createElement('button'); tb.type = 'button'; tb.className = 't'; tb.textContent = t.texto; tb.title = 'Tocar para cambiar nombre, cantidad, precio o dónde se compra';
     tb.addEventListener('click', function(){ editandoTexto = t.id; render(); });
     txt.appendChild(tb);
     var det = document.createElement('div'); det.className = 'det';
@@ -558,7 +616,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     dc.addEventListener('click', function(){ editandoTexto = t.id; render(); });
     det.appendChild(dc);
     var pg = document.createElement('button'); pg.type = 'button'; pg.className = 'pago ' + (t.pagado || ''); pg.textContent = PAGO[t.pagado || ''];
-    pg.title = 'Tocar para cambiar quién lo pagó';
+    pg.title = 'Tocar para cambiar con qué dinero se pagó';
     pg.addEventListener('click', function(){ cambia(t.id, function(x){ x.pagado = CICLO_PAGO[x.pagado || '']; if (x.pagado) x.hecho = true; }); });
     det.appendChild(pg);
     txt.appendChild(det);
@@ -574,19 +632,21 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       + '<div class="fila"><input type="text" class="num" name="cantidad" inputmode="decimal" aria-label="Cantidad">'
       + '<select name="unidad" aria-label="Unidad"><option value="ud">ud</option><option value="kg">kg</option><option value="g">g</option><option value="l">l</option><option value="paq">paq.</option></select>'
       + '<span class="uni">a</span><input type="text" class="num precio" name="precio" inputmode="decimal" placeholder="€/ud" aria-label="Precio por unidad"></div>'
+      + '<div class="fila"><span class="uni">en</span><select name="sitio" aria-label="Dónde se compra"><option value="super">Supermercado</option><option value="mercadillo">Mercadillo</option><option value="carniceria">Carnicería</option><option value="casa">Lo hace Lucía en casa</option><option value="otros">Otros</option></select></div>'
       + '<div class="fila"><button type="button" class="peligro">Quitar de la lista</button><button type="button" class="secundario">Cancelar</button><button type="submit">Guardar</button></div>';
     f.elements.texto.value = t.texto;
     f.elements.cantidad.value = num(t.cantidad) === null ? '1' : String(num(t.cantidad)).replace('.', ',');
     f.elements.unidad.value = UNIDAD[t.unidad] ? t.unidad : 'ud';
+    f.elements.sitio.value = sitioDe(t);
     f.elements.precio.value = num(t.precio) === null ? '' : String(num(t.precio)).replace('.', ',');
     f.elements.precio.placeholder = '€/' + UNIDAD[f.elements.unidad.value];
     f.elements.unidad.addEventListener('change', function(){ f.elements.precio.placeholder = '€/' + UNIDAD[f.elements.unidad.value]; });
     f.addEventListener('submit', function(ev){
       ev.preventDefault();
       var v = f.elements.texto.value.trim(); if (!v) { f.elements.texto.focus(); return; }
-      var c = num(f.elements.cantidad.value), u = f.elements.unidad.value, p = num(f.elements.precio.value);
+      var c = num(f.elements.cantidad.value), u = f.elements.unidad.value, p = num(f.elements.precio.value), st = f.elements.sitio.value;
       editandoTexto = null;
-      cambia(t.id, function(x){ x.texto = v; x.cantidad = c === null || c < 0 ? 1 : c; x.unidad = u; x.precio = p === null || p < 0 ? null : p; });
+      cambia(t.id, function(x){ x.texto = v; x.cantidad = c === null || c < 0 ? 1 : c; x.unidad = u; x.precio = p === null || p < 0 ? null : p; x.sitio = SITIO[st] ? st : 'otros'; });
     });
     f.querySelector('.secundario').addEventListener('click', function(){ editandoTexto = null; render(); });
     f.querySelector('.peligro').addEventListener('click', function(){ editandoTexto = null; cambia(t.id, null); });
@@ -652,7 +712,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   function renderCal(){
     var hoy = hoyISO(), dias = diasVisibles(hoy), visibles = {};
     dias.forEach(function(s){ visibles[s] = true; });
-    var tareas = estado.items.filter(function(t){ return t.lista === 'tareas'; });
+    var tareas = estado.items.filter(function(t){ return t.lista === 'tareas' && esDe(t, filtroQuien); });
     if (sel && !buscar(sel)) sel = null;
     var sinFecha = tareas.filter(function(t){ return !t.fecha; });
     var atrasadas = tareas.filter(function(t){ return t.fecha && !visibles[t.fecha] && !t.hecho; });
@@ -801,6 +861,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       if (f.dataset.lista === 'comida') {
         var c = num(f.elements.cantidad.value), p = num(f.elements.precio.value);
         nuevo.cantidad = c === null || c < 0 ? 1 : c; nuevo.unidad = f.elements.unidad.value; nuevo.precio = p === null || p < 0 ? null : p; nuevo.pagado = '';
+        nuevo.sitio = SITIO[f.elements.sitio.value] ? f.elements.sitio.value : 'otros';
         f.elements.cantidad.value = '1'; f.elements.precio.value = ''; f.elements.unidad.value = 'ud'; f.elements.precio.placeholder = '€/ud';
       }
       texto.value = ''; btn.disabled = true;
