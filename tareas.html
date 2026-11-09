@@ -182,6 +182,23 @@ button{font:inherit;color:inherit}
   .bandejas .zona:only-child{grid-column:1/-1}
 }
 
+/* fichas: documentos para abrir, descargar y subir */
+.docs{list-style:none;margin:0;padding:.4rem 0 0}
+.doc{display:grid;grid-template-columns:1fr auto;gap:.2rem 1rem;align-items:baseline;padding:.8rem 0;border-bottom:1px solid var(--line)}
+.doc .nom{font-family:var(--serif);font-size:1.05rem;line-height:1.3;color:var(--tinta);text-decoration:none;overflow-wrap:anywhere}
+.doc .nom:hover,.doc .nom:focus-visible{color:var(--acento)}
+.doc .bajar{font-size:.82rem;color:var(--tinta-2);text-decoration:none;border-bottom:1px solid var(--line);line-height:1.3;white-space:nowrap}
+.doc .bajar:hover,.doc .bajar:focus-visible{color:var(--tinta);border-bottom-color:currentColor}
+.doc .det{grid-column:1/-1;margin-top:0}
+.doc input.edit{all:unset;display:block;width:100%;font-family:var(--serif);font-size:1.05rem;line-height:1.3;color:var(--tinta);border-bottom:1px solid var(--acento);overflow-wrap:anywhere}
+.doc .ayuda{grid-column:1/-1;font-size:.78rem;color:var(--plata)}
+.det .seguro{color:var(--rojo)}
+.archivo{position:relative;display:inline-block;cursor:pointer;font-weight:400;font-size:.82rem;letter-spacing:.06em;color:var(--tinta);border-bottom:1px solid currentColor;line-height:1.3;padding-bottom:.1em}
+.archivo input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+.archivo:focus-within{outline:2px solid var(--acento);outline-offset:4px}
+.elegido{font-size:.85rem;color:var(--tinta-2);overflow-wrap:anywhere;flex:1 1 auto}
+.pista-fichas{font-size:.84rem;color:var(--plata);line-height:1.55;margin:.9rem 0 .4rem}
+
 /* estado de sincronización */
 .estado{min-height:1.3em;font-size:.78rem;color:var(--plata);text-align:right;margin:.3rem 0 0;transition:color .3s}
 .estado.error{color:var(--rojo)}
@@ -193,8 +210,10 @@ footer a{color:var(--plata);font-size:.78rem;text-decoration:none;border-bottom:
 footer a:hover,footer a:focus-visible{color:var(--tinta)}
 
 @media (max-width:420px){
-  .listas{gap:1.2rem}
-  .listas button{font-size:1.15rem}
+  /* cuatro pestañas no caben en una línea: se reparten en dos y la raya va bajo la palabra */
+  .listas{flex-wrap:wrap;gap:0 1.3rem}
+  .listas button{font-size:1.15rem;padding:.4rem 0 .55rem}
+  .listas button[aria-selected="true"]::after{bottom:.3rem}
 }
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important}
@@ -221,6 +240,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     <button type="button" role="tab" id="tab-tareas" aria-selected="true" aria-controls="panel-tareas" data-lista="tareas">Tareas<span class="n" id="n-tareas"></span></button>
     <button type="button" role="tab" id="tab-llevar" aria-selected="false" aria-controls="panel-llevar" data-lista="llevar">Para llevar<span class="n" id="n-llevar"></span></button>
     <button type="button" role="tab" id="tab-cal" aria-selected="false" aria-controls="panel-cal" data-lista="cal">Calendario</button>
+    <button type="button" role="tab" id="tab-fichas" aria-selected="false" aria-controls="panel-fichas" data-lista="fichas">Fichas<span class="n" id="n-fichas"></span></button>
   </div>
 
   <section id="panel-tareas" role="tabpanel" aria-labelledby="tab-tareas">
@@ -278,6 +298,20 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     </div>
   </section>
 
+  <section id="panel-fichas" role="tabpanel" aria-labelledby="tab-fichas" hidden>
+    <p class="pista-fichas">Documentos del retiro: consentimiento, horario y lo que haga falta. Tocar el nombre lo abre; «Descargar» lo guarda en el móvil.</p>
+    <ul class="docs" id="docs"><li class="vacio">Cargando…</li></ul>
+    <div class="anadir">
+      <form class="campos" id="form-ficha" autocomplete="off">
+        <div class="fila">
+          <label class="archivo">Elegir archivo<input type="file" name="archivo" accept="application/pdf,image/jpeg,image/png,image/webp" aria-label="Archivo (PDF o imagen)"></label>
+          <span class="elegido" id="elegido"></span>
+        </div>
+        <div class="fila"><input type="text" name="nombre" placeholder="Nombre de la ficha" maxlength="120" aria-label="Nombre de la ficha"><button type="submit" disabled>Subir</button></div>
+      </form>
+    </div>
+  </section>
+
   <p class="estado" id="estado" aria-live="polite"></p>
 
   <footer>
@@ -305,11 +339,11 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   var editandoTexto = null;  // tarea cuyo texto se está escribiendo
   var elEstado = document.getElementById('estado');
   var tabs = document.querySelectorAll('.listas [role="tab"]');
-  var paneles = { tareas: document.getElementById('panel-tareas'), llevar: document.getElementById('panel-llevar'), cal: document.getElementById('panel-cal') };
+  var paneles = { tareas: document.getElementById('panel-tareas'), llevar: document.getElementById('panel-llevar'), cal: document.getElementById('panel-cal'), fichas: document.getElementById('panel-fichas') };
   var hoja = document.querySelector('.hoja');
   var grupos = { tareas: paneles.tareas.querySelector('.grupos'), llevar: paneles.llevar.querySelector('.grupos[data-lista="llevar"]'), comida: paneles.llevar.querySelector('.grupos[data-lista="comida"]') };
 
-  try { var g = localStorage.getItem('tareas-lista'); if (g === 'llevar' || g === 'cal') listaActiva = g; } catch (e) {}
+  try { var g = localStorage.getItem('tareas-lista'); if (g === 'llevar' || g === 'cal' || g === 'fichas') listaActiva = g; } catch (e) {}
 
   // --- fechas ---
   function hoyISO(){ var d = new Date(); return iso(d); }
@@ -746,8 +780,10 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     paneles.tareas.hidden = lista !== 'tareas';
     paneles.llevar.hidden = lista !== 'llevar';
     paneles.cal.hidden = lista !== 'cal';
+    paneles.fichas.hidden = lista !== 'fichas';
     hoja.classList.toggle('ancha', lista === 'cal');
     if (lista === 'cal') renderCal();
+    if (lista === 'fichas') cargaFichas(true);
     try { localStorage.setItem('tareas-lista', lista); } catch (e) {}
   }
   tabs.forEach(function(b){ b.addEventListener('click', function(){ muestra(b.dataset.lista); }); });
@@ -755,6 +791,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   // --- añadir ---
   document.querySelectorAll('.anadir form').forEach(function(f){
     var texto = f.elements.texto, btn = f.querySelector('button');
+    if (!texto) return; // el formulario de fichas va por su cuenta
     texto.addEventListener('input', function(){ btn.disabled = !texto.value.trim(); });
     f.addEventListener('submit', function(ev){
       ev.preventDefault();
@@ -772,6 +809,107 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   });
 
   (function(){ var f = document.querySelector('form[data-lista="comida"]'); f.elements.unidad.addEventListener('change', function(){ f.elements.precio.placeholder = '€/' + UNIDAD[f.elements.unidad.value]; }); })();
+
+  // --- fichas: documentos en KV vía api/fichas ---
+  var fichas = [], renombrando = null, quitando = null, docsEl = document.getElementById('docs');
+  function tam(n){ return n < 1024 * 1024 ? Math.max(1, Math.round(n / 1024)) + ' KB' : (n / 1048576).toLocaleString('es-ES', { maximumFractionDigits: 1 }) + ' MB'; }
+  function tipoNombre(t){ return t === 'application/pdf' ? 'PDF' : 'Imagen'; }
+  function renderFichas(){
+    document.getElementById('n-fichas').textContent = fichas.length || '';
+    docsEl.innerHTML = '';
+    if (!fichas.length) { var v = document.createElement('li'); v.className = 'vacio'; v.textContent = 'Todavía no hay fichas. Sube la primera abajo.'; docsEl.appendChild(v); return; }
+    fichas.forEach(function(d){
+      var li = document.createElement('li'); li.className = 'doc'; li.dataset.id = d.id;
+      var url = 'api/fichas/' + encodeURIComponent(d.id);
+      if (renombrando === d.id) {
+        var inp = document.createElement('input'); inp.type = 'text'; inp.className = 'edit'; inp.value = d.nombre; inp.maxLength = 120; inp.setAttribute('aria-label', 'Nombre de la ficha');
+        var cerrado = false;
+        function acaba(guardar){
+          if (cerrado) return; cerrado = true; renombrando = null;
+          var v = inp.value.trim();
+          if (guardar && v && v !== d.nombre) {
+            pon('Guardando…');
+            fetch(url, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ nombre: v }) })
+              .then(function(r){ if (r.status === 401) { location.replace('tareas'); return; } if (!r.ok) throw new Error(r.status); return r.json(); })
+              .then(function(j){ if (j) { fichas = j.items; pon('Guardado'); renderFichas(); } })
+              .catch(function(){ pon('No se ha podido guardar el nombre.', true); renderFichas(); });
+          } else renderFichas();
+        }
+        inp.addEventListener('keydown', function(ev){ if (ev.key === 'Enter') { ev.preventDefault(); acaba(true); } else if (ev.key === 'Escape') { ev.preventDefault(); acaba(false); } });
+        inp.addEventListener('blur', function(){ acaba(true); });
+        li.appendChild(inp);
+        var ay = document.createElement('span'); ay.className = 'ayuda'; ay.textContent = 'Intro para guardar · Esc para dejarlo como estaba'; li.appendChild(ay);
+        docsEl.appendChild(li);
+        setTimeout(function(){ inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }, 0);
+        return;
+      }
+      var a = document.createElement('a'); a.className = 'nom'; a.href = url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = d.nombre; a.title = 'Abrir';
+      var b = document.createElement('a'); b.className = 'bajar'; b.href = url + '?bajar=1'; b.textContent = 'Descargar'; b.setAttribute('download', '');
+      var det = document.createElement('div'); det.className = 'det';
+      var info = document.createElement('span'); info.textContent = tipoNombre(d.tipo) + ' · ' + tam(d.tam) + ' · ' + nombreFecha(d.cuando.slice(0, 10), false);
+      det.appendChild(info);
+      var rn = document.createElement('button'); rn.type = 'button'; rn.textContent = 'Cambiar el nombre';
+      rn.addEventListener('click', function(){ renombrando = d.id; quitando = null; renderFichas(); });
+      det.appendChild(rn);
+      var q = document.createElement('button'); q.type = 'button';
+      if (quitando === d.id) {
+        q.className = 'seguro'; q.textContent = 'Sí, quitar «' + d.nombre + '»';
+        q.addEventListener('click', function(){
+          quitando = null; pon('Quitando…');
+          fetch(url, { method: 'DELETE' })
+            .then(function(r){ if (r.status === 401) { location.replace('tareas'); return; } if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(function(j){ if (j) { fichas = j.items; pon('Quitada'); renderFichas(); } })
+            .catch(function(){ pon('No se ha podido quitar.', true); renderFichas(); });
+        });
+        var no = document.createElement('button'); no.type = 'button'; no.textContent = 'No';
+        no.addEventListener('click', function(){ quitando = null; renderFichas(); });
+        det.appendChild(q); det.appendChild(no);
+      } else {
+        q.textContent = 'Quitar';
+        q.addEventListener('click', function(){ quitando = d.id; renombrando = null; renderFichas(); });
+        det.appendChild(q);
+      }
+      li.appendChild(a); li.appendChild(b); li.appendChild(det);
+      docsEl.appendChild(li);
+    });
+  }
+  var fichasCargadas = false;
+  function cargaFichas(silencio){
+    if (renombrando) return;
+    fetch('api/fichas', { cache: 'no-store' })
+      .then(function(r){ if (r.status === 401) { location.replace('tareas'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(j){ fichas = j.items || []; fichasCargadas = true; renderFichas(); })
+      .catch(function(){ if (!silencio || !fichasCargadas) { docsEl.innerHTML = '<li class="vacio">No se han podido cargar las fichas. Revisa la conexión.</li>'; } });
+  }
+  (function(){
+    var f = document.getElementById('form-ficha'), arch = f.elements.archivo, nom = f.elements.nombre, btn = f.querySelector('button[type="submit"]'), el = document.getElementById('elegido');
+    arch.addEventListener('change', function(){
+      var x = arch.files[0];
+      el.textContent = x ? x.name + ' · ' + tam(x.size) : '';
+      if (x && !nom.value.trim()) nom.value = x.name.replace(/\.[a-z0-9]+$/i, '');
+      btn.disabled = !x;
+    });
+    f.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var x = arch.files[0]; if (!x) return;
+      if (x.size > 20 * 1024 * 1024) { pon('Demasiado grande: el máximo son 20 MB.', true); return; }
+      var fd = new FormData(); fd.append('archivo', x); fd.append('nombre', nom.value.trim());
+      btn.disabled = true; pon('Subiendo…');
+      fetch('api/fichas', { method: 'POST', body: fd })
+        .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, status: r.status, j: j }; }); })
+        .then(function(res){
+          if (res.status === 401) { location.replace('tareas'); return; }
+          if (!res.ok) throw new Error(res.j && res.j.error || res.status);
+          fichas = res.j.items; renderFichas(); pon('Subida');
+          f.reset(); el.textContent = '';
+        })
+        .catch(function(e){
+          var m = String(e.message);
+          pon(m === 'grande' ? 'Demasiado grande: el máximo son 20 MB.' : m === 'tipo' ? 'Solo PDF o imágenes (JPG, PNG, WebP).' : 'No se ha podido subir. Revisa la conexión y vuelve a intentarlo.', true);
+          btn.disabled = false;
+        });
+    });
+  })();
 
   // --- cambios y guardado con versión ---
   // base = último estado confirmado por el servidor; ops = cambios aún no confirmados.
@@ -821,13 +959,14 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       .then(function(j){ if (j.v !== base.v || !silencio) { base = { v: j.v, items: j.items || [] }; refresca(); } })
       .catch(function(){ if (!silencio) { grupos.tareas.innerHTML = grupos.llevar.innerHTML = '<p class="vacio">No se ha podido cargar la lista. Revisa la conexión y recarga.</p>'; } });
   }
-  document.addEventListener('visibilitychange', function(){ if (!document.hidden) carga(true); });
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) { carga(true); if (listaActiva === 'fichas') cargaFichas(true); } });
   window.addEventListener('focus', function(){ carga(true); });
   setInterval(function(){ if (!document.hidden) carga(true); }, 25000);
 
   pintaFaltan();
   muestra(listaActiva);
   carga(false);
+  cargaFichas(false);
 })();
 </script>
 </body>
