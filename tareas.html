@@ -252,7 +252,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
 
 <script>
 (function(){
-  var API = 'api/tareas?k=bellver-2026';
+  var API = 'api/tareas';   // protegida con la cookie de acceso (functions/tareas.js); si caduca, 401 → volver a la puerta
   var RETIRO = new Date(2026, 10, 20);
   var DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
   var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -619,6 +619,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       .then(function(res){
         if (res.ok) { base = { v: res.j.v, items: res.j.items }; ops = ops.slice(enviando); pon('Guardado'); }
         else if (res.status === 409 && res.j.estado) { base = { v: res.j.estado.v, items: res.j.estado.items }; } // otra guardó antes: reintentamos sobre su versión
+        else if (res.status === 401) { location.replace('tareas'); return; }
         else { throw new Error(res.j && res.j.error || res.status); }
         refresca();
       })
@@ -636,7 +637,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   function carga(silencio){
     if (guardando || ops.length) return;
     fetch(API, { cache: 'no-store' })
-      .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(r){ if (r.status === 401) { location.replace('tareas'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function(j){ if (j.v !== base.v || !silencio) { base = { v: j.v, items: j.items || [] }; refresca(); } })
       .catch(function(){ if (!silencio) { grupos.tareas.innerHTML = grupos.llevar.innerHTML = '<p class="vacio">No se ha podido cargar la lista. Revisa la conexión y recarga.</p>'; } });
   }

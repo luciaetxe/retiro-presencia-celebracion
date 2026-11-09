@@ -1,8 +1,10 @@
 // Estado compartido de la lista de tareas de Lucía y Margarita (/tareas).
 // Un solo documento JSON en KV: { v: <versión>, items: [...] }.
+// Solo con la cookie de acceso de /tareas (lib/acceso.js); sin ella, 401.
 // GET  → devuelve el estado.  PUT { base, items } → guarda si base === v actual (si no, 409 con el estado vigente).
+import { tieneAcceso } from "../../lib/acceso.js";
+
 const KEY = "estado-nov-2026";
-const CLAVE = "bellver-2026";
 const CABECERAS = { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" };
 
 function json(obj, status = 200) {
@@ -26,14 +28,12 @@ function itemValido(t) {
 }
 
 export async function onRequestGet({ request, env }) {
-  const url = new URL(request.url);
-  if (url.searchParams.get("k") !== CLAVE) return json({ error: "clave" }, 403);
+  if (!await tieneAcceso(request, env)) return json({ error: "acceso" }, 401);
   return json(await leer(env));
 }
 
 export async function onRequestPut({ request, env }) {
-  const url = new URL(request.url);
-  if (url.searchParams.get("k") !== CLAVE) return json({ error: "clave" }, 403);
+  if (!await tieneAcceso(request, env)) return json({ error: "acceso" }, 401);
   let body;
   try { body = await request.json(); } catch (e) { return json({ error: "json" }, 400); }
   if (!body || !Array.isArray(body.items) || body.items.length > 300 || !body.items.every(itemValido)) {
