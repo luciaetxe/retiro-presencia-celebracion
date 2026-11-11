@@ -37,24 +37,38 @@ button{font:inherit;color:inherit}
 .hoja{max-width:600px;margin-inline:auto;padding:clamp(2.5rem,7vw,4.5rem) clamp(20px,6vw,40px) 3rem}
 
 /* cabecera */
-.cab{display:grid;justify-items:center;text-align:center;gap:.4rem;margin-bottom:clamp(1.8rem,5vw,2.6rem)}
+.cab{display:grid;justify-items:center;text-align:center;gap:.4rem;margin-bottom:clamp(1.4rem,4vw,2rem)}
 .cab .marca{width:58px;height:65px}
 .cab .nombre{font-family:var(--serif);font-size:1rem;color:var(--tinta);margin-top:.6rem}
 .cab h1{font-family:var(--mano);font-weight:400;font-size:clamp(1.9rem,6.5vw,2.6rem);line-height:1.6;margin:.3em 0 .2em;color:var(--tinta)}
 .cab .meta{font-weight:400;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--plata);line-height:1.9;margin:0}
 .cab .meta span{display:block}
-.cab .faltan{font-family:var(--serif);font-size:1.15rem;line-height:1.4;color:var(--tinta);margin:1.3rem 0 0}
+.cab .faltan{font-family:var(--serif);font-size:1.15rem;line-height:1.4;color:var(--tinta);margin:.9rem 0 0}
 .cab .faltan em{font-style:normal;color:var(--acento)}
 
 /* portada interna: un apartado por línea, y «← Interno» para volver desde cada uno */
-.inicio .sub:first-child{margin-top:0}
-.menu{list-style:none;margin:0 0 .6rem;padding:0}
-.menu a{display:grid;gap:.15rem;padding:.85rem 0;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent}
-.menu .t{font-family:var(--serif);font-size:1.3rem;line-height:1.2;color:var(--tinta);transition:color .2s}
-.menu .d{font-size:.85rem;color:var(--plata);line-height:1.45}
-.menu .d em{font-style:normal;color:var(--rojo)}
-.menu a:hover .t,.menu a:focus-visible .t{color:var(--acento)}
-.menu a:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.inicio .sub{margin:1.6rem 0 .7rem;font-size:1.05rem;color:var(--plata)}
+.inicio .sub:first-child{margin-top:.4rem}
+.cuadros{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
+.cuadro{position:relative;display:grid;grid-template-rows:auto 1fr auto auto;aspect-ratio:1;padding:.9rem 1rem .95rem;border:1px solid var(--line);text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent;transition:border-color .25s,transform .25s}
+.cuadro:hover,.cuadro:focus-visible{border-color:var(--tinta);transform:translateY(-2px)}
+.cuadro:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.cuadro:active{transform:none}
+.cuadro .t{font-family:var(--serif);font-size:1.15rem;line-height:1.2;color:var(--tinta)}
+.cuadro .num{align-self:end;font-family:var(--serif);font-size:2.6rem;line-height:1;color:var(--tinta);letter-spacing:-.01em;margin-top:.4rem}
+.cuadro .num.ok{color:var(--acento)}
+.cuadro .num.fecha{font-size:1.7rem}
+.cuadro .cap{font-size:.78rem;line-height:1.4;color:var(--plata);margin-top:.35rem;min-height:2.2em}
+.cuadro .cap em{font-style:normal;color:var(--rojo)}
+.cuadro .barra{display:block;height:2px;background:var(--line);margin-top:.6rem;overflow:hidden}
+.cuadro .barra i{display:block;height:100%;width:0;background:var(--tinta);transition:width .6s ease}
+.cuadro .barra.oculta{visibility:hidden}
+@media (min-width:600px){
+  .cuadros{gap:1rem}
+  .cuadro{aspect-ratio:auto;min-height:160px;padding:1rem 1.15rem 1.05rem}
+  .cuadro .num{font-size:3rem}
+}
+@media (prefers-reduced-motion:reduce){ .cuadro,.cuadro .barra i{transition:none} .cuadro:hover{transform:none} }
 [hidden]{display:none!important}
 .volver{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.3rem 0 .8rem;border-bottom:1px solid var(--line);margin-bottom:.4rem}
 .volver a{text-decoration:none;color:var(--plata);font-size:.85rem;border-bottom:1px solid transparent;line-height:1.3;-webkit-tap-highlight-color:transparent}
@@ -267,26 +281,23 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
 <main class="hoja">
   <header class="cab">
     <svg class="marca dibujo" viewBox="50 36 100 112" aria-hidden="true"><use href="#hoguera"/></svg>
-    <div class="nombre">Presencia y Celebración</div>
-    <h1>Interno</h1>
-    <p class="meta"><span>20, 21 y 22 de noviembre</span><span>Sant Salvador de Bellver</span></p>
     <p class="faltan" id="faltan"></p>
   </header>
 
   <nav class="volver" id="volver" hidden><a href="#" id="volver-a">&larr; Interno</a><span class="donde" id="donde"></span></nav>
 
   <section id="panel-inicio" class="inicio">
-    <h2 class="sub">Retiro de noviembre</h2>
-    <ul class="menu">
-      <li><a href="#tareas"><span class="t">Tareas</span><span class="d" id="d-tareas">Cargando…</span></a></li>
-      <li><a href="#llevar"><span class="t">Para llevar</span><span class="d" id="d-llevar">Cargando…</span></a></li>
-      <li><a href="#cal"><span class="t">Calendario</span><span class="d" id="d-cal">Las tareas por días, para moverlas de fecha</span></a></li>
-      <li><a href="#fichas"><span class="t">Fichas</span><span class="d" id="d-fichas">Cargando…</span></a></li>
-    </ul>
-    <h2 class="sub">Próximos retiros</h2>
-    <ul class="menu">
-      <li><a href="#personas"><span class="t">Personas</span><span class="d" id="d-personas">Cargando…</span></a></li>
-    </ul>
+    <h2 class="sub">Para este retiro</h2>
+    <div class="cuadros">
+      <a class="cuadro" href="#tareas" id="c-tareas"><span class="t">Tareas</span><span class="num">·</span><span class="cap">cargando</span><span class="barra"><i></i></span></a>
+      <a class="cuadro" href="#llevar" id="c-llevar"><span class="t">Para llevar</span><span class="num">·</span><span class="cap">cargando</span><span class="barra"><i></i></span></a>
+      <a class="cuadro" href="#cal" id="c-cal"><span class="t">Calendario</span><span class="num">·</span><span class="cap">cargando</span></a>
+      <a class="cuadro" href="#fichas" id="c-fichas"><span class="t">Fichas</span><span class="num">·</span><span class="cap">cargando</span></a>
+    </div>
+    <h2 class="sub">Para futuros retiros</h2>
+    <div class="cuadros">
+      <a class="cuadro" href="#interesadas" id="c-personas"><span class="t">Interesadas</span><span class="num">·</span><span class="cap">cargando</span></a>
+    </div>
   </section>
 
   <section id="panel-tareas" role="tabpanel" aria-labelledby="tab-tareas">
@@ -874,7 +885,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   paneles.cal.addEventListener('contextmenu', function(ev){ if (ev.target.closest('.ficha')) ev.preventDefault(); });
 
   // --- apartados: la portada interna y uno por hash (#tareas, #llevar, #cal, #fichas, #personas) ---
-  var NOMBRE = { tareas: 'Tareas', llevar: 'Para llevar', cal: 'Calendario', fichas: 'Fichas', personas: 'Personas' };
+  var NOMBRE = { tareas: 'Tareas', llevar: 'Para llevar', cal: 'Calendario', fichas: 'Fichas', personas: 'Interesadas' };
   function muestra(lista){
     if (!NOMBRE[lista]) lista = '';
     listaActiva = lista;
@@ -888,25 +899,40 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     if (lista === 'personas') cargaPersonas(true);
     if (lista === '') pintaInicio();
   }
-  function deHash(){ muestra(location.hash.replace(/^#/, '')); window.scrollTo(0, 0); }
+  function deHash(){ var h = location.hash.replace(/^#/, ''); if (h === 'interesadas') h = 'personas'; muestra(h); window.scrollTo(0, 0); }
   window.addEventListener('hashchange', deHash);
-  // qué hay en cada apartado, para la portada interna
+  // qué hay en cada apartado, para la portada interna (número grande, pie y barra de progreso)
+  function cuadro(id, num, cap, clase, barra){
+    var c = document.getElementById(id), n = c.querySelector('.num'), p = c.querySelector('.cap'), b = c.querySelector('.barra');
+    n.textContent = num; n.className = 'num' + (clase ? ' ' + clase : '');
+    p.innerHTML = cap;
+    if (b) { b.classList.toggle('oculta', barra === null); b.firstChild.style.width = (barra === null ? 0 : Math.round(barra * 100)) + '%'; }
+  }
   function pintaInicio(){
     var hoy = hoyISO(), ts = estado.items.filter(function(t){ return t.lista === 'tareas'; });
     var pend = ts.filter(function(t){ return !t.hecho; }), atr = pend.filter(function(t){ return t.fecha && t.fecha < hoy; }).length;
-    var dT = document.getElementById('d-tareas');
-    if (!ts.length) dT.textContent = 'Nada apuntado todavía';
-    else if (!pend.length) dT.textContent = 'Todo hecho';
-    else dT.innerHTML = pend.length + (pend.length === 1 ? ' pendiente' : ' pendientes') + (atr ? ' · <em>' + atr + (atr === 1 ? ' atrasada' : ' atrasadas') + '</em>' : '');
+    if (!ts.length) cuadro('c-tareas', '0', 'nada apuntado todavía', '', null);
+    else if (!pend.length) cuadro('c-tareas', '✓', 'todo hecho', 'ok', 1);
+    else cuadro('c-tareas', String(pend.length), (pend.length === 1 ? 'pendiente' : 'pendientes') + (atr ? ' · <em>' + atr + (atr === 1 ? ' atrasada' : ' atrasadas') + '</em>' : ' · ' + (ts.length - pend.length) + ' de ' + ts.length + ' hechas'), '', (ts.length - pend.length) / ts.length);
     var comida = estado.items.filter(function(t){ return t.lista === 'comida'; }), otras = estado.items.filter(function(t){ return t.lista === 'llevar'; });
-    var porComprar = comida.filter(function(t){ return !t.hecho; }).length + otras.filter(function(t){ return !t.hecho; }).length, previsto = 0;
+    var todas = comida.length + otras.length, porComprar = comida.filter(function(t){ return !t.hecho; }).length + otras.filter(function(t){ return !t.hecho; }).length, previsto = 0;
     comida.forEach(function(t){ var v = totalDe(t); if (v !== null) previsto += v; });
-    var resto = PRESUPUESTO - GASOLINA - previsto, dL = document.getElementById('d-llevar');
-    if (!comida.length && !otras.length) dL.textContent = 'Comida y otras cosas, con el presupuesto';
-    else dL.innerHTML = (porComprar ? porComprar + ' por comprar' : 'Todo comprado') + ' · ' + (resto >= 0 ? 'quedan ' + eur(resto) : '<em>se pasa ' + eur(-resto) + '</em>');
-    document.getElementById('d-fichas').textContent = fichasCargadas ? (fichas.length ? fichas.length + (fichas.length === 1 ? ' documento' : ' documentos') : 'Consentimiento, horario y lo que haga falta') : 'Cargando…';
+    var resto = PRESUPUESTO - GASOLINA - previsto, dinero = resto >= 0 ? 'quedan ' + eur(resto) : '<em>se pasa ' + eur(-resto) + '</em>';
+    if (!todas) cuadro('c-llevar', '0', 'comida y otras cosas', '', null);
+    else if (!porComprar) cuadro('c-llevar', '✓', 'todo comprado · ' + dinero, 'ok', 1);
+    else cuadro('c-llevar', String(porComprar), 'por comprar · ' + dinero, '', (todas - porComprar) / todas);
+    var deHoy = pend.filter(function(t){ return t.fecha === hoy; }).length;
+    if (deHoy) cuadro('c-cal', String(deHoy), deHoy === 1 ? 'tarea para hoy' : 'tareas para hoy', '', null);
+    else {
+      var prox = pend.map(function(t){ return t.fecha; }).filter(function(f){ return f && f > hoy; }).sort()[0];
+      if (prox) cuadro('c-cal', nombreFecha(prox, false), 'siguiente día con tareas', 'fecha', null);
+      else cuadro('c-cal', nombreFecha(hoy, false), 'nada para hoy', 'fecha', null);
+    }
+    if (!fichasCargadas) cuadro('c-fichas', '·', 'cargando', '', null);
+    else cuadro('c-fichas', String(fichas.length), fichas.length === 1 ? 'documento' : 'documentos', '', null);
     var n = activas().length;
-    document.getElementById('d-personas').textContent = personasCargadas ? (n ? n + (n === 1 ? ' apuntada' : ' apuntadas') + ' en la web' : 'Quien se apunte en la web para el próximo retiro') : 'Cargando…';
+    if (!personasCargadas) cuadro('c-personas', '·', 'cargando', '', null);
+    else cuadro('c-personas', String(n), n === 1 ? 'apuntada en la web' : 'apuntadas en la web', '', null);
   }
 
   // --- añadir ---
