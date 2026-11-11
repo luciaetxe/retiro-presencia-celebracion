@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Post · Avísame del próximo retiro</title>
+<style>
+@font-face{font-family:'Young Serif';font-weight:400;src:url(../../fonts/young-serif-400.woff2) format('woff2')}
+@font-face{font-family:'Homemade Apple';font-weight:400;src:url(../../fonts/homemade-apple-400.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-weight:300;src:url(../../fonts/work-sans-300.woff2) format('woff2')}
+@font-face{font-family:'Work Sans';font-weight:400;src:url(../../fonts/work-sans-400.woff2) format('woff2')}
+:root{--noche:#0A0F22;--noche-2:#121A36;--noche-3:#223055;--hueso:#F3EEE4;--hueso-2:#C8C3CF;--acento:#D9418C;--serif:'Young Serif',Georgia,serif;--mano:'Homemade Apple',cursive;--sans:'Work Sans',system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000}
+.post{position:relative;width:1080px;height:1080px;overflow:hidden;color:var(--hueso);background:linear-gradient(180deg,#0A0F22 0%,#121A36 55%,#223055 100%);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased}
+.post.story{height:1920px}
+canvas.cielo{position:absolute;inset:0;width:100%;height:100%}
+.in{position:absolute;inset:0;display:grid;grid-template-rows:auto 1fr auto;padding:88px 96px 84px;text-align:center;justify-items:center}
+.story .in{padding:200px 110px 170px}
+.marca{width:120px;height:135px;color:var(--hueso)}
+.story .marca{width:150px;height:168px}
+.centro{display:grid;align-content:center;gap:28px;max-width:860px}
+.story .centro{gap:40px}
+.gracias{font-family:var(--mano);font-size:66px;line-height:1.5;color:var(--hueso);margin:0}
+.story .gracias{font-size:82px}
+.titulo{font-family:var(--serif);font-size:58px;line-height:1.18;margin:0;color:var(--hueso);text-wrap:balance}
+.story .titulo{font-size:74px}
+.titulo em{font-style:normal;color:var(--acento)}
+.texto{font-size:30px;line-height:1.5;color:var(--hueso-2);margin:0;max-width:24em;text-wrap:balance}
+.story .texto{font-size:38px}
+.pie{display:grid;gap:14px;justify-items:center}
+.web{font-family:var(--serif);font-size:34px;color:var(--hueso);padding:18px 34px;border:1.5px solid var(--hueso);line-height:1}
+.story .web{font-size:44px;padding:24px 44px}
+.nombre{font-family:var(--serif);font-size:26px;color:var(--hueso-2);margin-top:12px}
+.story .nombre{font-size:32px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="pulso" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/></filter>
+<g id="hoguera" filter="url(#pulso)" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M62,138 L140,120 M60,122 L138,140 M100,144 L100,128" stroke="currentColor" stroke-width="5"/><path d="M100,112 C84,100 82,84 92,70 C92,82 98,86 100,92 C104,80 100,66 110,54 C112,74 124,80 124,98 C124,108 114,118 100,118 C92,118 86,112 86,104" style="stroke:var(--acento)" stroke-width="5"/><circle cx="120" cy="44" r="3.4" style="fill:var(--acento)"/><circle cx="84" cy="52" r="2.8" style="fill:var(--acento)"/><circle cx="130" cy="62" r="2.6" style="fill:var(--acento)"/></g>
+</defs></svg>
+
+<div class="post" id="post">
+  <canvas class="cielo"></canvas>
+  <div class="in">
+    <svg class="marca" viewBox="50 36 100 112" aria-hidden="true"><use href="#hoguera"/></svg>
+    <div class="centro">
+      <p class="gracias">Gracias, tribu.</p>
+      <h1 class="titulo">El retiro de noviembre está <em>completo</em>.</h1>
+      <p class="texto">Haremos más. Apúntate en la web y te avisamos cuando tengamos fechas.</p>
+    </div>
+    <div class="pie">
+      <div class="web">tribuconecta.site/avisame</div>
+      <div class="nombre">Presencia y Celebración</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// cielo de estrellas como el de la web (fijo, sin animación), con alguna estrella de palitos
+(function(){
+  var story = location.search.indexOf('story') > -1;
+  if (story) document.getElementById('post').classList.add('story');
+  var c = document.querySelector('canvas.cielo'), ctx = c.getContext('2d');
+  var W = 1080, H = story ? 1920 : 1080, dpr = 2;
+  c.width = W * dpr; c.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // semilla fija para que el post salga igual cada vez
+  var seed = 7; function rnd(){ seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+  var n = Math.round(W * H / 4200);
+  for (var i = 0; i < n; i++) {
+    var x = rnd() * W, y = rnd() * H * .92, r = rnd() < .1 ? 1.8 : .7 + rnd() * .8, a = .25 + rnd() * .6;
+    if (rnd() < .05) {
+      var s = 6 + r * 2; ctx.globalAlpha = a; ctx.strokeStyle = '#F3EEE4'; ctx.lineWidth = 1.2; ctx.beginPath();
+      ctx.moveTo(x, y - s); ctx.lineTo(x, y + s); ctx.moveTo(x - s * .87, y - s * .5); ctx.lineTo(x + s * .87, y + s * .5); ctx.moveTo(x - s * .87, y + s * .5); ctx.lineTo(x + s * .87, y - s * .5); ctx.stroke();
+      continue;
+    }
+    ctx.globalAlpha = a; ctx.fillStyle = '#E9E3F2'; ctx.beginPath(); ctx.arc(x, y, r, 0, 6.28); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+})();
+</script>
+</body>
+</html>
