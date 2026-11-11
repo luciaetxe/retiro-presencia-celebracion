@@ -23,6 +23,7 @@
 :root{
   --fondo:#FFFFFF; --tinta:#141414; --tinta-2:#4F4F4F; --plata:#8C8C8C;
   --acento:#D9418C; --rojo:#C8402E; --line:rgba(20,20,20,.14); --suave:#F6F5F2;
+  --noche:#0A0F22; --noche-2:#121A36; --noche-3:#223055; --hueso:#F3EEE4; --hueso-2:#C8C3CF;
   --serif:'Young Serif',Georgia,serif; --mano:'Homemade Apple',cursive; --sans:'Work Sans',system-ui,sans-serif;
   color-scheme:light;
 }
@@ -48,7 +49,22 @@ button{font:inherit;color:inherit}
 
 /* portada interna: un apartado por línea, y «← Interno» para volver desde cada uno */
 .inicio .sub{margin:1.6rem 0 .7rem;font-size:1.05rem;color:var(--plata)}
-.hoy .sub{margin-top:.2rem;display:flex;align-items:baseline;gap:.6rem}
+.col-menu .sub:first-child{margin-top:.2rem}
+.col-agenda{margin-top:1.2rem}
+.hoy .sub{display:flex;align-items:baseline;gap:.6rem}
+@media (min-width:760px){
+  .inicio{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2.6rem 3.5rem;align-items:start}
+  .col-agenda{margin-top:0}
+  .col-agenda .sub:first-child{margin-top:.2rem}
+}
+.agenda{list-style:none;margin:0;padding:0}
+.agenda .dia-ag{padding:.55rem 0;border-bottom:1px solid var(--line)}
+.agenda .dia-ag .f{font-family:var(--serif);font-size:.95rem;color:var(--tinta);display:block;margin-bottom:.15rem}
+.agenda .dia-ag.retiro .f{color:var(--acento)}
+.agenda .dia-ag ul{list-style:none;margin:0;padding:0}
+.agenda .dia-ag li{display:flex;justify-content:space-between;gap:.8rem;font-size:.92rem;color:var(--tinta-2);line-height:1.5}
+.agenda .dia-ag li .ini{font-size:.66rem;letter-spacing:.06em;color:var(--plata);white-space:nowrap;padding-top:.35em}
+.agenda .vacio{padding:.5rem 0 .3rem;font-size:.95rem;color:var(--plata)}
 .hoy .sub small{font-family:var(--sans);font-size:.75rem;color:var(--plata)}
 .lista-hoy{list-style:none;margin:0;padding:0}
 .lista-hoy .item{padding:.5rem 0;border-bottom:1px solid var(--line)}
@@ -74,14 +90,23 @@ button{font:inherit;color:inherit}
 .dia-chip.hoy .dn,.dia-chip.hoy .n{color:var(--acento)}
 .dia-chip.retiro{background:var(--suave);border-color:transparent}
 .dia-chip.retiro .n{color:var(--tinta-2)}
-@media (min-width:600px){ .tira{overflow:visible} .dia-chip{flex:1 1 0;min-width:0} }
+@media (min-width:600px){ .tira{overflow:visible;display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr))} .dia-chip{min-width:0} }
 .cuadros{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
 .cuadro{position:relative;display:grid;grid-template-rows:auto 1fr auto auto;aspect-ratio:1;padding:.9rem 1rem .95rem;border:1px solid transparent;border-radius:6px;background:var(--suave);text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent;transition:border-color .25s,transform .25s,filter .25s}
-.cuadro.c-arena{background:#F5EFE3}
-.cuadro.c-salvia{background:#E8EFE8}
-.cuadro.c-lavanda{background:#ECE9F5}
-.cuadro.c-rosa{background:#FBEAF1}
-.cuadro.c-cielo{background:#E6EEF6}
+.cuadro.c-noche{background:var(--noche)}
+.cuadro.c-noche-3{background:var(--noche-3)}
+.cuadro.c-hueso{background:var(--hueso)}
+.cuadro.c-suave{background:var(--suave);border-color:var(--line)}
+.cuadro.c-acento{background:var(--acento)}
+.cuadro.oscuro .t,.cuadro.oscuro .num{color:var(--hueso)}
+.cuadro.oscuro .cap{color:var(--hueso-2)}
+.cuadro.oscuro .cap em{color:#F2A28C}
+.cuadro.oscuro .barra{background:rgba(243,238,228,.22)}
+.cuadro.oscuro .barra i{background:var(--acento)}
+.cuadro.c-acento .t,.cuadro.c-acento .num{color:#fff}
+.cuadro.c-acento .cap{color:rgba(255,255,255,.8)}
+.cuadro.oscuro .num.ok{color:var(--hueso)}
+.cuadro.oscuro:hover,.cuadro.oscuro:focus-visible{border-color:transparent;filter:brightness(1.12)}
 .cuadro:hover,.cuadro:focus-visible{border-color:var(--tinta);transform:translateY(-2px)}
 .cuadro:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
 .cuadro:active{transform:none}
@@ -318,21 +343,29 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   <nav class="volver" id="volver" hidden><a href="#" id="volver-a">&larr; Interno</a><span class="donde" id="donde"></span></nav>
 
   <section id="panel-inicio" class="inicio">
-    <section class="hoy" aria-label="Para hoy">
-      <h2 class="sub">Hoy</h2>
-      <ul class="lista-hoy" id="lista-hoy"></ul>
-    </section>
-    <div class="tira" id="tira" aria-label="Días hasta el retiro"></div>
-    <h2 class="sub">Para este retiro</h2>
-    <div class="cuadros">
-      <a class="cuadro c-arena" href="#tareas" id="c-tareas"><span class="t">Tareas</span><span class="num">·</span><span class="cap">cargando</span><span class="barra"><i></i></span></a>
-      <a class="cuadro c-salvia" href="#llevar" id="c-llevar"><span class="t">Para llevar</span><span class="num">·</span><span class="cap">cargando</span><span class="barra"><i></i></span></a>
-      <a class="cuadro c-lavanda" href="#cal" id="c-cal"><span class="t">Calendario</span><span class="num">·</span><span class="cap">cargando</span></a>
-      <a class="cuadro c-rosa" href="#fichas" id="c-fichas"><span class="t">Fichas</span><span class="num">·</span><span class="cap">cargando</span></a>
+    <div class="col-menu">
+      <h2 class="sub">Para este retiro</h2>
+      <div class="cuadros">
+        <a class="cuadro oscuro c-noche" href="#tareas" id="c-tareas"><span class="t">Tareas</span><span class="num">·</span><span class="cap">cargando</span><span class="barra"><i></i></span></a>
+        <a class="cuadro oscuro c-noche-3" href="#llevar" id="c-llevar"><span class="t">Para llevar</span><span class="num">·</span><span class="cap">cargando</span><span class="barra"><i></i></span></a>
+        <a class="cuadro c-hueso" href="#cal" id="c-cal"><span class="t">Calendario</span><span class="num">·</span><span class="cap">cargando</span></a>
+        <a class="cuadro c-suave" href="#fichas" id="c-fichas"><span class="t">Fichas</span><span class="num">·</span><span class="cap">cargando</span></a>
+      </div>
+      <h2 class="sub">Para futuros retiros</h2>
+      <div class="cuadros">
+        <a class="cuadro oscuro c-acento" href="#interesadas" id="c-personas"><span class="t">Interesadas</span><span class="num">·</span><span class="cap">cargando</span></a>
+      </div>
     </div>
-    <h2 class="sub">Para futuros retiros</h2>
-    <div class="cuadros">
-      <a class="cuadro c-cielo" href="#interesadas" id="c-personas"><span class="t">Interesadas</span><span class="num">·</span><span class="cap">cargando</span></a>
+    <div class="col-agenda">
+      <section class="hoy" aria-label="Para hoy">
+        <h2 class="sub">Hoy</h2>
+        <ul class="lista-hoy" id="lista-hoy"></ul>
+      </section>
+      <div class="tira" id="tira" aria-label="Días hasta el retiro"></div>
+      <section class="proximos" aria-label="Próximos días">
+        <h2 class="sub">Próximos días</h2>
+        <ul class="agenda" id="agenda"></ul>
+      </section>
     </div>
   </section>
 
@@ -929,7 +962,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     var volver = document.getElementById('volver'); volver.hidden = lista === '';
     document.getElementById('donde').textContent = NOMBRE[lista] || '';
     Object.keys(paneles).forEach(function(k){ paneles[k].hidden = lista !== k; });
-    hoja.classList.toggle('ancha', lista === 'cal');
+    hoja.classList.toggle('ancha', lista === 'cal' || lista === '');
     if (lista === 'cal') renderCal();
     if (lista === 'fichas') cargaFichas(true);
     if (lista === 'personas') cargaPersonas(true);
@@ -991,10 +1024,25 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       a.appendChild(dn); a.appendChild(n); a.appendChild(pts); tira.appendChild(a);
     }
   }
+  function pintaAgenda(hoy, pend){
+    var ag = document.getElementById('agenda'), desde = masDias(hoy, 2); ag.innerHTML = '';
+    var dias = {};
+    pend.forEach(function(t){ if (t.fecha && t.fecha >= desde) (dias[t.fecha] = dias[t.fecha] || []).push(t); });
+    var fechas = Object.keys(dias).sort();
+    if (!fechas.length) { var v = document.createElement('li'); v.className = 'vacio'; v.textContent = 'Nada más apuntado hasta el retiro.'; ag.appendChild(v); return; }
+    fechas.forEach(function(f){
+      var li = document.createElement('li'); li.className = 'dia-ag' + (f >= '2026-11-20' ? ' retiro' : '');
+      var a = document.createElement('a'); a.href = '#cal'; a.className = 'f'; a.style.textDecoration = 'none'; a.textContent = nombreFecha(f, true) + (f === '2026-11-20' ? ' · llegada' : f > '2026-11-20' ? ' · retiro' : '');
+      li.appendChild(a);
+      var ul = document.createElement('ul');
+      dias[f].forEach(function(t){ var x = document.createElement('li'); var sp = document.createElement('span'); sp.textContent = t.texto; var ini = document.createElement('span'); ini.className = 'ini'; ini.textContent = INI[t.quien || '']; x.appendChild(sp); x.appendChild(ini); ul.appendChild(x); });
+      li.appendChild(ul); ag.appendChild(li);
+    });
+  }
   function pintaInicio(){
     var hoy = hoyISO(), ts = estado.items.filter(function(t){ return t.lista === 'tareas'; });
     var pend = ts.filter(function(t){ return !t.hecho; }), atr = pend.filter(function(t){ return t.fecha && t.fecha < hoy; }).length;
-    pintaHoy(hoy, ts, pend); pintaTira(hoy, pend);
+    pintaHoy(hoy, ts, pend); pintaTira(hoy, pend); pintaAgenda(hoy, pend);
     if (!ts.length) cuadro('c-tareas', '0', 'nada apuntado todavía', '', null);
     else if (!pend.length) cuadro('c-tareas', '✓', 'todo hecho', 'ok', 1);
     else cuadro('c-tareas', String(pend.length), (pend.length === 1 ? 'pendiente' : 'pendientes') + (atr ? ' · <em>' + atr + (atr === 1 ? ' atrasada' : ' atrasadas') + '</em>' : ' · ' + (ts.length - pend.length) + ' de ' + ts.length + ' hechas'), '', (ts.length - pend.length) / ts.length);
