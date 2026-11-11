@@ -7,7 +7,6 @@
 import { PREFIJO, buscaPorCorreo, limpia, metadatos } from "./personas.js";
 
 const CABECERAS = { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" };
-const EPOCAS = ["", "primavera", "verano", "otono", "invierno", "cualquiera"];
 const MIN_MS = 3000;
 
 function json(obj, status = 200) { return new Response(JSON.stringify(obj), { status, headers: CABECERAS }); }
@@ -44,7 +43,6 @@ export async function onRequestPost({ request, env }) {
   try { ({ campos, html } = await leeCampos(request)); } catch (e) { return json({ error: "formato" }, 400); }
   const s = k => limpia(campos[k], 200);
   const nombre = s("nombre"), correo = s("correo").toLowerCase();
-  const epoca = EPOCAS.includes(s("epoca")) ? s("epoca") : "";
   const c = campos.consiente;
   const consiente = c === true || c === "on" || c === "1" || c === "true";
   const bien = obj => html
@@ -66,11 +64,10 @@ export async function onRequestPost({ request, env }) {
   if (previa) {
     p = previa;
     p.nombre = nombre;
-    if (epoca) p.epoca = epoca;
     p.otra = ahora;
     if (p.estado === "baja") p.estado = "interesada";
   } else {
-    p = { id: crypto.randomUUID().replace(/-/g, "").slice(0, 16), nombre, correo, epoca, cuando: ahora, estado: "interesada", nota: "", origen: "web" };
+    p = { id: crypto.randomUUID().replace(/-/g, "").slice(0, 16), nombre, correo, cuando: ahora, estado: "interesada", nota: "", origen: "web" };
   }
   await env.TAREAS.put(PREFIJO + p.id, JSON.stringify(p), { metadata: metadatos(p) });
   return bien({ ok: true, ya: !!previa });

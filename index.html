@@ -408,7 +408,6 @@ footer .legal a:hover,footer .legal a:focus-visible{color:var(--tinta)}
       <form class="avisame" id="avisame" action="/api/avisame" method="post" autocomplete="on" novalidate>
         <div class="campo"><label for="av-nombre">Nombre</label><input type="text" id="av-nombre" name="nombre" maxlength="120" autocomplete="name" required></div>
         <div class="campo"><label for="av-correo">Correo</label><input type="email" id="av-correo" name="correo" maxlength="200" autocomplete="email" inputmode="email" required></div>
-        <div class="campo"><label for="av-epoca">¿Qué época te viene mejor?</label><select id="av-epoca" name="epoca"><option value="">Da igual</option><option value="primavera">Primavera</option><option value="verano">Verano</option><option value="otono">Otoño</option><option value="invierno">Invierno</option></select></div>
         <label class="consiente"><input type="checkbox" name="consiente" value="on" required><span>Quiero que me aviséis de los próximos retiros. He leído la <a href="/privacidad">política de privacidad</a>.</span></label>
         <div class="trampa" aria-hidden="true"><label>Web<input type="text" name="web" tabindex="-1" autocomplete="off"></label></div>
         <input type="hidden" name="t" value="">
@@ -488,7 +487,7 @@ footer .legal a:hover,footer .legal a:focus-visible{color:var(--tinta)}
       if (!f.elements.consiente.checked) { di('Marca la casilla para que podamos avisarte.', true); return; }
       btn.disabled = true; di('Enviando…');
       fetch(f.action, { method: 'POST', headers: { 'content-type': 'application/json', 'accept': 'application/json' },
-        body: JSON.stringify({ nombre: nombre, correo: correo, epoca: f.elements.epoca.value, consiente: true, web: f.elements.web.value, t: Number(f.elements.t.value) }) })
+        body: JSON.stringify({ nombre: nombre, correo: correo, consiente: true, web: f.elements.web.value, t: Number(f.elements.t.value) }) })
         .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, j: j }; }); })
         .then(function(res){
           if (!res.ok) throw new Error(res.j && res.j.error || 'error');

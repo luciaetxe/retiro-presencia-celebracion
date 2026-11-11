@@ -1064,7 +1064,6 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   var personasEl = document.getElementById('personas'), herrEl = document.getElementById('herr-personas');
   var ESTADO = { interesada: 'Interesada', contactada: 'Contactada', reservada: 'Reservada', confirmada: 'Confirmada', baja: 'Baja' };
   var CICLO_ESTADO = { interesada: 'contactada', contactada: 'reservada', reservada: 'confirmada', confirmada: 'baja', baja: 'interesada' };
-  var EPOCA = { primavera: 'primavera', verano: 'verano', otono: 'otoño', invierno: 'invierno', cualquiera: 'cualquier época', '': '' };
   function activas(){ return personas.filter(function(p){ return p.estado !== 'baja'; }); }
   function cuandoTexto(iso){ if (!iso) return ''; var d = new Date(iso); return isNaN(d) ? '' : d.getDate() + ' ' + MESES[d.getMonth()].slice(0, 3) + ' ' + d.getFullYear(); }
   function csvCampo(v){ v = String(v == null ? '' : v); return /[";\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
@@ -1088,8 +1087,8 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       herrEl.appendChild(copiar);
       var bajar = document.createElement('button'); bajar.type = 'button'; bajar.textContent = 'Descargar lista';
       bajar.addEventListener('click', function(){
-        var filas = [['Nombre', 'Correo', 'Época', 'Estado', 'Apuntada el', 'Nota']];
-        personas.forEach(function(p){ filas.push([p.nombre, p.correo, EPOCA[p.epoca] || '', ESTADO[p.estado] || p.estado, (p.cuando || '').slice(0, 10), p.nota || '']); });
+        var filas = [['Nombre', 'Correo', 'Estado', 'Apuntada el', 'Nota']];
+        personas.forEach(function(p){ filas.push([p.nombre, p.correo, ESTADO[p.estado] || p.estado, (p.cuando || '').slice(0, 10), p.nota || '']); });
         var csv = '\ufeff' + filas.map(function(f){ return f.map(csvCampo).join(';'); }).join('\r\n');
         var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = 'personas-retiro.csv';
         document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
@@ -1112,7 +1111,6 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       });
       var datos = document.createElement('div'); datos.className = 'datos';
       var m = document.createElement('a'); m.href = 'mailto:' + p.correo; m.textContent = p.correo; datos.appendChild(m);
-      if (p.epoca) { var s2 = document.createElement('span'); s2.className = 'sep'; s2.textContent = '·'; datos.appendChild(s2); datos.appendChild(document.createTextNode('prefiere ' + EPOCA[p.epoca])); }
       var det = document.createElement('div'); det.className = 'det';
       var cu = document.createElement('span'); cu.textContent = 'Apuntada el ' + cuandoTexto(p.cuando) + (p.otra ? ' · otra vez el ' + cuandoTexto(p.otra) : ''); det.appendChild(cu);
       if (quitandoPersona === p.id) {
