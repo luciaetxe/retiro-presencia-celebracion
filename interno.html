@@ -175,9 +175,11 @@ button{font:inherit;color:inherit}
 .anadir{border-top:1px solid var(--line);margin-top:.6rem;padding-top:1.2rem}
 .campos{display:grid;gap:.7rem}
 .campos .fila{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
-.campos input[type="text"]{all:unset;flex:1 1 100%;min-width:0;font-weight:300;font-size:1rem;line-height:1.4;padding:.45rem 0;border-bottom:1px solid var(--tinta);color:var(--tinta)}
-.campos input[type="text"]::placeholder{color:var(--plata)}
-.campos input[type="text"]:focus-visible{outline:none;border-bottom-color:var(--acento)}
+.campos input[type="text"],.campos input[type="email"],.campos input[type="tel"]{all:unset;flex:1 1 100%;min-width:0;font-weight:300;font-size:1rem;line-height:1.4;padding:.45rem 0;border-bottom:1px solid var(--tinta);color:var(--tinta)}
+.campos input[type="text"]::placeholder,.campos input[type="email"]::placeholder,.campos input[type="tel"]::placeholder{color:var(--plata)}
+.campos input[type="text"]:focus-visible,.campos input[type="email"]:focus-visible,.campos input[type="tel"]:focus-visible{outline:none;border-bottom-color:var(--acento)}
+.campos .mitad{flex:1 1 12em}
+.campos .ayuda{flex:1 1 100%;font-size:.78rem;color:var(--plata);line-height:1.45;margin:-.2rem 0 0}
 .campos input.num{flex:0 0 auto;width:4.2em;font-size:.95rem;text-align:right}
 .campos input.num.precio{width:5.2em}
 .campos .uni{font-size:.82rem;color:var(--plata)}
@@ -445,9 +447,19 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   </section>
 
   <section id="panel-personas" role="tabpanel" aria-labelledby="tab-personas" hidden>
-    <p class="pista-fichas">Quien se apunta en la web para el próximo retiro. Tocar el estado lo cambia: interesada → contactada → reservada → confirmada → baja.</p>
+    <p class="pista-fichas">Quien quiere que la avisemos del próximo retiro: las que se apuntan en la web y las que apuntáis vosotras abajo. Tocar el estado lo cambia: interesada → contactada → reservada → confirmada → baja.</p>
     <div class="herr" id="herr-personas"></div>
     <ul class="personas" id="personas"><li class="vacio">Cargando…</li></ul>
+    <div class="anadir">
+      <form class="campos" id="form-persona" autocomplete="off">
+        <div class="fila"><input type="text" name="nombre" placeholder="Nombre" maxlength="120" aria-label="Nombre" autocomplete="off"></div>
+        <div class="fila">
+          <input type="email" class="mitad" name="correo" placeholder="Correo" maxlength="200" inputmode="email" aria-label="Correo" autocomplete="off">
+          <input type="tel" class="mitad" name="whatsapp" placeholder="WhatsApp (opcional)" maxlength="30" inputmode="tel" aria-label="WhatsApp (opcional)" autocomplete="off">
+        </div>
+        <div class="fila"><p class="ayuda">Para apuntar a alguien que os lo ha pedido por WhatsApp o en persona.</p><button type="submit" disabled>Apuntar</button></div>
+      </form>
+    </div>
   </section>
 
   <p class="estado" id="estado" aria-live="polite"></p>
@@ -1064,7 +1076,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     else cuadro('c-fichas', String(fichas.length), fichas.length === 1 ? 'documento' : 'documentos', '', null);
     var n = activas().length;
     if (!personasCargadas) cuadro('c-personas', '·', 'cargando', '', null);
-    else cuadro('c-personas', String(n), (n === 1 ? 'apuntada en la web' : 'apuntadas en la web') + (n ? ' · última el ' + nombreFecha(personas[0].cuando.slice(0, 10), false) : ''), '', null);
+    else cuadro('c-personas', String(n), (n === 1 ? 'apuntada' : 'apuntadas') + (n ? ' · última el ' + nombreFecha(personas[0].cuando.slice(0, 10), false) : ''), '', null);
   }
 
   // --- añadir ---
@@ -1219,8 +1231,8 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       herrEl.appendChild(copiar);
       var bajar = document.createElement('button'); bajar.type = 'button'; bajar.textContent = 'Descargar lista';
       bajar.addEventListener('click', function(){
-        var filas = [['Nombre', 'Correo', 'Estado', 'Apuntada el', 'Nota']];
-        personas.forEach(function(p){ filas.push([p.nombre, p.correo, ESTADO[p.estado] || p.estado, (p.cuando || '').slice(0, 10), p.nota || '']); });
+        var filas = [['Nombre', 'Correo', 'WhatsApp', 'Estado', 'Apuntada el', 'Desde', 'Nota']];
+        personas.forEach(function(p){ filas.push([p.nombre, p.correo, p.whatsapp || '', ESTADO[p.estado] || p.estado, (p.cuando || '').slice(0, 10), p.origen === 'interno' ? 'A mano' : 'Web', p.nota || '']); });
         var csv = '\ufeff' + filas.map(function(f){ return f.map(csvCampo).join(';'); }).join('\r\n');
         var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = 'personas-retiro.csv';
         document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
@@ -1230,7 +1242,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       herrEl.appendChild(c);
     }
     personasEl.innerHTML = '';
-    if (!personas.length) { var v = document.createElement('li'); v.className = 'vacio'; v.textContent = 'Todavía no se ha apuntado nadie. Cuando alguien rellene el formulario de la web aparecerá aquí.'; personasEl.appendChild(v); return; }
+    if (!personas.length) { var v = document.createElement('li'); v.className = 'vacio'; v.textContent = 'Todavía no hay nadie. Quien rellene el formulario de la web aparecerá aquí, y abajo podéis apuntar vosotras a quien os lo pida.'; personasEl.appendChild(v); return; }
     personas.forEach(function(p){
       var li = document.createElement('li'); li.className = 'persona' + (p.estado === 'baja' ? ' baja' : ''); li.dataset.id = p.id;
       var url = 'api/personas/' + encodeURIComponent(p.id);
@@ -1243,8 +1255,12 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       });
       var datos = document.createElement('div'); datos.className = 'datos';
       var m = document.createElement('a'); m.href = 'mailto:' + p.correo; m.textContent = p.correo; datos.appendChild(m);
+      if (p.whatsapp) {
+        var sep = document.createElement('span'); sep.className = 'sep'; sep.textContent = '·'; datos.appendChild(sep);
+        var w = document.createElement('a'); w.href = 'https://wa.me/' + waDigitos(p.whatsapp); w.target = '_blank'; w.rel = 'noopener'; w.textContent = p.whatsapp; w.title = 'Abrir en WhatsApp'; datos.appendChild(w);
+      }
       var det = document.createElement('div'); det.className = 'det';
-      var cu = document.createElement('span'); cu.textContent = 'Apuntada el ' + cuandoTexto(p.cuando) + (p.otra ? ' · otra vez el ' + cuandoTexto(p.otra) : ''); det.appendChild(cu);
+      var cu = document.createElement('span'); cu.textContent = (p.origen === 'interno' ? 'Apuntada a mano el ' : 'Apuntada en la web el ') + cuandoTexto(p.cuando) + (p.otra ? ' · otra vez el ' + cuandoTexto(p.otra) : ''); det.appendChild(cu);
       if (quitandoPersona === p.id) {
         var si = document.createElement('button'); si.type = 'button'; si.className = 'seguro'; si.textContent = 'Sí, quitar a ' + p.nombre;
         si.addEventListener('click', function(){ quitandoPersona = null; pon('Quitando…'); pidePersona(url, { method: 'DELETE' }, 'Quitada', 'No se ha podido quitar.'); });
@@ -1260,6 +1276,33 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       personasEl.appendChild(li);
     });
   }
+  function waDigitos(w){ var d = String(w).replace(/\D/g, ''); if (d.length === 9 && /^[67]/.test(d)) d = '34' + d; return d; } // un móvil español sin prefijo → +34
+  (function(){
+    var f = document.getElementById('form-persona'), nom = f.elements.nombre, cor = f.elements.correo, wa = f.elements.whatsapp, btn = f.querySelector('button[type="submit"]');
+    function listo(){ btn.disabled = !(nom.value.trim().length >= 2 && cor.value.trim()); }
+    nom.addEventListener('input', listo); cor.addEventListener('input', listo);
+    f.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var nombre = nom.value.trim(), correo = cor.value.trim(), whatsapp = wa.value.trim();
+      if (nombre.length < 2) { pon('Falta el nombre.', true); nom.focus(); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(correo)) { pon('Revisa el correo.', true); cor.focus(); return; }
+      if (whatsapp && !/^\d{7,15}$/.test(whatsapp.replace(/\D/g, ''))) { pon('Revisa el WhatsApp (o déjalo en blanco).', true); wa.focus(); return; }
+      btn.disabled = true; pon('Apuntando…');
+      fetch('api/personas', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ nombre: nombre, correo: correo, whatsapp: whatsapp }) })
+        .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, status: r.status, j: j }; }); })
+        .then(function(res){
+          if (res.status === 401) { location.replace('interno'); return; }
+          if (!res.ok) throw new Error(res.j && res.j.error === 'ya' ? 'ya:' + (res.j.nombre || '') : res.j && res.j.error || res.status);
+          personas = res.j.items || []; personasCargadas = true; renderPersonas(); pon('Apuntada ' + nombre);
+          f.reset(); nom.focus();
+        })
+        .catch(function(e){
+          var m = String(e.message);
+          pon(m.indexOf('ya:') === 0 ? 'Ese correo ya está apuntado' + (m.slice(3) ? ' (' + m.slice(3) + ')' : '') + '.' : m === 'correo' ? 'Revisa el correo.' : m === 'whatsapp' ? 'Revisa el WhatsApp (o déjalo en blanco).' : m === 'nombre' ? 'Falta el nombre.' : 'No se ha podido apuntar. Revisa la conexión y vuelve a intentarlo.', true);
+          listo();
+        });
+    });
+  })();
   function cargaPersonas(silencio){
     fetch('api/personas', { cache: 'no-store' })
       .then(function(r){ if (r.status === 401) { location.replace('interno'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
