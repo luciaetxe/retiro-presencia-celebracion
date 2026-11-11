@@ -981,15 +981,15 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   function pintaHoy(hoy, ts, pend){
     var lh = document.getElementById('lista-hoy'), manana = masDias(hoy, 1);
     lh.innerHTML = '';
-    // atrasadas, las de hoy (también las ya hechas, para ver que avanza) y las de mañana
-    var de = ts.filter(function(t){ return t.fecha && t.fecha <= manana && (!t.hecho || t.fecha === hoy); });
+    // atrasadas y las de hoy (también las ya hechas, para ver que avanza); mañana va en «Próximos días»
+    var de = ts.filter(function(t){ return t.fecha && t.fecha <= hoy && (!t.hecho || t.fecha === hoy); });
     de.sort(function(a, b){ return a.fecha < b.fecha ? -1 : a.fecha > b.fecha ? 1 : (a.hecho === b.hecho ? 0 : a.hecho ? 1 : -1); });
     var sub = document.querySelector('.hoy .sub'); sub.innerHTML = 'Hoy';
     var sm = document.createElement('small'); sm.textContent = nombreFecha(hoy, true).toLowerCase(); sub.appendChild(sm);
     if (!de.length) {
       var v = document.createElement('li'); v.className = 'vacio';
-      var prox = pend.map(function(t){ return t.fecha; }).filter(function(f){ return f && f > manana; }).sort()[0];
-      v.innerHTML = 'Nada para hoy ni mañana.' + (prox ? ' Lo siguiente, el <a href="#cal">' + nombreFecha(prox, false) + '</a>.' : (pend.length ? ' Hay ' + pend.length + ' tareas <a href="#tareas">sin fecha</a>.' : ''));
+      var prox = pend.map(function(t){ return t.fecha; }).filter(function(f){ return f && f > hoy; }).sort()[0];
+      v.innerHTML = 'Nada para hoy.' + (prox ? ' Lo siguiente, el <a href="#cal">' + nombreFecha(prox, false) + '</a>.' : (pend.length ? ' Hay ' + pend.length + ' tareas <a href="#tareas">sin fecha</a>.' : ''));
       lh.appendChild(v); return;
     }
     de.forEach(function(t){
@@ -1003,7 +1003,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       var txt = document.createElement('div'); txt.className = 'txt';
       var sp = document.createElement('span'); sp.className = 't'; sp.textContent = t.texto; txt.appendChild(sp);
       var eti = document.createElement('span'); eti.className = 'eti ' + (t.fecha < hoy ? 'atrasada' : t.fecha === hoy ? 'hoy' : 'manana');
-      eti.textContent = t.fecha < hoy ? 'atrasada · ' + nombreFecha(t.fecha, false) : t.fecha === hoy ? 'hoy' : 'mañana'; txt.appendChild(eti);
+      eti.textContent = t.fecha < hoy ? 'atrasada · ' + nombreFecha(t.fecha, false) : 'hoy'; txt.appendChild(eti);
       var ini = document.createElement('span'); ini.className = 'ini'; ini.textContent = INI[t.quien || '']; txt.appendChild(ini);
       div.appendChild(cb); div.appendChild(txt); li.appendChild(div); lh.appendChild(li);
     });
@@ -1025,14 +1025,14 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     }
   }
   function pintaAgenda(hoy, pend){
-    var ag = document.getElementById('agenda'), desde = masDias(hoy, 2); ag.innerHTML = '';
+    var ag = document.getElementById('agenda'), desde = masDias(hoy, 1); ag.innerHTML = '';
     var dias = {};
     pend.forEach(function(t){ if (t.fecha && t.fecha >= desde) (dias[t.fecha] = dias[t.fecha] || []).push(t); });
     var fechas = Object.keys(dias).sort();
     if (!fechas.length) { var v = document.createElement('li'); v.className = 'vacio'; v.textContent = 'Nada más apuntado hasta el retiro.'; ag.appendChild(v); return; }
     fechas.forEach(function(f){
       var li = document.createElement('li'); li.className = 'dia-ag' + (f >= '2026-11-20' ? ' retiro' : '');
-      var a = document.createElement('a'); a.href = '#cal'; a.className = 'f'; a.style.textDecoration = 'none'; a.textContent = nombreFecha(f, true) + (f === '2026-11-20' ? ' · llegada' : f > '2026-11-20' ? ' · retiro' : '');
+      var a = document.createElement('a'); a.href = '#cal'; a.className = 'f'; a.style.textDecoration = 'none'; a.textContent = nombreFecha(f, true) + (f === masDias(hoy, 1) ? ' · mañana' : f === '2026-11-20' ? ' · llegada' : f > '2026-11-20' ? ' · retiro' : '');
       li.appendChild(a);
       var ul = document.createElement('ul');
       dias[f].forEach(function(t){ var x = document.createElement('li'); var sp = document.createElement('span'); sp.textContent = t.texto; var ini = document.createElement('span'); ini.className = 'ini'; ini.textContent = INI[t.quien || '']; x.appendChild(sp); x.appendChild(ini); ul.appendChild(x); });
