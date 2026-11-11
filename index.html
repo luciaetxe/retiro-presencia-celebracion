@@ -171,6 +171,24 @@ b{font-weight:500;color:inherit}
 .reserva .acciones{display:flex;flex-wrap:wrap;gap:1.5rem 2.5rem;align-items:center;margin:1.5rem 0 1rem}
 .reserva .dibujo{color:var(--hueso);width:80px;height:90px;justify-self:end}
 .reserva .wrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:2rem 4rem;align-items:start}
+.reserva .btn{font:inherit;font-weight:500;background:none;cursor:pointer}
+.reserva .btn:disabled{opacity:.6;cursor:default}
+.avisame{display:grid;gap:1.3rem;max-width:30em;margin-top:2rem}
+.avisame .campo{display:grid;gap:.3rem}
+.avisame label{font-size:.82rem;letter-spacing:.06em;color:var(--hueso-2)}
+.avisame label span{letter-spacing:0;opacity:.8}
+.avisame input[type="text"],.avisame input[type="email"],.avisame input[type="tel"],.avisame select{all:unset;box-sizing:border-box;display:block;width:100%;font-weight:300;font-size:1.05rem;line-height:1.4;padding:.4rem 0;border-bottom:1px solid var(--hueso-2);color:var(--hueso);border-radius:0}
+.avisame select{cursor:pointer;padding-right:1.4em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23C8C3CF' stroke-width='1.3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right .1em center/.62em auto}
+.avisame select option{color:#141414;background:#fff}
+.avisame input:focus-visible,.avisame select:focus-visible{outline:none;border-bottom-color:var(--hueso)}
+.avisame input:-webkit-autofill{-webkit-text-fill-color:var(--hueso);-webkit-box-shadow:0 0 0 1000px #121A36 inset;caret-color:var(--hueso)}
+.avisame .consiente{display:flex;gap:.7rem;align-items:flex-start;font-size:.9rem;line-height:1.5;color:var(--hueso-2);letter-spacing:0;cursor:pointer}
+.avisame .consiente input{flex:none;width:1.1em;height:1.1em;margin:.2em 0 0;accent-color:var(--hueso)}
+.avisame .consiente a{color:var(--hueso);text-decoration:none;border-bottom:1px solid currentColor}
+.avisame .trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.avisame .acciones{margin:.4rem 0 0}
+.avisame .mal{color:#F2A28C}
+.reserva .gracias{font-family:var(--serif);font-size:1.15rem;color:var(--hueso);margin-top:2rem}
 
 /* acceso y pie */
 .access-item{margin-bottom:1.5rem;max-width:40em}
@@ -179,6 +197,9 @@ b{font-weight:500;color:inherit}
 footer{padding:3rem var(--gutter);border-top:1px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:center;font-size:.85rem;color:var(--tinta-2)}
 footer .marca{width:44px;height:48px}
 footer .fname{font-family:var(--serif);font-size:1.05rem;color:var(--tinta);display:block;margin-bottom:.3em}
+footer .legal{display:block;margin-top:.5em;font-size:.78rem;color:var(--plata)}
+footer .legal a{color:inherit;text-decoration:none;border-bottom:1px solid currentColor}
+footer .legal a:hover,footer .legal a:focus-visible{color:var(--tinta)}
 
 
 
@@ -374,12 +395,19 @@ footer .fname{font-family:var(--serif);font-size:1.05rem;color:var(--tinta);disp
   <div class="fondo"><canvas class="cielo" aria-hidden="true"></canvas></div>
   <div class="wrap">
     <div>
-      <h2>Reserva tu plaza</h2>
-      <p class="lede">El retiro de noviembre está completo. Si quieres que te avisemos de las próximas fechas, déjanos tus datos en el formulario.</p>
-      <div class="acciones">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe1IAnaGGV3NlmShKqGBk-70MKR8-3k7L88Y0_SUVakqxXDNA/viewform" target="_blank" rel="noopener" class="btn">Ir al formulario</a>
-        <p class="small-note" style="margin:0">Te escribiremos cuando abramos el próximo retiro.</p>
-      </div>
+      <h2>El próximo retiro</h2>
+      <p class="lede">El de noviembre está completo. Haremos otro. Déjanos tus datos y te avisamos cuando tengamos fechas.</p>
+      <form class="avisame" id="avisame" action="/api/avisame" method="post" autocomplete="on" novalidate>
+        <div class="campo"><label for="av-nombre">Nombre</label><input type="text" id="av-nombre" name="nombre" maxlength="120" autocomplete="name" required></div>
+        <div class="campo"><label for="av-correo">Correo</label><input type="email" id="av-correo" name="correo" maxlength="200" autocomplete="email" inputmode="email" required></div>
+        <div class="campo"><label for="av-whatsapp">WhatsApp <span>(si prefieres que te escribamos ahí)</span></label><input type="tel" id="av-whatsapp" name="whatsapp" maxlength="40" autocomplete="tel" inputmode="tel"></div>
+        <div class="campo"><label for="av-epoca">¿Qué época te viene mejor?</label><select id="av-epoca" name="epoca"><option value="">Da igual</option><option value="primavera">Primavera</option><option value="verano">Verano</option><option value="otono">Otoño</option><option value="invierno">Invierno</option></select></div>
+        <label class="consiente"><input type="checkbox" name="consiente" value="on" required><span>Quiero que me aviséis de los próximos retiros. He leído la <a href="/privacidad">política de privacidad</a>.</span></label>
+        <div class="trampa" aria-hidden="true"><label>Web<input type="text" name="web" tabindex="-1" autocomplete="off"></label></div>
+        <input type="hidden" name="t" value="">
+        <div class="acciones"><button type="submit" class="btn">Avisadme</button><p class="small-note" id="av-estado" aria-live="polite"></p></div>
+      </form>
+      <p class="small-note gracias" id="av-gracias" hidden>Recibido. Te escribiremos cuando tengamos fechas.</p>
     </div>
     <svg class="dibujo" viewBox="50 36 100 112" aria-hidden="true"><use href="#hoguera-fina"/></svg>
   </div>
@@ -401,7 +429,7 @@ footer .fname{font-family:var(--serif);font-size:1.05rem;color:var(--tinta);disp
 
 <footer>
   <svg class="marca dibujo" viewBox="50 36 100 112" aria-hidden="true"><use href="#hoguera-fina"/></svg>
-  <div><span class="fname">Presencia y Celebración</span>Margarita Margenat &amp; Lucía Echenique · Sant Salvador de Bellver</div>
+  <div><span class="fname">Presencia y Celebración</span>Margarita Margenat &amp; Lucía Echenique · Sant Salvador de Bellver<span class="legal"><a href="/aviso-legal">Aviso legal</a> · <a href="/privacidad">Privacidad</a></span></div>
 </footer>
 
 <script>
@@ -438,6 +466,35 @@ footer .fname{font-family:var(--serif);font-size:1.05rem;color:var(--tinta);disp
     size(); addEventListener('resize', function(){ size(); if (reduce) draw(0); }); draw(0);
   }
   document.querySelectorAll('canvas.cielo').forEach(cielo);
+
+  // Avísame: envío sin recargar; sin JS el formulario va a /api/avisame y vuelve a /gracias
+  (function(){
+    var f = document.getElementById('avisame'); if (!f) return;
+    var est = document.getElementById('av-estado'), btn = f.querySelector('button'), gracias = document.getElementById('av-gracias');
+    f.elements.t.value = String(Date.now());
+    function di(m, mal){ est.textContent = m; est.classList.toggle('mal', !!mal); }
+    f.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var nombre = f.elements.nombre.value.trim(), correo = f.elements.correo.value.trim();
+      if (nombre.length < 2) { di('Dinos tu nombre.', true); f.elements.nombre.focus(); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(correo)) { di('Revisa el correo.', true); f.elements.correo.focus(); return; }
+      if (!f.elements.consiente.checked) { di('Marca la casilla para que podamos avisarte.', true); return; }
+      btn.disabled = true; di('Enviando…');
+      fetch(f.action, { method: 'POST', headers: { 'content-type': 'application/json', 'accept': 'application/json' },
+        body: JSON.stringify({ nombre: nombre, correo: correo, whatsapp: f.elements.whatsapp.value.trim(), epoca: f.elements.epoca.value, consiente: true, web: f.elements.web.value, t: Number(f.elements.t.value) }) })
+        .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, j: j }; }); })
+        .then(function(res){
+          if (!res.ok) throw new Error(res.j && res.j.error || 'error');
+          f.hidden = true; gracias.hidden = false;
+          if (res.j.ya) gracias.textContent = 'Ya te teníamos apuntada. Te escribiremos cuando tengamos fechas.';
+        })
+        .catch(function(e){
+          var m = String(e.message);
+          di(m === 'correo' ? 'Revisa el correo.' : m === 'nombre' ? 'Dinos tu nombre.' : 'No se ha podido enviar. Prueba otra vez en un momento.', true);
+          btn.disabled = false;
+        });
+    });
+  })();
 
   var v = document.querySelector('.ventana video');
   if (v && !reduce) { var pr = v.play(); if (pr && pr.catch) pr.catch(function(){}); }

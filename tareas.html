@@ -146,6 +146,30 @@ button{font:inherit;color:inherit}
 .filtro button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
 .resumen + .filtro{padding-top:.7rem}
 
+/* personas: quien se apunta en la web */
+.herr{display:flex;flex-wrap:wrap;gap:.3rem 1.3rem;padding:.2rem 0 .6rem;font-size:.82rem}
+.herr button{all:unset;cursor:pointer;color:var(--tinta-2);letter-spacing:.04em;border-bottom:1px solid var(--line);line-height:1.3;padding-bottom:.05em;-webkit-tap-highlight-color:transparent}
+.herr button:hover,.herr button:focus-visible{color:var(--tinta);border-bottom-color:currentColor}
+.herr button:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.herr .cuenta{color:var(--plata);margin-left:auto}
+.personas{list-style:none;margin:0;padding:.2rem 0 0}
+.persona{display:grid;grid-template-columns:1fr auto;gap:.15rem 1rem;align-items:baseline;padding:.85rem 0;border-bottom:1px solid var(--line)}
+.persona .nom{font-family:var(--serif);font-size:1.05rem;line-height:1.3;color:var(--tinta);overflow-wrap:anywhere}
+.persona.baja .nom{color:var(--plata)}
+.persona .est{all:unset;cursor:pointer;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--tinta-2);border-bottom:1px solid var(--line);line-height:1.4;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.persona .est:hover,.persona .est:focus-visible{color:var(--tinta);border-bottom-color:currentColor}
+.persona .est:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+.persona .est.reservada,.persona .est.confirmada{color:var(--acento);border-bottom-color:currentColor}
+.persona .est.baja{color:var(--plata)}
+.persona .datos{grid-column:1/-1;font-size:.9rem;color:var(--tinta-2);line-height:1.55;overflow-wrap:anywhere}
+.persona .datos a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
+.persona .datos a:hover,.persona .datos a:focus-visible{color:var(--tinta);border-bottom-color:currentColor}
+.persona .datos .sep{margin:0 .4em;color:var(--line)}
+.persona .det{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.3rem 1.2rem;font-size:.78rem;color:var(--plata);margin-top:.15rem}
+.persona .det button{all:unset;cursor:pointer;color:var(--plata);border-bottom:1px solid transparent;line-height:1.3;-webkit-tap-highlight-color:transparent}
+.persona .det button:hover,.persona .det button:focus-visible{color:var(--tinta);border-bottom-color:currentColor}
+.persona .det button.seguro{color:var(--rojo);border-bottom-color:currentColor}
+
 /* calendario */
 @media (min-width:760px){ .hoja.ancha{max-width:1120px} }
 .pista{font-size:.84rem;color:var(--plata);line-height:1.55;margin:.9rem 0 1.1rem;min-height:1.5em}
@@ -253,6 +277,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     <button type="button" role="tab" id="tab-llevar" aria-selected="false" aria-controls="panel-llevar" data-lista="llevar">Para llevar<span class="n" id="n-llevar"></span></button>
     <button type="button" role="tab" id="tab-cal" aria-selected="false" aria-controls="panel-cal" data-lista="cal">Calendario</button>
     <button type="button" role="tab" id="tab-fichas" aria-selected="false" aria-controls="panel-fichas" data-lista="fichas">Fichas<span class="n" id="n-fichas"></span></button>
+    <button type="button" role="tab" id="tab-personas" aria-selected="false" aria-controls="panel-personas" data-lista="personas">Personas<span class="n" id="n-personas"></span></button>
   </div>
 
   <section id="panel-tareas" role="tabpanel" aria-labelledby="tab-tareas">
@@ -330,6 +355,12 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     </div>
   </section>
 
+  <section id="panel-personas" role="tabpanel" aria-labelledby="tab-personas" hidden>
+    <p class="pista-fichas">Quien se apunta en la web para el próximo retiro. Tocar el estado lo cambia: interesada → contactada → reservada → confirmada → baja.</p>
+    <div class="herr" id="herr-personas"></div>
+    <ul class="personas" id="personas"><li class="vacio">Cargando…</li></ul>
+  </section>
+
   <p class="estado" id="estado" aria-live="polite"></p>
 
   <footer>
@@ -385,11 +416,11 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   var editandoTexto = null;  // tarea cuyo texto se está escribiendo
   var elEstado = document.getElementById('estado');
   var tabs = document.querySelectorAll('.listas [role="tab"]');
-  var paneles = { tareas: document.getElementById('panel-tareas'), llevar: document.getElementById('panel-llevar'), cal: document.getElementById('panel-cal'), fichas: document.getElementById('panel-fichas') };
+  var paneles = { tareas: document.getElementById('panel-tareas'), llevar: document.getElementById('panel-llevar'), cal: document.getElementById('panel-cal'), fichas: document.getElementById('panel-fichas'), personas: document.getElementById('panel-personas') };
   var hoja = document.querySelector('.hoja');
   var grupos = { tareas: paneles.tareas.querySelector('.grupos'), llevar: paneles.llevar.querySelector('.grupos[data-lista="llevar"]'), comida: paneles.llevar.querySelector('.grupos[data-lista="comida"]') };
 
-  try { var g = localStorage.getItem('tareas-lista'); if (g === 'llevar' || g === 'cal' || g === 'fichas') listaActiva = g; } catch (e) {}
+  try { var g = localStorage.getItem('tareas-lista'); if (g === 'llevar' || g === 'cal' || g === 'fichas' || g === 'personas') listaActiva = g; } catch (e) {}
 
   // --- fechas ---
   function hoyISO(){ var d = new Date(); return iso(d); }
@@ -846,9 +877,11 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     paneles.llevar.hidden = lista !== 'llevar';
     paneles.cal.hidden = lista !== 'cal';
     paneles.fichas.hidden = lista !== 'fichas';
+    paneles.personas.hidden = lista !== 'personas';
     hoja.classList.toggle('ancha', lista === 'cal');
     if (lista === 'cal') renderCal();
     if (lista === 'fichas') cargaFichas(true);
+    if (lista === 'personas') cargaPersonas(true);
     try { localStorage.setItem('tareas-lista', lista); } catch (e) {}
   }
   tabs.forEach(function(b){ b.addEventListener('click', function(){ muestra(b.dataset.lista); }); });
@@ -977,6 +1010,86 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     });
   })();
 
+  // --- personas: quien se apunta en la web (api/personas) ---
+  var personas = [], personasCargadas = false, quitandoPersona = null;
+  var personasEl = document.getElementById('personas'), herrEl = document.getElementById('herr-personas');
+  var ESTADO = { interesada: 'Interesada', contactada: 'Contactada', reservada: 'Reservada', confirmada: 'Confirmada', baja: 'Baja' };
+  var CICLO_ESTADO = { interesada: 'contactada', contactada: 'reservada', reservada: 'confirmada', confirmada: 'baja', baja: 'interesada' };
+  var EPOCA = { primavera: 'primavera', verano: 'verano', otono: 'otoño', invierno: 'invierno', cualquiera: 'cualquier época', '': '' };
+  function activas(){ return personas.filter(function(p){ return p.estado !== 'baja'; }); }
+  function telWa(t){ var d = String(t || '').replace(/\D/g, ''); if (!d) return ''; if (d.length === 9) d = '34' + d; return 'https://wa.me/' + d; }
+  function cuandoTexto(iso){ if (!iso) return ''; var d = new Date(iso); return isNaN(d) ? '' : d.getDate() + ' ' + MESES[d.getMonth()].slice(0, 3) + ' ' + d.getFullYear(); }
+  function csvCampo(v){ v = String(v == null ? '' : v); return /[";\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+  function pidePersona(url, opciones, bien, mal){
+    fetch(url, opciones)
+      .then(function(r){ if (r.status === 401) { location.replace('tareas'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(j){ personas = j.items || []; personasCargadas = true; renderPersonas(); if (bien) pon(bien); })
+      .catch(function(){ if (mal) pon(mal, true); renderPersonas(); });
+  }
+  function renderPersonas(){
+    var n = activas().length;
+    document.getElementById('n-personas').textContent = n || '';
+    herrEl.innerHTML = '';
+    if (personas.length) {
+      var copiar = document.createElement('button'); copiar.type = 'button'; copiar.textContent = 'Copiar correos';
+      copiar.addEventListener('click', function(){
+        var lista = activas().map(function(p){ return p.correo; }).join(', ');
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(lista).then(function(){ pon('Copiados ' + n + ' correos'); }, function(){ pon('No se han podido copiar.', true); });
+        else pon('No se han podido copiar.', true);
+      });
+      herrEl.appendChild(copiar);
+      var bajar = document.createElement('button'); bajar.type = 'button'; bajar.textContent = 'Descargar lista';
+      bajar.addEventListener('click', function(){
+        var filas = [['Nombre', 'Correo', 'WhatsApp', 'Época', 'Estado', 'Apuntada el', 'Nota']];
+        personas.forEach(function(p){ filas.push([p.nombre, p.correo, p.whatsapp || '', EPOCA[p.epoca] || '', ESTADO[p.estado] || p.estado, (p.cuando || '').slice(0, 10), p.nota || '']); });
+        var csv = '\ufeff' + filas.map(function(f){ return f.map(csvCampo).join(';'); }).join('\r\n');
+        var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = 'personas-retiro.csv';
+        document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      });
+      herrEl.appendChild(bajar);
+      var c = document.createElement('span'); c.className = 'cuenta'; c.textContent = n + (n === 1 ? ' persona' : ' personas') + (personas.length > n ? ' · ' + (personas.length - n) + ' de baja' : '');
+      herrEl.appendChild(c);
+    }
+    personasEl.innerHTML = '';
+    if (!personas.length) { var v = document.createElement('li'); v.className = 'vacio'; v.textContent = 'Todavía no se ha apuntado nadie. Cuando alguien rellene el formulario de la web aparecerá aquí.'; personasEl.appendChild(v); return; }
+    personas.forEach(function(p){
+      var li = document.createElement('li'); li.className = 'persona' + (p.estado === 'baja' ? ' baja' : ''); li.dataset.id = p.id;
+      var url = 'api/personas/' + encodeURIComponent(p.id);
+      var nom = document.createElement('span'); nom.className = 'nom'; nom.textContent = p.nombre;
+      var est = document.createElement('button'); est.type = 'button'; est.className = 'est ' + p.estado; est.textContent = ESTADO[p.estado] || p.estado; est.title = 'Cambiar el estado';
+      est.addEventListener('click', function(){
+        var nuevo = CICLO_ESTADO[p.estado] || 'interesada';
+        pon('Guardando…');
+        pidePersona(url, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ estado: nuevo }) }, 'Guardado', 'No se ha podido guardar.');
+      });
+      var datos = document.createElement('div'); datos.className = 'datos';
+      var m = document.createElement('a'); m.href = 'mailto:' + p.correo; m.textContent = p.correo; datos.appendChild(m);
+      if (p.whatsapp) { var s1 = document.createElement('span'); s1.className = 'sep'; s1.textContent = '·'; datos.appendChild(s1); var w = document.createElement('a'); w.href = telWa(p.whatsapp); w.target = '_blank'; w.rel = 'noopener'; w.textContent = p.whatsapp; datos.appendChild(w); }
+      if (p.epoca) { var s2 = document.createElement('span'); s2.className = 'sep'; s2.textContent = '·'; datos.appendChild(s2); datos.appendChild(document.createTextNode('prefiere ' + EPOCA[p.epoca])); }
+      var det = document.createElement('div'); det.className = 'det';
+      var cu = document.createElement('span'); cu.textContent = 'Apuntada el ' + cuandoTexto(p.cuando) + (p.otra ? ' · otra vez el ' + cuandoTexto(p.otra) : ''); det.appendChild(cu);
+      if (quitandoPersona === p.id) {
+        var si = document.createElement('button'); si.type = 'button'; si.className = 'seguro'; si.textContent = 'Sí, quitar a ' + p.nombre;
+        si.addEventListener('click', function(){ quitandoPersona = null; pon('Quitando…'); pidePersona(url, { method: 'DELETE' }, 'Quitada', 'No se ha podido quitar.'); });
+        var no = document.createElement('button'); no.type = 'button'; no.textContent = 'No';
+        no.addEventListener('click', function(){ quitandoPersona = null; renderPersonas(); });
+        det.appendChild(si); det.appendChild(no);
+      } else {
+        var q = document.createElement('button'); q.type = 'button'; q.textContent = 'Quitar';
+        q.addEventListener('click', function(){ quitandoPersona = p.id; renderPersonas(); });
+        det.appendChild(q);
+      }
+      li.appendChild(nom); li.appendChild(est); li.appendChild(datos); li.appendChild(det);
+      personasEl.appendChild(li);
+    });
+  }
+  function cargaPersonas(silencio){
+    fetch('api/personas', { cache: 'no-store' })
+      .then(function(r){ if (r.status === 401) { location.replace('tareas'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(j){ personas = j.items || []; personasCargadas = true; renderPersonas(); })
+      .catch(function(){ if (!silencio || !personasCargadas) { personasEl.innerHTML = '<li class="vacio">No se ha podido cargar la lista. Revisa la conexión.</li>'; } });
+  }
+
   // --- cambios y guardado con versión ---
   // base = último estado confirmado por el servidor; ops = cambios aún no confirmados.
   // Lo que se pinta es siempre base + ops, así no se pierde nada aunque lleguen cambios mientras se guarda.
@@ -1025,7 +1138,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       .then(function(j){ if (j.v !== base.v || !silencio) { base = { v: j.v, items: j.items || [] }; refresca(); } })
       .catch(function(){ if (!silencio) { grupos.tareas.innerHTML = grupos.llevar.innerHTML = '<p class="vacio">No se ha podido cargar la lista. Revisa la conexión y recarga.</p>'; } });
   }
-  document.addEventListener('visibilitychange', function(){ if (!document.hidden) { carga(true); if (listaActiva === 'fichas') cargaFichas(true); } });
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) { carga(true); if (listaActiva === 'fichas') cargaFichas(true); if (listaActiva === 'personas') cargaPersonas(true); } });
   window.addEventListener('focus', function(){ carga(true); });
   setInterval(function(){ if (!document.hidden) carga(true); }, 25000);
 
@@ -1033,6 +1146,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   muestra(listaActiva);
   carga(false);
   cargaFichas(false);
+  cargaPersonas(false);
 })();
 </script>
 </body>
