@@ -43,7 +43,7 @@ export async function onRequestPost({ request, env }) {
   let campos, html;
   try { ({ campos, html } = await leeCampos(request)); } catch (e) { return json({ error: "formato" }, 400); }
   const s = k => limpia(campos[k], 200);
-  const nombre = s("nombre"), correo = s("correo").toLowerCase(), whatsapp = limpia(campos.whatsapp, 40);
+  const nombre = s("nombre"), correo = s("correo").toLowerCase();
   const epoca = EPOCAS.includes(s("epoca")) ? s("epoca") : "";
   const c = campos.consiente;
   const consiente = c === true || c === "on" || c === "1" || c === "true";
@@ -66,12 +66,11 @@ export async function onRequestPost({ request, env }) {
   if (previa) {
     p = previa;
     p.nombre = nombre;
-    if (whatsapp) p.whatsapp = whatsapp;
     if (epoca) p.epoca = epoca;
     p.otra = ahora;
     if (p.estado === "baja") p.estado = "interesada";
   } else {
-    p = { id: crypto.randomUUID().replace(/-/g, "").slice(0, 16), nombre, correo, whatsapp, epoca, cuando: ahora, estado: "interesada", nota: "", origen: "web" };
+    p = { id: crypto.randomUUID().replace(/-/g, "").slice(0, 16), nombre, correo, epoca, cuando: ahora, estado: "interesada", nota: "", origen: "web" };
   }
   await env.TAREAS.put(PREFIJO + p.id, JSON.stringify(p), { metadata: metadatos(p) });
   return bien({ ok: true, ya: !!previa });

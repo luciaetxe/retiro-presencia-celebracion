@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Antes del retiro · Presencia y Celebración</title>
+<title>Interno · Presencia y Celebración</title>
 <meta name="description" content="Lista de tareas y de cosas que llevar de Margarita y Lucía para el retiro de noviembre.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="favicon.svg?v=hoguera" type="image/svg+xml">
@@ -46,13 +46,20 @@ button{font:inherit;color:inherit}
 .cab .faltan{font-family:var(--serif);font-size:1.15rem;line-height:1.4;color:var(--tinta);margin:1.3rem 0 0}
 .cab .faltan em{font-style:normal;color:var(--acento)}
 
-/* pestañas: dos listas */
-.listas{display:flex;gap:1.6rem;border-bottom:1px solid var(--line);margin-bottom:.4rem}
-.listas button{all:unset;cursor:pointer;font-family:var(--serif);font-size:1.3rem;line-height:1.2;padding:.55rem 0 .7rem;color:var(--plata);position:relative;-webkit-tap-highlight-color:transparent}
-.listas button[aria-selected="true"]{color:var(--tinta)}
-.listas button[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--tinta)}
-.listas button:focus-visible{outline:2px solid var(--acento);outline-offset:4px}
-.listas .n{font-family:var(--sans);font-weight:400;font-size:.78rem;color:var(--plata);margin-left:.35em;vertical-align:.25em}
+/* portada interna: un apartado por línea, y «← Interno» para volver desde cada uno */
+.inicio .sub:first-child{margin-top:0}
+.menu{list-style:none;margin:0 0 .6rem;padding:0}
+.menu a{display:grid;gap:.15rem;padding:.85rem 0;border-bottom:1px solid var(--line);text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent}
+.menu .t{font-family:var(--serif);font-size:1.3rem;line-height:1.2;color:var(--tinta);transition:color .2s}
+.menu .d{font-size:.85rem;color:var(--plata);line-height:1.45}
+.menu .d em{font-style:normal;color:var(--rojo)}
+.menu a:hover .t,.menu a:focus-visible .t{color:var(--acento)}
+.menu a:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
+[hidden]{display:none!important}
+.volver{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.3rem 0 .8rem;border-bottom:1px solid var(--line);margin-bottom:.4rem}
+.volver a{text-decoration:none;color:var(--plata);font-size:.85rem;border-bottom:1px solid transparent;line-height:1.3;-webkit-tap-highlight-color:transparent}
+.volver a:hover,.volver a:focus-visible{color:var(--tinta);border-bottom-color:currentColor}
+.volver .donde{font-family:var(--serif);font-size:1.3rem;line-height:1.2;color:var(--tinta)}
 
 /* grupos por fecha */
 .grupo{padding:1.3rem 0 .6rem}
@@ -245,12 +252,6 @@ footer .fname{font-family:var(--serif);font-size:.95rem;color:var(--tinta);displ
 footer a{color:var(--plata);font-size:.78rem;text-decoration:none;border-bottom:1px solid currentColor;line-height:1.3;white-space:nowrap}
 footer a:hover,footer a:focus-visible{color:var(--tinta)}
 
-@media (max-width:420px){
-  /* cuatro pestañas no caben en una línea: se reparten en dos y la raya va bajo la palabra */
-  .listas{flex-wrap:wrap;gap:0 1.3rem}
-  .listas button{font-size:1.15rem;padding:.4rem 0 .55rem}
-  .listas button[aria-selected="true"]::after{bottom:.3rem}
-}
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important}
 }
@@ -267,18 +268,26 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   <header class="cab">
     <svg class="marca dibujo" viewBox="50 36 100 112" aria-hidden="true"><use href="#hoguera"/></svg>
     <div class="nombre">Presencia y Celebración</div>
-    <h1>Antes del retiro</h1>
+    <h1>Interno</h1>
     <p class="meta"><span>20, 21 y 22 de noviembre</span><span>Sant Salvador de Bellver</span></p>
     <p class="faltan" id="faltan"></p>
   </header>
 
-  <div class="listas" role="tablist" aria-label="Listas">
-    <button type="button" role="tab" id="tab-tareas" aria-selected="true" aria-controls="panel-tareas" data-lista="tareas">Tareas<span class="n" id="n-tareas"></span></button>
-    <button type="button" role="tab" id="tab-llevar" aria-selected="false" aria-controls="panel-llevar" data-lista="llevar">Para llevar<span class="n" id="n-llevar"></span></button>
-    <button type="button" role="tab" id="tab-cal" aria-selected="false" aria-controls="panel-cal" data-lista="cal">Calendario</button>
-    <button type="button" role="tab" id="tab-fichas" aria-selected="false" aria-controls="panel-fichas" data-lista="fichas">Fichas<span class="n" id="n-fichas"></span></button>
-    <button type="button" role="tab" id="tab-personas" aria-selected="false" aria-controls="panel-personas" data-lista="personas">Personas<span class="n" id="n-personas"></span></button>
-  </div>
+  <nav class="volver" id="volver" hidden><a href="#" id="volver-a">&larr; Interno</a><span class="donde" id="donde"></span></nav>
+
+  <section id="panel-inicio" class="inicio">
+    <h2 class="sub">Retiro de noviembre</h2>
+    <ul class="menu">
+      <li><a href="#tareas"><span class="t">Tareas</span><span class="d" id="d-tareas">Cargando…</span></a></li>
+      <li><a href="#llevar"><span class="t">Para llevar</span><span class="d" id="d-llevar">Cargando…</span></a></li>
+      <li><a href="#cal"><span class="t">Calendario</span><span class="d" id="d-cal">Las tareas por días, para moverlas de fecha</span></a></li>
+      <li><a href="#fichas"><span class="t">Fichas</span><span class="d" id="d-fichas">Cargando…</span></a></li>
+    </ul>
+    <h2 class="sub">Próximos retiros</h2>
+    <ul class="menu">
+      <li><a href="#personas"><span class="t">Personas</span><span class="d" id="d-personas">Cargando…</span></a></li>
+    </ul>
+  </section>
 
   <section id="panel-tareas" role="tabpanel" aria-labelledby="tab-tareas">
     <div class="filtro" id="filtro-quien" role="group" aria-label="Ver las tareas de"></div>
@@ -371,7 +380,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
 
 <script>
 (function(){
-  var API = 'api/tareas';   // protegida con la cookie de acceso (functions/tareas.js); si caduca, 401 → volver a la puerta
+  var API = 'api/tareas';   // protegida con la cookie de acceso (functions/interno.js); si caduca, 401 → volver a la puerta
   var RETIRO = new Date(2026, 10, 20);
   var DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
   var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
@@ -411,16 +420,14 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   function sitioDe(t){ return SITIO[t.sitio] ? t.sitio : 'otros'; }
 
   var estado = { items: [] };   // lo que se pinta (base + cambios pendientes)
-  var listaActiva = 'tareas';
+  var listaActiva = '';
   var editando = null;       // tarea con los botones «Sin fecha» / «Cambiar el texto» / «Quitar» a la vista
   var editandoTexto = null;  // tarea cuyo texto se está escribiendo
   var elEstado = document.getElementById('estado');
-  var tabs = document.querySelectorAll('.listas [role="tab"]');
   var paneles = { tareas: document.getElementById('panel-tareas'), llevar: document.getElementById('panel-llevar'), cal: document.getElementById('panel-cal'), fichas: document.getElementById('panel-fichas'), personas: document.getElementById('panel-personas') };
   var hoja = document.querySelector('.hoja');
   var grupos = { tareas: paneles.tareas.querySelector('.grupos'), llevar: paneles.llevar.querySelector('.grupos[data-lista="llevar"]'), comida: paneles.llevar.querySelector('.grupos[data-lista="comida"]') };
 
-  try { var g = localStorage.getItem('tareas-lista'); if (g === 'llevar' || g === 'cal' || g === 'fichas' || g === 'personas') listaActiva = g; } catch (e) {}
 
   // --- fechas ---
   function hoyISO(){ var d = new Date(); return iso(d); }
@@ -458,6 +465,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     var hoy = hoyISO();
     pintaFiltros();
     renderComida();
+    pintaInicio();
     ['tareas', 'llevar'].forEach(function(lista){
       var items = estado.items.filter(function(t){ return t.lista === lista; });
       if (lista === 'llevar') items.forEach(function(t){ t.fecha = ''; }); // en "Para llevar" no hay fechas ni persona
@@ -466,11 +474,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
         return fa < fb ? -1 : fa > fb ? 1 : 0;
       });
       var pend = items.filter(function(t){ return !t.hecho; }).length;
-      if (lista === 'tareas') { document.getElementById('n-tareas').textContent = items.length ? pend : ''; items = items.filter(function(t){ return esDe(t, filtroQuien); }); }
-      else {
-        var pc = estado.items.filter(function(t){ return t.lista === 'comida' && !t.hecho; }).length;
-        document.getElementById('n-llevar').textContent = (pend + pc) ? (pend + pc) : '';
-      }
+      if (lista === 'tareas') items = items.filter(function(t){ return esDe(t, filtroQuien); });
       var cont = grupos[lista];
       cont.innerHTML = '';
       if (!items.length) {
@@ -869,22 +873,41 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   paneles.cal.addEventListener('touchmove', function(ev){ if (dr && dr.activo) ev.preventDefault(); }, { passive: false });
   paneles.cal.addEventListener('contextmenu', function(ev){ if (ev.target.closest('.ficha')) ev.preventDefault(); });
 
-  // --- pestañas ---
+  // --- apartados: la portada interna y uno por hash (#tareas, #llevar, #cal, #fichas, #personas) ---
+  var NOMBRE = { tareas: 'Tareas', llevar: 'Para llevar', cal: 'Calendario', fichas: 'Fichas', personas: 'Personas' };
   function muestra(lista){
+    if (!NOMBRE[lista]) lista = '';
     listaActiva = lista;
-    tabs.forEach(function(b){ b.setAttribute('aria-selected', String(b.dataset.lista === lista)); });
-    paneles.tareas.hidden = lista !== 'tareas';
-    paneles.llevar.hidden = lista !== 'llevar';
-    paneles.cal.hidden = lista !== 'cal';
-    paneles.fichas.hidden = lista !== 'fichas';
-    paneles.personas.hidden = lista !== 'personas';
+    document.getElementById('panel-inicio').hidden = lista !== '';
+    var volver = document.getElementById('volver'); volver.hidden = lista === '';
+    document.getElementById('donde').textContent = NOMBRE[lista] || '';
+    Object.keys(paneles).forEach(function(k){ paneles[k].hidden = lista !== k; });
     hoja.classList.toggle('ancha', lista === 'cal');
     if (lista === 'cal') renderCal();
     if (lista === 'fichas') cargaFichas(true);
     if (lista === 'personas') cargaPersonas(true);
-    try { localStorage.setItem('tareas-lista', lista); } catch (e) {}
+    if (lista === '') pintaInicio();
   }
-  tabs.forEach(function(b){ b.addEventListener('click', function(){ muestra(b.dataset.lista); }); });
+  function deHash(){ muestra(location.hash.replace(/^#/, '')); window.scrollTo(0, 0); }
+  window.addEventListener('hashchange', deHash);
+  // qué hay en cada apartado, para la portada interna
+  function pintaInicio(){
+    var hoy = hoyISO(), ts = estado.items.filter(function(t){ return t.lista === 'tareas'; });
+    var pend = ts.filter(function(t){ return !t.hecho; }), atr = pend.filter(function(t){ return t.fecha && t.fecha < hoy; }).length;
+    var dT = document.getElementById('d-tareas');
+    if (!ts.length) dT.textContent = 'Nada apuntado todavía';
+    else if (!pend.length) dT.textContent = 'Todo hecho';
+    else dT.innerHTML = pend.length + (pend.length === 1 ? ' pendiente' : ' pendientes') + (atr ? ' · <em>' + atr + (atr === 1 ? ' atrasada' : ' atrasadas') + '</em>' : '');
+    var comida = estado.items.filter(function(t){ return t.lista === 'comida'; }), otras = estado.items.filter(function(t){ return t.lista === 'llevar'; });
+    var porComprar = comida.filter(function(t){ return !t.hecho; }).length + otras.filter(function(t){ return !t.hecho; }).length, previsto = 0;
+    comida.forEach(function(t){ var v = totalDe(t); if (v !== null) previsto += v; });
+    var resto = PRESUPUESTO - GASOLINA - previsto, dL = document.getElementById('d-llevar');
+    if (!comida.length && !otras.length) dL.textContent = 'Comida y otras cosas, con el presupuesto';
+    else dL.innerHTML = (porComprar ? porComprar + ' por comprar' : 'Todo comprado') + ' · ' + (resto >= 0 ? 'quedan ' + eur(resto) : '<em>se pasa ' + eur(-resto) + '</em>');
+    document.getElementById('d-fichas').textContent = fichasCargadas ? (fichas.length ? fichas.length + (fichas.length === 1 ? ' documento' : ' documentos') : 'Consentimiento, horario y lo que haga falta') : 'Cargando…';
+    var n = activas().length;
+    document.getElementById('d-personas').textContent = personasCargadas ? (n ? n + (n === 1 ? ' apuntada' : ' apuntadas') + ' en la web' : 'Quien se apunte en la web para el próximo retiro') : 'Cargando…';
+  }
 
   // --- añadir ---
   document.querySelectorAll('.anadir form').forEach(function(f){
@@ -914,7 +937,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   function tam(n){ return n < 1024 * 1024 ? Math.max(1, Math.round(n / 1024)) + ' KB' : (n / 1048576).toLocaleString('es-ES', { maximumFractionDigits: 1 }) + ' MB'; }
   function tipoNombre(t){ return t === 'application/pdf' ? 'PDF' : 'Imagen'; }
   function renderFichas(){
-    document.getElementById('n-fichas').textContent = fichas.length || '';
+    pintaInicio();
     docsEl.innerHTML = '';
     if (!fichas.length) { var v = document.createElement('li'); v.className = 'vacio'; v.textContent = 'Todavía no hay fichas. Sube la primera abajo.'; docsEl.appendChild(v); return; }
     fichas.forEach(function(d){
@@ -929,7 +952,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
           if (guardar && v && v !== d.nombre) {
             pon('Guardando…');
             fetch(url, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ nombre: v }) })
-              .then(function(r){ if (r.status === 401) { location.replace('tareas'); return; } if (!r.ok) throw new Error(r.status); return r.json(); })
+              .then(function(r){ if (r.status === 401) { location.replace('interno'); return; } if (!r.ok) throw new Error(r.status); return r.json(); })
               .then(function(j){ if (j) { fichas = j.items; pon('Guardado'); renderFichas(); } })
               .catch(function(){ pon('No se ha podido guardar el nombre.', true); renderFichas(); });
           } else renderFichas();
@@ -956,7 +979,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
         q.addEventListener('click', function(){
           quitando = null; pon('Quitando…');
           fetch(url, { method: 'DELETE' })
-            .then(function(r){ if (r.status === 401) { location.replace('tareas'); return; } if (!r.ok) throw new Error(r.status); return r.json(); })
+            .then(function(r){ if (r.status === 401) { location.replace('interno'); return; } if (!r.ok) throw new Error(r.status); return r.json(); })
             .then(function(j){ if (j) { fichas = j.items; pon('Quitada'); renderFichas(); } })
             .catch(function(){ pon('No se ha podido quitar.', true); renderFichas(); });
         });
@@ -976,7 +999,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   function cargaFichas(silencio){
     if (renombrando) return;
     fetch('api/fichas', { cache: 'no-store' })
-      .then(function(r){ if (r.status === 401) { location.replace('tareas'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(r){ if (r.status === 401) { location.replace('interno'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function(j){ fichas = j.items || []; fichasCargadas = true; renderFichas(); })
       .catch(function(){ if (!silencio || !fichasCargadas) { docsEl.innerHTML = '<li class="vacio">No se han podido cargar las fichas. Revisa la conexión.</li>'; } });
   }
@@ -997,7 +1020,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       fetch('api/fichas', { method: 'POST', body: fd })
         .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, status: r.status, j: j }; }); })
         .then(function(res){
-          if (res.status === 401) { location.replace('tareas'); return; }
+          if (res.status === 401) { location.replace('interno'); return; }
           if (!res.ok) throw new Error(res.j && res.j.error || res.status);
           fichas = res.j.items; renderFichas(); pon('Subida');
           f.reset(); el.textContent = '';
@@ -1017,18 +1040,17 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   var CICLO_ESTADO = { interesada: 'contactada', contactada: 'reservada', reservada: 'confirmada', confirmada: 'baja', baja: 'interesada' };
   var EPOCA = { primavera: 'primavera', verano: 'verano', otono: 'otoño', invierno: 'invierno', cualquiera: 'cualquier época', '': '' };
   function activas(){ return personas.filter(function(p){ return p.estado !== 'baja'; }); }
-  function telWa(t){ var d = String(t || '').replace(/\D/g, ''); if (!d) return ''; if (d.length === 9) d = '34' + d; return 'https://wa.me/' + d; }
   function cuandoTexto(iso){ if (!iso) return ''; var d = new Date(iso); return isNaN(d) ? '' : d.getDate() + ' ' + MESES[d.getMonth()].slice(0, 3) + ' ' + d.getFullYear(); }
   function csvCampo(v){ v = String(v == null ? '' : v); return /[";\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
   function pidePersona(url, opciones, bien, mal){
     fetch(url, opciones)
-      .then(function(r){ if (r.status === 401) { location.replace('tareas'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(r){ if (r.status === 401) { location.replace('interno'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function(j){ personas = j.items || []; personasCargadas = true; renderPersonas(); if (bien) pon(bien); })
       .catch(function(){ if (mal) pon(mal, true); renderPersonas(); });
   }
   function renderPersonas(){
     var n = activas().length;
-    document.getElementById('n-personas').textContent = n || '';
+    pintaInicio();
     herrEl.innerHTML = '';
     if (personas.length) {
       var copiar = document.createElement('button'); copiar.type = 'button'; copiar.textContent = 'Copiar correos';
@@ -1040,8 +1062,8 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       herrEl.appendChild(copiar);
       var bajar = document.createElement('button'); bajar.type = 'button'; bajar.textContent = 'Descargar lista';
       bajar.addEventListener('click', function(){
-        var filas = [['Nombre', 'Correo', 'WhatsApp', 'Época', 'Estado', 'Apuntada el', 'Nota']];
-        personas.forEach(function(p){ filas.push([p.nombre, p.correo, p.whatsapp || '', EPOCA[p.epoca] || '', ESTADO[p.estado] || p.estado, (p.cuando || '').slice(0, 10), p.nota || '']); });
+        var filas = [['Nombre', 'Correo', 'Época', 'Estado', 'Apuntada el', 'Nota']];
+        personas.forEach(function(p){ filas.push([p.nombre, p.correo, EPOCA[p.epoca] || '', ESTADO[p.estado] || p.estado, (p.cuando || '').slice(0, 10), p.nota || '']); });
         var csv = '\ufeff' + filas.map(function(f){ return f.map(csvCampo).join(';'); }).join('\r\n');
         var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = 'personas-retiro.csv';
         document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
@@ -1064,7 +1086,6 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       });
       var datos = document.createElement('div'); datos.className = 'datos';
       var m = document.createElement('a'); m.href = 'mailto:' + p.correo; m.textContent = p.correo; datos.appendChild(m);
-      if (p.whatsapp) { var s1 = document.createElement('span'); s1.className = 'sep'; s1.textContent = '·'; datos.appendChild(s1); var w = document.createElement('a'); w.href = telWa(p.whatsapp); w.target = '_blank'; w.rel = 'noopener'; w.textContent = p.whatsapp; datos.appendChild(w); }
       if (p.epoca) { var s2 = document.createElement('span'); s2.className = 'sep'; s2.textContent = '·'; datos.appendChild(s2); datos.appendChild(document.createTextNode('prefiere ' + EPOCA[p.epoca])); }
       var det = document.createElement('div'); det.className = 'det';
       var cu = document.createElement('span'); cu.textContent = 'Apuntada el ' + cuandoTexto(p.cuando) + (p.otra ? ' · otra vez el ' + cuandoTexto(p.otra) : ''); det.appendChild(cu);
@@ -1085,7 +1106,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   }
   function cargaPersonas(silencio){
     fetch('api/personas', { cache: 'no-store' })
-      .then(function(r){ if (r.status === 401) { location.replace('tareas'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(r){ if (r.status === 401) { location.replace('interno'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function(j){ personas = j.items || []; personasCargadas = true; renderPersonas(); })
       .catch(function(){ if (!silencio || !personasCargadas) { personasEl.innerHTML = '<li class="vacio">No se ha podido cargar la lista. Revisa la conexión.</li>'; } });
   }
@@ -1116,7 +1137,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
       .then(function(res){
         if (res.ok) { base = { v: res.j.v, items: res.j.items }; ops = ops.slice(enviando); pon('Guardado'); }
         else if (res.status === 409 && res.j.estado) { base = { v: res.j.estado.v, items: res.j.estado.items }; } // otra guardó antes: reintentamos sobre su versión
-        else if (res.status === 401) { location.replace('tareas'); return; }
+        else if (res.status === 401) { location.replace('interno'); return; }
         else { throw new Error(res.j && res.j.error || res.status); }
         refresca();
       })
@@ -1134,7 +1155,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   function carga(silencio){
     if (guardando || ops.length || editandoTexto) return;
     fetch(API, { cache: 'no-store' })
-      .then(function(r){ if (r.status === 401) { location.replace('tareas'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(r){ if (r.status === 401) { location.replace('interno'); throw new Error(401); } if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function(j){ if (j.v !== base.v || !silencio) { base = { v: j.v, items: j.items || [] }; refresca(); } })
       .catch(function(){ if (!silencio) { grupos.tareas.innerHTML = grupos.llevar.innerHTML = '<p class="vacio">No se ha podido cargar la lista. Revisa la conexión y recarga.</p>'; } });
   }
@@ -1143,7 +1164,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   setInterval(function(){ if (!document.hidden) carga(true); }, 25000);
 
   pintaFaltan();
-  muestra(listaActiva);
+  deHash();
   carga(false);
   cargaFichas(false);
   cargaPersonas(false);

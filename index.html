@@ -157,6 +157,8 @@ b{font-weight:500;color:inherit}
 .date-row{display:grid;grid-template-columns:1fr auto;gap:1.5rem 3rem;align-items:center;border:1px solid var(--line);padding:2rem;background:var(--fondo);max-width:44em}
 .date-row .when{font-family:var(--serif);font-size:clamp(1.7rem,3.8vw,3rem);line-height:1}
 .date-row .meta{margin-top:.6em;color:var(--tinta-2)}
+.date-row.proximo{margin-top:1rem}
+.date-row.proximo .when{font-size:clamp(1.3rem,2.6vw,1.9rem)}
 .status{display:inline-block;background:var(--rojo);color:#fff;padding:.6em 1em;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500}
 
 /* reserva: la noche vuelve */
@@ -173,7 +175,7 @@ b{font-weight:500;color:inherit}
 .reserva .wrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:2rem 4rem;align-items:start}
 .reserva .btn{font:inherit;font-weight:500;background:none;cursor:pointer}
 .reserva .btn:disabled{opacity:.6;cursor:default}
-.avisame{display:grid;gap:1.3rem;max-width:30em;margin-top:2rem}
+.avisame{display:grid;gap:1.3rem;max-width:30em;margin-top:.6rem}
 .avisame .campo{display:grid;gap:.3rem}
 .avisame label{font-size:.82rem;letter-spacing:.06em;color:var(--hueso-2)}
 .avisame label span{letter-spacing:0;opacity:.8}
@@ -388,6 +390,13 @@ footer .legal a:hover,footer .legal a:focus-visible{color:var(--tinta)}
       </div>
       <span class="status">Completo</span>
     </div>
+    <div class="date-row proximo">
+      <div>
+        <div class="when">Próximo retiro</div>
+        <div class="meta">Fechas por confirmar</div>
+      </div>
+      <a class="btn" href="#contacto">Avísame</a>
+    </div>
   </div>
 </section>
 
@@ -395,17 +404,15 @@ footer .legal a:hover,footer .legal a:focus-visible{color:var(--tinta)}
   <div class="fondo"><canvas class="cielo" aria-hidden="true"></canvas></div>
   <div class="wrap">
     <div>
-      <h2>El próximo retiro</h2>
-      <p class="lede">El de noviembre está completo. Haremos otro. Déjanos tus datos y te avisamos cuando tengamos fechas.</p>
+      <h2>Avísame del próximo retiro</h2>
       <form class="avisame" id="avisame" action="/api/avisame" method="post" autocomplete="on" novalidate>
         <div class="campo"><label for="av-nombre">Nombre</label><input type="text" id="av-nombre" name="nombre" maxlength="120" autocomplete="name" required></div>
         <div class="campo"><label for="av-correo">Correo</label><input type="email" id="av-correo" name="correo" maxlength="200" autocomplete="email" inputmode="email" required></div>
-        <div class="campo"><label for="av-whatsapp">WhatsApp <span>(si prefieres que te escribamos ahí)</span></label><input type="tel" id="av-whatsapp" name="whatsapp" maxlength="40" autocomplete="tel" inputmode="tel"></div>
         <div class="campo"><label for="av-epoca">¿Qué época te viene mejor?</label><select id="av-epoca" name="epoca"><option value="">Da igual</option><option value="primavera">Primavera</option><option value="verano">Verano</option><option value="otono">Otoño</option><option value="invierno">Invierno</option></select></div>
         <label class="consiente"><input type="checkbox" name="consiente" value="on" required><span>Quiero que me aviséis de los próximos retiros. He leído la <a href="/privacidad">política de privacidad</a>.</span></label>
         <div class="trampa" aria-hidden="true"><label>Web<input type="text" name="web" tabindex="-1" autocomplete="off"></label></div>
         <input type="hidden" name="t" value="">
-        <div class="acciones"><button type="submit" class="btn">Avisadme</button><p class="small-note" id="av-estado" aria-live="polite"></p></div>
+        <div class="acciones"><button type="submit" class="btn">Avísame</button><p class="small-note" id="av-estado" aria-live="polite"></p></div>
       </form>
       <p class="small-note gracias" id="av-gracias" hidden>Recibido. Te escribiremos cuando tengamos fechas.</p>
     </div>
@@ -481,7 +488,7 @@ footer .legal a:hover,footer .legal a:focus-visible{color:var(--tinta)}
       if (!f.elements.consiente.checked) { di('Marca la casilla para que podamos avisarte.', true); return; }
       btn.disabled = true; di('Enviando…');
       fetch(f.action, { method: 'POST', headers: { 'content-type': 'application/json', 'accept': 'application/json' },
-        body: JSON.stringify({ nombre: nombre, correo: correo, whatsapp: f.elements.whatsapp.value.trim(), epoca: f.elements.epoca.value, consiente: true, web: f.elements.web.value, t: Number(f.elements.t.value) }) })
+        body: JSON.stringify({ nombre: nombre, correo: correo, epoca: f.elements.epoca.value, consiente: true, web: f.elements.web.value, t: Number(f.elements.t.value) }) })
         .then(function(r){ return r.json().then(function(j){ return { ok: r.ok, j: j }; }); })
         .then(function(res){
           if (!res.ok) throw new Error(res.j && res.j.error || 'error');
