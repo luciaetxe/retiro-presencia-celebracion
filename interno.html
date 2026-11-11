@@ -48,9 +48,40 @@ button{font:inherit;color:inherit}
 
 /* portada interna: un apartado por línea, y «← Interno» para volver desde cada uno */
 .inicio .sub{margin:1.6rem 0 .7rem;font-size:1.05rem;color:var(--plata)}
-.inicio .sub:first-child{margin-top:.4rem}
+.hoy .sub{margin-top:.2rem;display:flex;align-items:baseline;gap:.6rem}
+.hoy .sub small{font-family:var(--sans);font-size:.75rem;color:var(--plata)}
+.lista-hoy{list-style:none;margin:0;padding:0}
+.lista-hoy .item{padding:.5rem 0;border-bottom:1px solid var(--line)}
+.lista-hoy .txt{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .6rem}
+.lista-hoy .txt .t{cursor:default;flex:1 1 auto}
+.lista-hoy .eti{font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--plata);white-space:nowrap}
+.lista-hoy .eti.atrasada{color:var(--rojo)}
+.lista-hoy .eti.hoy{color:var(--acento)}
+.lista-hoy .ini{font-size:.66rem;letter-spacing:.06em;color:var(--plata);white-space:nowrap}
+.lista-hoy .vacio{padding:.5rem 0 .3rem;font-size:.95rem;color:var(--plata)}
+.lista-hoy .vacio a{color:var(--tinta);text-decoration:none;border-bottom:1px solid var(--line)}
+.tira{display:flex;gap:.4rem;overflow-x:auto;scroll-snap-type:x proximity;padding:1rem 2px .3rem;margin:0 -2px;scrollbar-width:none}
+.tira::-webkit-scrollbar{display:none}
+.dia-chip{flex:0 0 auto;scroll-snap-align:start;display:grid;justify-items:center;gap:.1rem;min-width:46px;padding:.45rem .3rem .45rem;border:1px solid var(--line);border-radius:4px;text-decoration:none;color:var(--tinta);-webkit-tap-highlight-color:transparent;transition:border-color .2s}
+.dia-chip:hover,.dia-chip:focus-visible{border-color:var(--tinta)}
+.dia-chip:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+.dia-chip .dn{font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--plata)}
+.dia-chip .n{font-family:var(--serif);font-size:1.05rem;line-height:1.15}
+.dia-chip .pts{display:flex;gap:3px;height:6px;margin-top:.15rem}
+.dia-chip .pts i{width:5px;height:5px;border-radius:50%;background:var(--tinta-2)}
+.dia-chip .pts i.mas{width:auto;height:auto;background:none;border-radius:0;font-style:normal;font-size:.6rem;line-height:6px;color:var(--plata)}
+.dia-chip.hoy{border-color:var(--acento)}
+.dia-chip.hoy .dn,.dia-chip.hoy .n{color:var(--acento)}
+.dia-chip.retiro{background:var(--suave);border-color:transparent}
+.dia-chip.retiro .n{color:var(--tinta-2)}
+@media (min-width:600px){ .tira{overflow:visible} .dia-chip{flex:1 1 0;min-width:0} }
 .cuadros{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem}
-.cuadro{position:relative;display:grid;grid-template-rows:auto 1fr auto auto;aspect-ratio:1;padding:.9rem 1rem .95rem;border:1px solid var(--line);text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent;transition:border-color .25s,transform .25s}
+.cuadro{position:relative;display:grid;grid-template-rows:auto 1fr auto auto;aspect-ratio:1;padding:.9rem 1rem .95rem;border:1px solid transparent;border-radius:6px;background:var(--suave);text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent;transition:border-color .25s,transform .25s,filter .25s}
+.cuadro.c-arena{background:#F5EFE3}
+.cuadro.c-salvia{background:#E8EFE8}
+.cuadro.c-lavanda{background:#ECE9F5}
+.cuadro.c-rosa{background:#FBEAF1}
+.cuadro.c-cielo{background:#E6EEF6}
 .cuadro:hover,.cuadro:focus-visible{border-color:var(--tinta);transform:translateY(-2px)}
 .cuadro:focus-visible{outline:2px solid var(--acento);outline-offset:3px}
 .cuadro:active{transform:none}
@@ -60,8 +91,8 @@ button{font:inherit;color:inherit}
 .cuadro .num.fecha{font-size:1.7rem}
 .cuadro .cap{font-size:.78rem;line-height:1.4;color:var(--plata);margin-top:.35rem;min-height:2.2em}
 .cuadro .cap em{font-style:normal;color:var(--rojo)}
-.cuadro .barra{display:block;height:2px;background:var(--line);margin-top:.6rem;overflow:hidden}
-.cuadro .barra i{display:block;height:100%;width:0;background:var(--tinta);transition:width .6s ease}
+.cuadro .barra{display:block;height:3px;border-radius:2px;background:rgba(20,20,20,.1);margin-top:.6rem;overflow:hidden}
+.cuadro .barra i{display:block;height:100%;width:0;background:var(--tinta);border-radius:2px;transition:width .6s ease}
 .cuadro .barra.oculta{visibility:hidden}
 @media (min-width:600px){
   .cuadros{gap:1rem}
@@ -287,16 +318,21 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
   <nav class="volver" id="volver" hidden><a href="#" id="volver-a">&larr; Interno</a><span class="donde" id="donde"></span></nav>
 
   <section id="panel-inicio" class="inicio">
+    <section class="hoy" aria-label="Para hoy">
+      <h2 class="sub">Hoy</h2>
+      <ul class="lista-hoy" id="lista-hoy"></ul>
+    </section>
+    <div class="tira" id="tira" aria-label="Días hasta el retiro"></div>
     <h2 class="sub">Para este retiro</h2>
     <div class="cuadros">
-      <a class="cuadro" href="#tareas" id="c-tareas"><span class="t">Tareas</span><span class="num">·</span><span class="cap">cargando</span><span class="barra"><i></i></span></a>
-      <a class="cuadro" href="#llevar" id="c-llevar"><span class="t">Para llevar</span><span class="num">·</span><span class="cap">cargando</span><span class="barra"><i></i></span></a>
-      <a class="cuadro" href="#cal" id="c-cal"><span class="t">Calendario</span><span class="num">·</span><span class="cap">cargando</span></a>
-      <a class="cuadro" href="#fichas" id="c-fichas"><span class="t">Fichas</span><span class="num">·</span><span class="cap">cargando</span></a>
+      <a class="cuadro c-arena" href="#tareas" id="c-tareas"><span class="t">Tareas</span><span class="num">·</span><span class="cap">cargando</span><span class="barra"><i></i></span></a>
+      <a class="cuadro c-salvia" href="#llevar" id="c-llevar"><span class="t">Para llevar</span><span class="num">·</span><span class="cap">cargando</span><span class="barra"><i></i></span></a>
+      <a class="cuadro c-lavanda" href="#cal" id="c-cal"><span class="t">Calendario</span><span class="num">·</span><span class="cap">cargando</span></a>
+      <a class="cuadro c-rosa" href="#fichas" id="c-fichas"><span class="t">Fichas</span><span class="num">·</span><span class="cap">cargando</span></a>
     </div>
     <h2 class="sub">Para futuros retiros</h2>
     <div class="cuadros">
-      <a class="cuadro" href="#interesadas" id="c-personas"><span class="t">Interesadas</span><span class="num">·</span><span class="cap">cargando</span></a>
+      <a class="cuadro c-cielo" href="#interesadas" id="c-personas"><span class="t">Interesadas</span><span class="num">·</span><span class="cap">cargando</span></a>
     </div>
   </section>
 
@@ -908,9 +944,57 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     p.innerHTML = cap;
     if (b) { b.classList.toggle('oculta', barra === null); b.firstChild.style.width = (barra === null ? 0 : Math.round(barra * 100)) + '%'; }
   }
+  var INI = { lucia: 'L', marga: 'M', dos: 'L+M', '': 'L+M' };
+  function pintaHoy(hoy, ts, pend){
+    var lh = document.getElementById('lista-hoy'), manana = masDias(hoy, 1);
+    lh.innerHTML = '';
+    // atrasadas, las de hoy (también las ya hechas, para ver que avanza) y las de mañana
+    var de = ts.filter(function(t){ return t.fecha && t.fecha <= manana && (!t.hecho || t.fecha === hoy); });
+    de.sort(function(a, b){ return a.fecha < b.fecha ? -1 : a.fecha > b.fecha ? 1 : (a.hecho === b.hecho ? 0 : a.hecho ? 1 : -1); });
+    var sub = document.querySelector('.hoy .sub'); sub.innerHTML = 'Hoy';
+    var sm = document.createElement('small'); sm.textContent = nombreFecha(hoy, true).toLowerCase(); sub.appendChild(sm);
+    if (!de.length) {
+      var v = document.createElement('li'); v.className = 'vacio';
+      var prox = pend.map(function(t){ return t.fecha; }).filter(function(f){ return f && f > manana; }).sort()[0];
+      v.innerHTML = 'Nada para hoy ni mañana.' + (prox ? ' Lo siguiente, el <a href="#cal">' + nombreFecha(prox, false) + '</a>.' : (pend.length ? ' Hay ' + pend.length + ' tareas <a href="#tareas">sin fecha</a>.' : ''));
+      lh.appendChild(v); return;
+    }
+    de.forEach(function(t){
+      var li = document.createElement('li'), div = document.createElement('div');
+      div.className = 'item' + (t.hecho ? ' hecha' : '');
+      var cb = document.createElement('button'); cb.type = 'button'; cb.className = 'caja-btn';
+      cb.setAttribute('role', 'checkbox'); cb.setAttribute('aria-checked', String(!!t.hecho));
+      cb.setAttribute('aria-label', (t.hecho ? 'Desmarcar: ' : 'Marcar hecha: ') + t.texto);
+      cb.innerHTML = '<span class="caja"><svg viewBox="0 0 34 34" aria-hidden="true"><use href="#tick"/></svg></span>';
+      cb.addEventListener('click', function(){ cambia(t.id, function(x){ x.hecho = !x.hecho; }); });
+      var txt = document.createElement('div'); txt.className = 'txt';
+      var sp = document.createElement('span'); sp.className = 't'; sp.textContent = t.texto; txt.appendChild(sp);
+      var eti = document.createElement('span'); eti.className = 'eti ' + (t.fecha < hoy ? 'atrasada' : t.fecha === hoy ? 'hoy' : 'manana');
+      eti.textContent = t.fecha < hoy ? 'atrasada · ' + nombreFecha(t.fecha, false) : t.fecha === hoy ? 'hoy' : 'mañana'; txt.appendChild(eti);
+      var ini = document.createElement('span'); ini.className = 'ini'; ini.textContent = INI[t.quien || '']; txt.appendChild(ini);
+      div.appendChild(cb); div.appendChild(txt); li.appendChild(div); lh.appendChild(li);
+    });
+  }
+  function pintaTira(hoy, pend){
+    var tira = document.getElementById('tira'); tira.innerHTML = '';
+    var ini = hoy < PRIMERO ? PRIMERO : hoy > FIN ? FIN : hoy;
+    for (var s = ini; s <= FIN; s = masDias(s, 1)) {
+      var d = deISO(s), a = document.createElement('a'); a.href = '#cal';
+      a.className = 'dia-chip' + (s === hoy ? ' hoy' : '') + (s >= '2026-11-20' ? ' retiro' : '');
+      var dn = document.createElement('span'); dn.className = 'dn'; dn.textContent = DIAS[d.getDay()].slice(0, 3);
+      var n = document.createElement('span'); n.className = 'n'; n.textContent = String(d.getDate());
+      var pts = document.createElement('span'); pts.className = 'pts';
+      var k = pend.filter(function(t){ return t.fecha === s; }).length;
+      for (var i = 0; i < Math.min(k, 3); i++) pts.appendChild(document.createElement('i'));
+      if (k > 3) { var m = document.createElement('i'); m.className = 'mas'; m.textContent = '+'; pts.appendChild(m); }
+      a.title = k ? k + (k === 1 ? ' tarea' : ' tareas') : 'Sin tareas';
+      a.appendChild(dn); a.appendChild(n); a.appendChild(pts); tira.appendChild(a);
+    }
+  }
   function pintaInicio(){
     var hoy = hoyISO(), ts = estado.items.filter(function(t){ return t.lista === 'tareas'; });
     var pend = ts.filter(function(t){ return !t.hecho; }), atr = pend.filter(function(t){ return t.fecha && t.fecha < hoy; }).length;
+    pintaHoy(hoy, ts, pend); pintaTira(hoy, pend);
     if (!ts.length) cuadro('c-tareas', '0', 'nada apuntado todavía', '', null);
     else if (!pend.length) cuadro('c-tareas', '✓', 'todo hecho', 'ok', 1);
     else cuadro('c-tareas', String(pend.length), (pend.length === 1 ? 'pendiente' : 'pendientes') + (atr ? ' · <em>' + atr + (atr === 1 ? ' atrasada' : ' atrasadas') + '</em>' : ' · ' + (ts.length - pend.length) + ' de ' + ts.length + ' hechas'), '', (ts.length - pend.length) / ts.length);
@@ -932,7 +1016,7 @@ footer a:hover,footer a:focus-visible{color:var(--tinta)}
     else cuadro('c-fichas', String(fichas.length), fichas.length === 1 ? 'documento' : 'documentos', '', null);
     var n = activas().length;
     if (!personasCargadas) cuadro('c-personas', '·', 'cargando', '', null);
-    else cuadro('c-personas', String(n), n === 1 ? 'apuntada en la web' : 'apuntadas en la web', '', null);
+    else cuadro('c-personas', String(n), (n === 1 ? 'apuntada en la web' : 'apuntadas en la web') + (n ? ' · última el ' + nombreFecha(personas[0].cuando.slice(0, 10), false) : ''), '', null);
   }
 
   // --- añadir ---
